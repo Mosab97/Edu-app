@@ -40,22 +40,10 @@ return [
             'driver' => 'session',
             'provider' => 'managers',
         ],
-
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
         ],
-
-        'merchant' => [
-            'driver' => 'session',
-            'provider' => 'merchants',
-        ],
-
-        'branch' => [
-            'driver' => 'session',
-            'provider' => 'branches',
-        ],
-
         'api' => [
             'driver' => 'passport',
             'provider' => 'users',

@@ -15,14 +15,13 @@ class ClientSeeder extends Seeder
             ],
             'email' => 'u@u.com',
             'username' => generateRandomString(7),
-            'phone' => PHONE_CLIENT1,
-            'whatsapp' => PHONE_CLIENT1,
+            'phone' => STUDENT_DEFAULT_PHONE,
+            'whatsapp' => STUDENT_DEFAULT_PHONE,
             'verified' => true,
-            'is_registered' => true,
             'lat' => 31.5347908, //Indonesian hospital
             'lng' => 34.5102229,//Indonesian hospital
             'dob' => \Carbon\Carbon::now(),
-            'password' => \Illuminate\Support\Facades\Hash::make('u@u.com'),
+            'password' => \Illuminate\Support\Facades\Hash::make(PASSWORD),
         ]);
         for ($item = 1; $item <= 3; $item++) {
             $client = User::create([

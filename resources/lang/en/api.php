@@ -156,4 +156,7 @@ return [
   'You are not the owner of this ad' => 'You are not the owner of this ad',
   'Wrong order id' => 'Wrong order id',
   'Wrong ad id' => 'Wrong ad id',
+  
+  'Wrong User Password' => 'Wrong User Password',  
+  'Wrong mobile Number' => 'Wrong mobile Number',
 ];

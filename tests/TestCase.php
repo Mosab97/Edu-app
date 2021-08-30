@@ -3,22 +3,36 @@
 namespace Tests;
 
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
-use Illuminate\Support\Facades\Session;
+use Laravel\Passport\Passport;
 
 abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication;
-    protected $rootRoute = '/api/v1';
 
-    protected function withCSRFToken($attributes = [])
+    public $validator;
+
+    protected function setUp(): void
     {
-        Session::start();
-        return array_merge($attributes, ['_token' => csrf_token()]);
+        parent::setUp();
+
+        $uses = array_flip(class_uses_recursive(static::class));
+
+        if (isset($uses[DatabaseMigrations::class])) {
+            $this->runDatabaseMigrations();
+        }
+        $this->validator = app()->get('validator');
     }
 
-    protected function getFullRoute($attributes = '')
+    public function passportAs($user, $scopes = [], $guard = 'api')
     {
+        Passport::actingAs($user, $scopes, $guard);
+        return $this;
+    }
 
-        return '/api/v1' . $attributes;
+    protected function validate($mockedRequestData, $rules)
+    {
+        return $this->validator
+            ->make($mockedRequestData, $rules)
+            ->passes();
     }
 }

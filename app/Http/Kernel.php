@@ -48,7 +48,7 @@ class Kernel extends HttpKernel
         'api' => [
             'throttle:60,1',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-            SetLocalLanguage::class,
+//            SetLocalLanguage::class,
         ],
     ];
 
@@ -81,8 +81,8 @@ class Kernel extends HttpKernel
     ];
 
 
-    protected $middlewarePriority = [
-        'localization' => \App\Http\Middleware\localization::class,
-    ];
+//    protected $middlewarePriority = [
+//        'localization' => \App\Http\Middleware\localization::class,
+//    ];
 
 }

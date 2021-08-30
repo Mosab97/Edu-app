@@ -34,7 +34,6 @@ define('TIME_FORMAT_WITHOUT_SECONDS', 'h:i');
 define('ROOT_NAMESPACE', 'Api\v1');
 define('PASSWORD', '123456');
 
-define('API_ACCESS_KEY', "AAAAoQ-ebHg:APA91bF7DTXitrVT6W9Df8d-kplCl-ye5XwJa4cPqNn1X0IHSyFNTABT5asIuWi95weoTlvC35THTWvINDOsZ4Jfk3PYjvKj-tiyj_foVmYgnM8yTXnkcnA0-LMjXmWHlgsyUQAnhDin");
 
 
 define("DEFAULT_category_IMAGE", 'category_image.png');
@@ -59,14 +58,14 @@ define('FEMALE', 2);
 /***
  * API access token name
  */
-define('API_ACCESS_TOKEN_NAME', 'OrderApp');
+define('API_ACCESS_TOKEN_NAME', 'Edu_App');
 
 
 /*
  *
  * client numbers
  */
-define('PHONE_CLIENT1', '+966500000000');
+define('STUDENT_DEFAULT_PHONE', '+966500000000');
 define('CODE_FIXED', '1234');
 
 
@@ -76,13 +75,6 @@ define('CODE_FIXED', '1234');
 */
 define('CONTACT_US_NOTIFICATION', 1);
 
-
-//Notification receptions
-define('ALL_USERS', 1);
-define('CLIENTS', 2);
-define('RESTAURANTS', 3);
-define('BRANCHES', 4);
-define('DRIVERS', 5);
 
 
 /*
@@ -122,20 +114,18 @@ define('DECIMAL_DIGIT_NUMBER', 1);
 define('DECIMAL_SEPARATOR', '.');
 define('DIGIT_THOUSANDS_SEPARATOR', '');
 
-//Project Lang
-define('PROJECT_LANG', [
-    'Arabic' => 1,
-    'English' => 1,
-]);
-define('employee_number', [
-    '0 - 10' => 1,
-    '11 - 49' => 2,
-    '50 - 100' => 3,
-    'أكثر من مئة' => 4,
-]);
-define('mechanism_of_action', [
-    'TEAM VIEWER' => 1,
-    'SKAYPE' => 2,
-    'GOOGLE MEET' => 3,
-    'ZOOM' => 4,
-]);
+
+
+
+
+/***ERRORS_STATUS_CODE**/
+define('METHOD_NOT_ALLOWED_EXCEPTION', 403);
+define('UN_AUTHENTICATED', 401);
+define('VALIDATION_EXCEPTION', 422);
+define('SERVER_ERROR', 500);
+define('UPDATE_APP_VERSION', 4000);
+define('STOP_MOBILE_APP', 4001);
+define('WAITING', 4003);
+
+
+define('API_ACCESS_KEY', "AAAAoQ-ebHg:APA91bF7DTXitrVT6W9Df8d-kplCl-ye5XwJa4cPqNn1X0IHSyFNTABT5asIuWi95weoTlvC35THTWvINDOsZ4Jfk3PYjvKj-tiyj_foVmYgnM8yTXnkcnA0-LMjXmWHlgsyUQAnhDin");

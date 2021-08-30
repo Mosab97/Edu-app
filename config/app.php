@@ -39,7 +39,7 @@ return [
     |
     */
 
-    'debug' => (bool) env('APP_DEBUG', false),
+    'debug' => (bool)env('APP_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -179,11 +179,6 @@ return [
         Arcanedev\LogViewer\LogViewerServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         Akaunting\Setting\Provider::class,
-        // login by google Socialite
-        Laravel\Socialite\SocialiteServiceProvider::class,
-        Spatie\Analytics\AnalyticsServiceProvider::class,
-
-
     ],
 
     /*
@@ -237,9 +232,6 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
         'Setting' => Akaunting\Setting\Facade::class,
-        'Socialite' => Laravel\Socialite\Facades\Socialite::class,
-        'Analytics' => Spatie\Analytics\AnalyticsFacade::class,
-
     ],
 
 ];
