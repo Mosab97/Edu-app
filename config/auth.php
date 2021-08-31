@@ -48,6 +48,10 @@ return [
             'driver' => 'passport',
             'provider' => 'users',
         ],
+        'student' => [
+            'driver' => 'passport',
+            'provider' => 'student',
+        ],
     ],
 
     /*
@@ -72,26 +76,15 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\Manager::class,
         ],
-
-
-        'merchants' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\Merchant::class,
-        ],
-        'branches' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\Branch::class,
-        ],
-
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
+        'staff' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Student::class,
+        ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
     ],
 
     /*
@@ -115,7 +108,6 @@ return [
             'table' => 'manager_password_resets',
             'expire' => 60,
         ],
-
         'users' => [
             'provider' => 'users',
             'table' => 'password_resets',

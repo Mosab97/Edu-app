@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use App\Http\Middleware\BranchMiddleware;
+use App\Http\Middleware\CheckForAllScopes;
 use App\Http\Middleware\CheckIsAuth;
 use App\Http\Middleware\RestaurantMiddleware;
 use App\Http\Middleware\SetLocalLanguage;
@@ -78,6 +79,7 @@ class Kernel extends HttpKernel
         'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
         'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
         'localization' => \App\Http\Middleware\localization::class,
+        'scopes' => CheckForAllScopes::class,
     ];
 
 

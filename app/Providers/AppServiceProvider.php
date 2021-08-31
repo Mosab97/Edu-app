@@ -24,14 +24,5 @@ class AppServiceProvider extends ServiceProvider
             });
             View::share('settings', app('settings'));
         }
-        if (Schema::hasTable('services')) {
-            App::singleton('services', function () {
-//                dd(Service::first()->name);
-                return Service::get();
-            });
-            View::share('services', app('services'));
-        }
-
-//        view()->share('notifications',\App\Models\ContactUs::where('seen',0)->latest()->get());
     }
 }
