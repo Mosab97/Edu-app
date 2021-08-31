@@ -8,6 +8,7 @@ use App\Http\Resources\Api\v1\User\ProfileResource;
 use App\Models\Country;
 use App\Models\Merchant;
 use App\Models\ShareApp;
+use App\Models\Student;
 use App\Models\User;
 use App\Rules\EmailRule;
 use Illuminate\Http\Request;
@@ -74,6 +75,24 @@ class AuthController extends Controller
         if (!Hash::check($request->password, $user->password)) return apiError(api('Wrong User Password'));
 //        dd(34);
         $user['access_token'] = $user->createToken(API_ACCESS_TOKEN_NAME)->accessToken;
+
+        return apiSuccess(new ProfileResource($user), apiTrans('Successfully Logedin'));
+    }
+
+    public function student_login(Request $request)
+    {
+        //        validations
+        $request->validate([
+            'phone' => ['required', 'numeric'],
+            'password' => password_rules(true, 6),
+        ]);
+        $user = Student::phone(request('phone'))->first();
+        if (!isset($user)) return apiError(api('Wrong mobile Number'));
+        if (!Hash::check($request->password, $user->password)) return apiError(api('Wrong User Password'));
+//        dd(34);
+        $user['access_token'] = $user->createToken('API_ACCESS_TOKEN_NAME', ['student'])->accessToken;
+        //$user->createToken(API_ACCESS_TOKEN_NAME)->accessToken;
+
 
         return apiSuccess(new ProfileResource($user), apiTrans('Successfully Logedin'));
     }

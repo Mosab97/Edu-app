@@ -18,14 +18,6 @@ use Illuminate\Support\Facades\Notification;
 
 class StudentController extends Controller
 {
-    private $country = null;
-
-    public function __construct()
-    {
-        $request = request();
-        $this->country = Country::find($request->header('country-id'));
-    }
-
     public function index(Request $request)
     {
         dd(checkRequestIsWorkingOrNot());

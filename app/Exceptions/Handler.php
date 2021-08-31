@@ -61,7 +61,7 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
-        dd($exception);
+//        dd($exception);
         if (strpos($request->url(), '/api/') !== false || strpos($request->url(), '/admin_api_app_v1/') !== false || strpos($request->url(), '/web/') !== false) {
             \Log::debug('API Request Exception - ' . $request->url() . ' - ' . $exception->getMessage() . (!empty($request->all()) ? ' - ' . json_encode($request->except(['password'])) : ''));
 

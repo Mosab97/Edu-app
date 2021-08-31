@@ -2,6 +2,7 @@
 Route::group(['prefix' => 'v1', 'namespace' => ROOT_NAMESPACE], function () {
     Route::group(['namespace' => 'Auth'], function () {
         Route::post('login', 'AuthController@login');
+        Route::post('student/login', 'AuthController@student_login');
         Route::post('register', 'AuthController@register');
         Route::post('forget_password', 'AuthController@forget_password');
         Route::group(['middleware' => 'auth:api'], function () {

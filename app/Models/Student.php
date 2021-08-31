@@ -13,4 +13,11 @@ use Laravel\Passport\HasApiTokens;
 class Student extends Authenticatable
 {
     use HasApiTokens, Notifiable;
+
+    public function scopePhone($query, $param)
+    {
+        return $query->where('phone', $param);
+    }
+
+
 }

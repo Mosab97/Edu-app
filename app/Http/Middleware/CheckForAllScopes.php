@@ -16,6 +16,8 @@ class CheckForAllScopes
      */
     public function handle($request, $next, ...$scopes)
     {
+        dd(34);
+        dd(user('student'));
         if (! $request->user() || ! $request->user()->token()) {
             throw new AuthenticationException;
         }
