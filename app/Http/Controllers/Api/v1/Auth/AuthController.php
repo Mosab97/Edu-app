@@ -89,8 +89,13 @@ class AuthController extends Controller
         $user = Student::phone(request('phone'))->first();
         if (!isset($user)) return apiError(api('Wrong mobile Number'));
         if (!Hash::check($request->password, $user->password)) return apiError(api('Wrong User Password'));
-//        dd(34);
-        $user['access_token'] = $user->createToken('API_ACCESS_TOKEN_NAME', ['student'])->accessToken;
+        if (auth()->attempt(['phone'=>$request->phone, 'password'=>$request->password])) {
+
+            $user['access_token'] = $user->createToken('API_ACCESS_TOKEN_NAME', ['student'])->accessToken;
+        }else{
+
+        dd(34);
+        }
         //$user->createToken(API_ACCESS_TOKEN_NAME)->accessToken;
 
 

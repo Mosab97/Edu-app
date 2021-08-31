@@ -16,6 +16,7 @@ Route::group(['prefix' => 'v1', 'namespace' => ROOT_NAMESPACE], function () {
 
 
     Route::group(['prefix' => 'student','namespace' => 'Student'], function () {
+        Route::get('courses', 'CourseController@courses');
 
         Route::post('sign-up', 'StaffController@signUp');
         //unauthenticated routes for customers here
