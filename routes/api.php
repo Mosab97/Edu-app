@@ -1,5 +1,5 @@
 <?php
-Route::group(['prefix' => 'v1', 'namespace' => ROOT_NAMESPACE, "middleware" => ['localization'/*, 'AppVersion'*/]], function () {
+Route::group(['prefix' => 'v1', 'namespace' => ROOT_NAMESPACE], function () {
     Route::group(['namespace' => 'Auth'], function () {
         Route::post('login', 'AuthController@login');
         Route::post('register', 'AuthController@register');
@@ -14,7 +14,18 @@ Route::group(['prefix' => 'v1', 'namespace' => ROOT_NAMESPACE, "middleware" => [
     });
 
 
-        Route::get('system_constants','SystemConstantsController@system_constants');
+    Route::group(['prefix' => 'student','namespace' => 'Student'], function () {
+
+        Route::post('sign-up', 'StaffController@signUp');
+        //unauthenticated routes for customers here
+
+        Route::group(['middleware' => ['auth:student', 'scope:student']], function () {
+            // authenticated staff routes here
+            Route::post('test', 'StudentController@index');
+        });
+    });
+
+    Route::get('system_constants', 'SystemConstantsController@system_constants');
 
 });
 
