@@ -45,12 +45,16 @@ return [
             'provider' => 'users',
         ],
         'api' => [
-            'driver' => 'passport',
+            'driver' => 'jwt',
             'provider' => 'users',
         ],
         'student' => [
-            'driver' => 'passport',
+            'driver' => 'jwt',
             'provider' => 'student',
+        ],
+        'teacher' => [
+            'driver' => 'jwt',
+            'provider' => 'teacher',
         ],
     ],
 
@@ -83,6 +87,10 @@ return [
         'student' => [
             'driver' => 'eloquent',
             'model' => App\Models\Student::class,
+        ],
+        'teacher' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Teacher::class,
         ],
 
     ],

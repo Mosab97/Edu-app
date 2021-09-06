@@ -12,6 +12,7 @@ class SystemConstantsController extends Controller
         return apiSuccess([
             'user_type' => \App\Models\User::user_type,
             'STUDENT_DEFAULT_PHONE' => STUDENT_DEFAULT_PHONE,
+            'TEACHER_DEFAULT_PHONE' => TEACHER_DEFAULT_PHONE,
         ]);
     }
 

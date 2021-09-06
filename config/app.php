@@ -179,6 +179,8 @@ return [
         Arcanedev\LogViewer\LogViewerServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         Akaunting\Setting\Provider::class,
+        Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
+
     ],
 
     /*

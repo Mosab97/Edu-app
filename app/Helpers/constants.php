@@ -66,6 +66,7 @@ define('API_ACCESS_TOKEN_NAME', 'Edu_App');
  * client numbers
  */
 define('STUDENT_DEFAULT_PHONE', '+966500000000');
+define('TEACHER_DEFAULT_PHONE', '+966500000001');
 define('CODE_FIXED', '1234');
 
 

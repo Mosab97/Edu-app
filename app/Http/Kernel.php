@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\AssignGuard;
 use App\Http\Middleware\BranchMiddleware;
 use App\Http\Middleware\CheckForAllScopes;
 use App\Http\Middleware\CheckIsAuth;
@@ -78,8 +79,11 @@ class Kernel extends HttpKernel
         'CheckIsAuth' => CheckIsAuth::class,
         'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
         'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
-        'localization' => \App\Http\Middleware\localization::class,
-        'scopes' => CheckForAllScopes::class,
+//        'localization' => \App\Http\Middleware\localization::class,
+//        'scopes' => CheckForAllScopes::class,
+//        'scopes' => \Laravel\Passport\Http\Middleware\CheckScopes::class,
+//        'scope' => \Laravel\Passport\Http\Middleware\CheckForAnyScope::class,
+        'auth_guard' => AssignGuard::class,
     ];
 
 

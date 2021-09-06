@@ -29,6 +29,7 @@ class ProfileResource extends JsonResource
             'notification' => (bool)$this->notification,
             'unread_notifications' => (int)$this->unread_notifications,
             'access_token' => $this->access_token,
+            'expires_in' => auth('student')->factory()->getTTL() * 60
         ];
         return $response;
     }

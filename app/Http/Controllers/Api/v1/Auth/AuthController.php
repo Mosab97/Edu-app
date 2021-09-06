@@ -12,6 +12,7 @@ use App\Models\Student;
 use App\Models\User;
 use App\Rules\EmailRule;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Mail;
 
@@ -79,28 +80,6 @@ class AuthController extends Controller
         return apiSuccess(new ProfileResource($user), apiTrans('Successfully Logedin'));
     }
 
-    public function student_login(Request $request)
-    {
-        //        validations
-        $request->validate([
-            'phone' => ['required', 'numeric'],
-            'password' => password_rules(true, 6),
-        ]);
-        $user = Student::phone(request('phone'))->first();
-        if (!isset($user)) return apiError(api('Wrong mobile Number'));
-        if (!Hash::check($request->password, $user->password)) return apiError(api('Wrong User Password'));
-        if (auth()->attempt(['phone'=>$request->phone, 'password'=>$request->password])) {
-
-            $user['access_token'] = $user->createToken('API_ACCESS_TOKEN_NAME', ['student'])->accessToken;
-        }else{
-
-        dd(34);
-        }
-        //$user->createToken(API_ACCESS_TOKEN_NAME)->accessToken;
-
-
-        return apiSuccess(new ProfileResource($user), apiTrans('Successfully Logedin'));
-    }
 
     public function register(Request $request)
     {
@@ -190,11 +169,128 @@ class AuthController extends Controller
         return apiSuccess(logoutAllAuthUsers());
     }
 
-    public function logout(Request $request)
+//    public function logout(Request $request)
+//    {
+//        $user = apiUser();
+//        if (!isset($user)) return apiSuccess(null, apiTrans('please login'));
+//        $user->tokens()->delete();
+//        return apiSuccess(null, apiTrans('Successful Logout'));
+//    }
+
+
+//    public function student_login(Request $request)
+//    {
+//        //        validations
+//        $request->validate([
+//            'phone' => ['required', 'numeric'],
+//            'password' => password_rules(true, 6),
+//        ]);
+//        $user = Student::phone(request('phone'))->first();
+//        if (!isset($user)) return apiError(api('Wrong mobile Number'));
+//        if (!Hash::check($request->password, $user->password)) return apiError(api('Wrong User Password'));
+////        if (auth()->attempt(['phone' => $request->phone, 'password' => $request->password])) {
+//        $user['access_token'] = $user->createToken(API_ACCESS_TOKEN_NAME, ['student'])->accessToken;
+////            $user->token()->create([
+////                'access_token' => $user['access_token']
+////            ], ['student']);
+////        } else {
+////
+////            dd(34);
+////        }
+//        //$user->createToken(API_ACCESS_TOKEN_NAME)->accessToken;
+//
+//
+//        return apiSuccess(new ProfileResource($user), apiTrans('Successfully Logedin'));
+//    }
+
+
+    /**
+     * Get a JWT via given credentials.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function student_login(Request $request)
     {
-        $user = apiUser();
-        if (!isset($user)) return apiSuccess(null, apiTrans('please login'));
-        $user->tokens()->delete();
-        return apiSuccess(null, apiTrans('Successful Logout'));
+
+        //        validations
+        $request->validate([
+            'phone' => ['required', 'numeric'],
+            'password' => password_rules(true, 6),
+        ]);
+//        $user = Student::phone(request('phone'))->first();
+        $credentials = request(['phone', 'password']);
+//        dd($token);
+        if (!$token = auth("student")->attempt($credentials)) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+
+        return $this->respondWithToken($token);
+    }
+
+    public function teacher_login(Request $request)
+    {
+        //        validations
+        $request->validate([
+            'phone' => ['required', 'numeric'],
+            'password' => password_rules(true, 6),
+        ]);
+        $credentials = request(['phone', 'password']);
+        if (!$token = auth("teacher")->attempt($credentials)) return response()->json(['error' => 'Unauthorized'], 401);
+        $user = user('teacher');
+        $user['access_token'] = $token;
+        return apiSuccess(new ProfileResource($user));
+
+    }
+
+    /**
+     * Get the authenticated User.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function me()
+    {
+        return response()->json(auth()->user());
+    }
+
+    /**
+     * Log the user out (Invalidate the token).
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function logout()
+    {
+        auth()->logout();
+
+        return response()->json(['message' => 'Successfully logged out']);
+    }
+
+    /**
+     * Refresh a token.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function refresh()
+    {
+        return $this->respondWithToken(auth()->refresh());
+    }
+
+    /**
+     * Get the token array structure.
+     *
+     * @param string $token
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function respondWithToken($token)
+    {
+        $user = user('student');
+        $user['access_token'] = $token;
+
+        return apiSuccess(new ProfileResource($user));
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => auth()->factory()->getTTL() * 60
+        ]);
     }
 }
