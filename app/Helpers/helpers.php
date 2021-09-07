@@ -1797,9 +1797,9 @@ if (!function_exists('gender')) {
     function gender($gender)
     {
         switch ($gender) {
-            case   MALE :
+            case   Gender['MALE'] :
                 return api('male');
-            case   FEMALE :
+            case   Gender['FEMALE'] :
                 return api('female');
             default:
                 return null;

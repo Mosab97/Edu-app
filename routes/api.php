@@ -28,8 +28,16 @@ Route::group(['prefix' => 'v1', 'namespace' => ROOT_NAMESPACE], function () {
             Route::get('group/{group_id}', 'CourseController@group');
             Route::get('my_groups', 'CourseController@my_groups');
             Route::post('test', 'StudentController@index');
+            Route::get('notifications', 'NotificationController@notifications');
+            Route::get('notification/{id}', 'NotificationController@notification');
+
+            Route::get('profile', 'ProfileController@profile');
+            Route::post('update_profile', 'User\UserController@updateProfile');
+            Route::post('update_language', 'User\UserController@updateLanguage');
+            Route::post('update_location', 'User\UserController@update_location');
         });
     });
+
 
     Route::get('system_constants', 'SystemConstantsController@system_constants');
 

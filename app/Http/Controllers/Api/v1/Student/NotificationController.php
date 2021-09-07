@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\v1\User;
+namespace App\Http\Controllers\Api\v1\Student;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Api\v1\User\NotificationResource;
@@ -10,15 +10,12 @@ use App\Rules\EmailRule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
-class UserController extends Controller
+class NotificationController extends Controller
 {
-    public function __construct()
-    {
-//        dd(\auth()->user());
-    }
 
     public function notifications(Request $request)
     {
+
         $user = user('student');
         $notifications = Notification::where('notifiable_id', $user->id)
             ->where('created_at', '>=', $user->created_at)->paginate($this->perPage);
@@ -29,26 +26,18 @@ class UserController extends Controller
         ]);
     }
 
-    public function notification($id)
+    public function notification(Request $request,$id)
     {
-
-        $user = apiUser();
-        $notification = Notification::query()
-            ->where(function ($query) use ($user) {
-                $query->where('notifiable_id', $user->id)->orWhere('notifiable_id', 0);
-            })
-            ->find($id);
-
-        if (!$notification) {
-            return apiError(api('Notification Not Found'));
-        }
+        $user = user('student');
+        $notification = Notification::query()->where('notifiable_id', $user->id)->orWhere('notifiable_id', 0)->find($id);
+        if (!$notification) return apiError(api('Notification Not Found'));
         if (!$notification->seen && $notification->notifiable_id != 0) {
             $notification->update([
                 'read_at' => now(),
             ]);
         }
         return apiSuccess([
-            'item' => new NotificationReasource($notification),
+            'item' => new NotificationResource($notification),
             'unread_notifications' => $user->unread_notifications,
         ]);
     }
