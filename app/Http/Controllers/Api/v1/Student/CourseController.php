@@ -3,20 +3,10 @@
 namespace App\Http\Controllers\Api\v1\Student;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Api\v1\CategoryResource;
 use App\Http\Resources\Api\v1\CourseResource;
-use App\Models\Category;
-use App\Models\ContactUs;
-use App\Models\Country;
+use App\Http\Resources\Api\v1\QuestionResource;
 use App\Models\Course;
-use App\Models\Manager;
-use App\Models\User;
-use App\Notifications\ContactUsNotification;
-use App\Rules\EmailRule;
-use App\Rules\StartWith;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Notification;
 
 class CourseController extends Controller
 {
@@ -25,5 +15,10 @@ class CourseController extends Controller
         return apiSuccess(CourseResource::collection(Course::get()));
     }
 
-
+    public function questions(Request $request, $course_id)
+    {
+        $course = Course::with(['questions', 'questions.answers'])->find($course_id);
+        if (!isset($course)) return apiError('Wrong Course Id');
+        return apiSuccess(QuestionResource::collection($course->questions));
+    }
 }

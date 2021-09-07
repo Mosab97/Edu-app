@@ -16,6 +16,16 @@ class CourseSeeder extends Seeder
                 $course->groups()->create([
                     'name' => 'group ' . $group
                 ]);
+            for ($q = 1; $q <= 3; $q++) {
+                $question = $course->questions()->create([
+                    'name' => 'question ' . $q
+                ]);
+                for ($a = 1; $a <= 3; $a++) $question->answers()->create([
+                    'name' => 'Answer ' . $a,
+                    'is_right_answer' => $a == 1,
+                ]);
+
+            }
         }
     }
 

@@ -23,6 +23,7 @@ Route::group(['prefix' => 'v1', 'namespace' => ROOT_NAMESPACE], function () {
 
         Route::group(['middleware' => ['auth_guard:student']], function () {
             Route::get('courses', 'CourseController@courses');
+            Route::get('questions/{course_id}', 'CourseController@questions');
             Route::post('test', 'StudentController@index');
         });
     });
