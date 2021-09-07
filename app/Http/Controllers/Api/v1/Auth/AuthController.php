@@ -44,20 +44,6 @@ class AuthController extends Controller
         return apiSuccess(new ProfileResource($user), api('Account vitrified successfully'));
     }
 
-    public function forget_password(Request $request)
-    {
-        //        validations
-        $request->validate(['phone' => 'required|exists:students,phone']);
-        $user = Student::where('phone', $request->phone)->first();
-        if (!isset($user)) return apiError(api('Wrong phone'));
-        //        Generate code
-        $sms_code = generateCode(0, 9, 6);
-        $sms_code = CODE_FIXED;
-        $user->update(['generatedCode' => $sms_code]);
-
-//TODO Send sms to this mobile number
-        return apiSuccess(new ProfileResource($user), api('We sent to your SMS verification code, please check your phone'));
-    }
 
     public function login(Request $request)
     {
@@ -83,22 +69,49 @@ class AuthController extends Controller
         return $request->type == LOGIN_INFO_TYPES['STUDENT'] ? $this->student_register($request) : $this->teacher_register($request);
     }
 
+    public function forget_password(Request $request)
+    {
+        //        validations
+        $request->validate(['phone' => 'required'/*|exists:students,phone*/]);
+        $user = Student::where('phone', $request->phone)->first();
+        if (!isset($user)) {
+            $user = Teacher::where('phone', $request->phone)->first();
+            if (!isset($user)) return apiError(api('Wrong phone'));
+        }
+        //        Generate code
+        $sms_code = generateCode(0, 9, 6);
+        $sms_code = CODE_FIXED;
+        $user->update(['generatedCode' => $sms_code]);
+
+//TODO Send sms to this mobile number
+        return apiSuccess(new ProfileResource($user), api('We sent to your SMS verification code, please check your phone'));
+    }
+
     public function verified_code(Request $request)
     {
-        $request->validate([
-            'email' => 'required|email|exists:users,email',
-            'code' => 'required|min:4|max:4',
+        $request->validate(['phone' => 'required'/*|exists:students,phone*/, 'code' => 'required|min:4|max:4',
         ]);
-        $user = $this->model->where('email', $request->get('email'))->first();
-        if ($user->generatedCode != $request->get('code')) return apiError(apiTrans('You cannot login verified code invalid'));
+
+
+        $user = Student::where('phone', $request->phone)->first();
+        if (!isset($user)) {
+            $user = Teacher::where('phone', $request->phone)->first();
+            if (!isset($user)) return apiError(api('Wrong phone'));
+        }
+//        if ($user->generatedCode != $request->get('code')) return apiError(apiTrans('You cannot login verified code invalid'));
         $user->update([
             'generatedCode' => null,
             'verified' => true,
         ]);
-        $user['access_token'] = $user->createToken(API_ACCESS_TOKEN_NAME)->accessToken;
+        Auth::login($user);
+        dd($this->refresh());
         return apiSuccess(new ProfileResource($user), apiTrans('Successfully verified'));
     }
 
+    private function refresh()
+    {
+        return $this->respondWithToken(auth()->refresh());
+    }
 
     private function student_login(Request $request)
     {
