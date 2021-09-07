@@ -55,6 +55,13 @@ define('MALE', 1);
 define('FEMALE', 2);
 
 
+//LOGIN_INFO_TYPES
+define('LOGIN_INFO_TYPES', [
+    'STUDENT' => 1,
+    'TEACHER' => 2,
+]);
+
+
 /***
  * API access token name
  */

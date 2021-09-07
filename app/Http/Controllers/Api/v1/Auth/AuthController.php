@@ -70,14 +70,9 @@ class AuthController extends Controller
         $request->validate([
             'phone' => ['required', 'numeric'],
             'password' => password_rules(true, 6),
+            'type' => 'required|in:' . implode(',', LOGIN_INFO_TYPES),
         ]);
-        $user = User::phone(request('phone'))->first();
-        if (!isset($user)) return apiError(api('Wrong mobile Number'));
-        if (!Hash::check($request->password, $user->password)) return apiError(api('Wrong User Password'));
-//        dd(34);
-        $user['access_token'] = $user->createToken(API_ACCESS_TOKEN_NAME)->accessToken;
-
-        return apiSuccess(new ProfileResource($user), apiTrans('Successfully Logedin'));
+        return $request->type == LOGIN_INFO_TYPES['STUDENT'] ? $this->student_login($request) : $this->teacher_login($request);
     }
 
 
@@ -211,19 +206,8 @@ class AuthController extends Controller
      */
     public function student_login(Request $request)
     {
-
-        //        validations
-        $request->validate([
-            'phone' => ['required', 'numeric'],
-            'password' => password_rules(true, 6),
-        ]);
-//        $user = Student::phone(request('phone'))->first();
         $credentials = request(['phone', 'password']);
-//        dd($token);
-        if (!$token = auth("student")->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
-        }
-
+        if (!$token = auth("student")->attempt($credentials)) return response()->json(['error' => 'Unauthorized'], 401);
         return $this->respondWithToken($token);
     }
 

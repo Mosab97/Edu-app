@@ -13,6 +13,7 @@ class SystemConstantsController extends Controller
             'user_type' => \App\Models\User::user_type,
             'STUDENT_DEFAULT_PHONE' => STUDENT_DEFAULT_PHONE,
             'TEACHER_DEFAULT_PHONE' => TEACHER_DEFAULT_PHONE,
+            'LOGIN_INFO_TYPES' => LOGIN_INFO_TYPES,
         ]);
     }
 
