@@ -10,9 +10,11 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
 //use Laravel\Passport\HasApiTokens;
 use Tymon\JWTAuth\Contracts\JWTSubject;
-class Student  extends Authenticatable implements JWTSubject
+
+class Student extends Authenticatable implements JWTSubject
 {
     use  Notifiable;
+    protected $fillable = ['name', 'phone', 'password'];
 
     public function scopePhone($query, $param)
     {

@@ -9,6 +9,7 @@ use App\Models\Country;
 use App\Models\Merchant;
 use App\Models\ShareApp;
 use App\Models\Student;
+use App\Models\Teacher;
 use App\Models\User;
 use App\Rules\EmailRule;
 use Illuminate\Http\Request;
@@ -80,67 +81,12 @@ class AuthController extends Controller
     {
 
         $request->validate([
-            'first_name' => 'required|min:3|max:100',
-            'last_name' => 'required|min:3|max:100',
-            'country_id' => 'required|exists:countries,id',
-            'mobile' => ['required', 'numeric', 'unique:users,mobile'],
-            "email" => ['required', 'unique:users,email', new EmailRule()],
-            'password' => password_rules(true, 6),
-            'user_type' => 'required|in:' . User::CUSTOMER . ',' . User::MERCHANT . ',' . User::DISTRIBUTOR,
-            'merchant_type' => 'requiredIf:user_type,' . User::MERCHANT . '|in:' . Merchant::MERCHANT_TYPES['RETAILER'] . ',' . Merchant::MERCHANT_TYPES['WHOLESALER'],
-            'store_name' => 'requiredIf:user_type,' . User::MERCHANT,
-            'lat' => 'requiredIf:user_type,' . User::MERCHANT,
-            'lng' => 'requiredIf:user_type,' . User::MERCHANT,
-            'office_mobile' => ['requiredIf:user_type,' . User::MERCHANT,/* 'numeric', 'unique:users,office_mobile,{$id},id,deleted_at,NULL'*/],
-            'retailer_merchant_type' => 'requiredIf:merchant_type,' . Merchant::MERCHANT_TYPES['RETAILER'] . '|in:' . Merchant::RETAILER_MERCHANT_TYPES['CAFETERIA']
-                . ',' . Merchant::RETAILER_MERCHANT_TYPES['MINIMARKET'] . ',' . Merchant::RETAILER_MERCHANT_TYPES['SUPERMARKET'],
+            'name' => 'required|min:3|max:100',
+            'phone' => ['required', 'numeric', 'unique:' . ($request->type == LOGIN_INFO_TYPES['STUDENT'] ? 'students' : 'teachers') . ',phone'],
+            'password' => password_rules(true, 6, true),
+            'type' => 'required|in:' . implode(',', LOGIN_INFO_TYPES),
         ]);
-
-        $user = new User();
-        $user->country_id = $request->country_id;
-        $user->user_type = $request->user_type;
-        $user->first_name = [
-            'ar' => $request->first_name,
-            'en' => $request->first_name,
-        ];
-        $user->last_name = [
-            'ar' => $request->last_name,
-            'en' => $request->last_name,
-        ];
-        $user->mobile = $request->mobile;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->password);
-        $user->lat = $request->lat;
-        $user->lng = $request->lng;
-        $user->local = 'ar';
-        $user->verified = false;
-        $user->isBlocked = false;
-        $country = Country::findOrFail($request->country_id);
-        $user->points = $request->user_type == User::CUSTOMER ? $country->customer_points : $country->merchant_points;
-        $user->active = $request->user_type == User::MERCHANT ? false : true;
-
-        $user->generatedCode = generateCode();
-        $user->save();
-
-
-        $shareApp = ShareApp::whereNull("new_registered_user_id")->where('mobile', $request->mobile)->first();
-        if (isset($shareApp)) $shareApp->update([
-            'new_registered_user_id' => $user->id
-        ]);
-
-        if ($request->user_type == User::MERCHANT) $user->merchant()->create([
-            'office_mobile' => $request->office_mobile,
-            'merchant_type' => $request->merchant_type,
-            'store_name' => $request->store_name,
-            'retailer_merchant_type' => $request->retailer_merchant_type,
-        ]);
-        if ($request->user_type == User::DISTRIBUTOR) $user->distributor()->create([
-            'receive_orders' => true,
-        ]);
-
-        if ($request->hasFile('image')) $user->image = uploadImage($request->file('image'), User::DIR_IMAGE_UPLOADS);
-        $user['access_token'] = $user->createToken(API_ACCESS_TOKEN_NAME)->accessToken;
-        return apiSuccess(new ProfileResource($user));
+        return $request->type == LOGIN_INFO_TYPES['STUDENT'] ? $this->student_register($request) : $this->teacher_register($request);
     }
 
     public function verified_code(Request $request)
@@ -159,88 +105,41 @@ class AuthController extends Controller
         return apiSuccess(new ProfileResource($user), apiTrans('Successfully verified'));
     }
 
-    public function logoutAllAuthUsers()
-    {
-        return apiSuccess(logoutAllAuthUsers());
-    }
 
-//    public function logout(Request $request)
-//    {
-//        $user = apiUser();
-//        if (!isset($user)) return apiSuccess(null, apiTrans('please login'));
-//        $user->tokens()->delete();
-//        return apiSuccess(null, apiTrans('Successful Logout'));
-//    }
-
-
-//    public function student_login(Request $request)
-//    {
-//        //        validations
-//        $request->validate([
-//            'phone' => ['required', 'numeric'],
-//            'password' => password_rules(true, 6),
-//        ]);
-//        $user = Student::phone(request('phone'))->first();
-//        if (!isset($user)) return apiError(api('Wrong mobile Number'));
-//        if (!Hash::check($request->password, $user->password)) return apiError(api('Wrong User Password'));
-////        if (auth()->attempt(['phone' => $request->phone, 'password' => $request->password])) {
-//        $user['access_token'] = $user->createToken(API_ACCESS_TOKEN_NAME, ['student'])->accessToken;
-////            $user->token()->create([
-////                'access_token' => $user['access_token']
-////            ], ['student']);
-////        } else {
-////
-////            dd(34);
-////        }
-//        //$user->createToken(API_ACCESS_TOKEN_NAME)->accessToken;
-//
-//
-//        return apiSuccess(new ProfileResource($user), apiTrans('Successfully Logedin'));
-//    }
-
-
-    /**
-     * Get a JWT via given credentials.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function student_login(Request $request)
+    private function student_login(Request $request)
     {
         $credentials = request(['phone', 'password']);
-        if (!$token = auth("student")->attempt($credentials)) return response()->json(['error' => 'Unauthorized'], 401);
+        if (!$token = auth("student")->attempt($credentials))
+            return apiError('Unauthorized', 401);
         return $this->respondWithToken($token);
     }
 
-    public function teacher_login(Request $request)
+    private function student_register(Request $request)
     {
-        //        validations
-        $request->validate([
-            'phone' => ['required', 'numeric'],
-            'password' => password_rules(true, 6),
-        ]);
+        $data = $request->except(['password', 'password_confirmation', 'type']);
+        $data['password'] = Hash::make($request->password);
+        $student = Student::create($data);
+        return $this->student_login($request);
+    }
+    private function teacher_register(Request $request)
+    {
+        $data = $request->except(['password', 'password_confirmation', 'type']);
+        $data['password'] = Hash::make($request->password);
+        $student = Teacher::create($data);
+        return $this->student_login($request);
+    }
+
+    private function teacher_login(Request $request)
+    {
         $credentials = request(['phone', 'password']);
-        if (!$token = auth("teacher")->attempt($credentials)) return response()->json(['error' => 'Unauthorized'], 401);
+        if (!$token = auth("teacher")->attempt($credentials))
+            return apiError('Unauthorized', 401);
         $user = user('teacher');
         $user['access_token'] = $token;
         return apiSuccess(new ProfileResource($user));
 
     }
 
-    /**
-     * Get the authenticated User.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function me()
-    {
-        return response()->json(auth()->user());
-    }
-
-    /**
-     * Log the user out (Invalidate the token).
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function logout()
     {
         auth()->logout();
@@ -248,33 +147,11 @@ class AuthController extends Controller
         return response()->json(['message' => 'Successfully logged out']);
     }
 
-    /**
-     * Refresh a token.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function refresh()
-    {
-        return $this->respondWithToken(auth()->refresh());
-    }
-
-    /**
-     * Get the token array structure.
-     *
-     * @param string $token
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
     protected function respondWithToken($token)
     {
         $user = user('student');
         $user['access_token'] = $token;
-
         return apiSuccess(new ProfileResource($user));
-        return response()->json([
-            'access_token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60
-        ]);
     }
+
 }
