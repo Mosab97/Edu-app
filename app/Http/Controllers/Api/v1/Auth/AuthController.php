@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Mail;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
@@ -104,14 +105,12 @@ class AuthController extends Controller
             'verified' => true,
         ]);
         Auth::login($user);
-        dd($this->refresh());
+
+        if (!$userToken = JWTAuth::fromUser($user)) return response()->json(['error' => 'invalid_credentials'], 401);
+        $user['access_token'] = $userToken;
         return apiSuccess(new ProfileResource($user), apiTrans('Successfully verified'));
     }
 
-    private function refresh()
-    {
-        return $this->respondWithToken(auth()->refresh());
-    }
 
     private function student_login(Request $request)
     {
