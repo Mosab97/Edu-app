@@ -24,6 +24,8 @@ Route::group(['prefix' => 'v1', 'namespace' => ROOT_NAMESPACE], function () {
         Route::group(['middleware' => ['auth_guard:student']], function () {
             Route::get('courses', 'CourseController@courses');
             Route::get('questions/{course_id}', 'CourseController@questions');
+            Route::get('groups/{course_id}', 'CourseController@groups');
+            Route::get('group/{group_id}', 'CourseController@group');
             Route::post('test', 'StudentController@index');
         });
     });

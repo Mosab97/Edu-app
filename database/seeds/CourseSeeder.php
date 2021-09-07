@@ -14,7 +14,11 @@ class CourseSeeder extends Seeder
             ]);
             for ($group = 1; $group <= 3; $group++)
                 $course->groups()->create([
-                    'name' => 'group ' . $group
+                    'name' => 'group ' . $group,
+                    'price' => $group,
+                    'students_number_max' => $group,
+                    'level' => collect(\App\Models\Group::levels)->random(),
+                    'gender' => collect(Gender)->random(),
                 ]);
             for ($q = 1; $q <= 3; $q++) {
                 $question = $course->questions()->create([

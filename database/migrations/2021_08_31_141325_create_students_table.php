@@ -20,7 +20,7 @@ class CreateStudentsTable extends Migration
             $table->string('username')->nullable();
             $table->string('phone')->nullable();
             $table->string('whatsapp')->nullable();
-            $table->integer('gender')->default(MALE);
+            $table->integer('gender')->default(Gender['MALE']);
             $table->boolean('verified')->default(false);
             $table->string('generatedCode')->nullable();
             $table->float('lat', 8, 5)->nullable();

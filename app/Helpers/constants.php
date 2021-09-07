@@ -51,8 +51,10 @@ define('NO', 0);
 
 
 //Gender
-define('MALE', 1);
-define('FEMALE', 2);
+define('Gender', [
+    'MALE' => 1,
+    'FEMALE' => 2,
+]);
 
 
 //LOGIN_INFO_TYPES
