@@ -17,13 +17,12 @@ Route::group(['prefix' => 'v1', 'namespace' => ROOT_NAMESPACE], function () {
 
 
     Route::group(['prefix' => 'student', 'namespace' => 'Student'], function () {
-        Route::get('courses', 'CourseController@courses');
 
         Route::post('sign-up', 'StaffController@signUp');
         //unauthenticated routes for customers here
 
         Route::group(['middleware' => ['auth_guard:student']], function () {
-            // authenticated staff routes here
+            Route::get('courses', 'CourseController@courses');
             Route::post('test', 'StudentController@index');
         });
     });
