@@ -20,7 +20,8 @@ class CreateStudentGroupsTable extends Migration
             $table->unsignedBigInteger('group_id');
             $table->timestamps();
             $table->foreign('student_id')->on('students')->references('id');
-            $table->foreign('course_id')->on('students')->references('id');
+            $table->foreign('course_id')->on('courses')->references('id');
+            $table->foreign('group_id')->on('groups')->references('id');
         });
     }
 

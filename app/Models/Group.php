@@ -17,5 +17,9 @@ class Group extends Model
         return is_null($value) ? defaultUserImage() : asset($value);
     }
 
+    public function students()
+    {
+        return $this->hasMany(StudentGroups::class);
+    }
 
 }
