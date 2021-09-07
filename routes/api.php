@@ -30,11 +30,13 @@ Route::group(['prefix' => 'v1', 'namespace' => ROOT_NAMESPACE], function () {
             Route::post('test', 'StudentController@index');
             Route::get('notifications', 'NotificationController@notifications');
             Route::get('notification/{id}', 'NotificationController@notification');
+            Route::post('sendNotificationForAllStudents', 'NotificationController@sendNotificationForAllStudents');
+
 
             Route::get('profile', 'ProfileController@profile');
-            Route::post('update_profile', 'User\UserController@updateProfile');
-            Route::post('update_language', 'User\UserController@updateLanguage');
-            Route::post('update_location', 'User\UserController@update_location');
+            Route::post('update_profile', 'ProfileController@updateProfile');
+            Route::post('update_language', 'ProfileController@updateLanguage');
+            Route::post('update_location', 'ProfileController@update_location');
         });
     });
 

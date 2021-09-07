@@ -84,6 +84,8 @@ define('CODE_FIXED', '1234');
 * 1- Merchant
 */
 define('CONTACT_US_NOTIFICATION', 1);
+define('GENERAL_NOTIFICATION', 2);
+define('CLOSE_CHAT_NOTIFICATION', 3);
 
 
 

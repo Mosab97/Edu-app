@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api\v1\Student;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Api\v1\User\ProfileResource;
-use App\Rules\EmailRule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -19,13 +18,14 @@ class ProfileController extends Controller
 
     public function updateProfile(Request $request)
     {
-        $user = apiUser();
+        $user = user('student');
         $request->validate([
             'name' => 'required|min:3|max:100',
             'phone' => ['required', 'numeric', 'unique:students,phone,' . $user->id . ',id,deleted_at,NULL'],
             'image' => 'sometimes|image',
         ]);
         $user->name = $request->name;
+        $user->phone = $request->phone;
         if ($request->hasFile('image')) $user->image = $this->uploadImage($request->file('image'), 'students');
         $user->save();
 //        $user['access_token'] = Str::substr(request()->header('Authorization'), 7);
