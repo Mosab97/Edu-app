@@ -19,6 +19,7 @@ class GroupResource extends JsonResource
             'level' => $this->level,
             'gender' => $this->gender,
             'time' => $this->time,
+            'number_of_joined_students' => $this->students->count(),
         ];
         return $response;
     }

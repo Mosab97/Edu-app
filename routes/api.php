@@ -26,6 +26,7 @@ Route::group(['prefix' => 'v1', 'namespace' => ROOT_NAMESPACE], function () {
             Route::get('questions/{course_id}', 'CourseController@questions');
             Route::get('groups/{course_id}', 'CourseController@groups');
             Route::get('group/{group_id}', 'CourseController@group');
+            Route::get('my_groups', 'CourseController@my_groups');
             Route::post('test', 'StudentController@index');
         });
     });
