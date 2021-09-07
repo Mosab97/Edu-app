@@ -5,17 +5,12 @@ namespace App\Http\Controllers\Api\v1\Auth;
 use App\Http\Controllers\Api\v1\Controller;
 
 use App\Http\Resources\Api\v1\User\ProfileResource;
-use App\Models\Country;
-use App\Models\Merchant;
-use App\Models\ShareApp;
 use App\Models\Student;
 use App\Models\Teacher;
 use App\Models\User;
-use App\Rules\EmailRule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Mail;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
@@ -29,11 +24,14 @@ class AuthController extends Controller
 
     public function change_password(Request $request)
     {
-        $request->validate(['password' => password_rules(true, 6),]);
-        $user = apiUser();
-        apiUser()->update(['password' => Hash::make($request->password)]);
-        $user['access_token'] = $user->createToken(API_ACCESS_TOKEN_NAME)->accessToken;
-        return apiSuccess(new ProfileResource($user), api('Account vitrified successfully'));
+        $request->validate(['password' => password_rules(true, 6, true)]);
+        $user = user('student');
+        if (!isset($user)) return apiError('User not found');
+        $user->update(['password' => Hash::make($request->password)]);
+        Auth::login($user);
+        if (!$userToken = JWTAuth::fromUser($user)) return response()->json(['error' => 'invalid_credentials'], 401);
+        $user['access_token'] = $userToken;
+        return apiSuccess(new ProfileResource($user), apiTrans('Password Successfully Changed'));
     }
 
     public function verifiy_account(Request $request)
