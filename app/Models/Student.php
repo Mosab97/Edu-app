@@ -14,7 +14,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 class Student extends Authenticatable implements JWTSubject
 {
     use  Notifiable;
-    protected $fillable = ['name', 'phone', 'password'];
+    protected $fillable = ['name', 'phone', 'password','generatedCode'];
 
     public function scopePhone($query, $param)
     {

@@ -47,22 +47,16 @@ class AuthController extends Controller
     public function forget_password(Request $request)
     {
         //        validations
-        $request->validate(['email' => 'required|email|exists:users,email']);
-        $user = User::where('email', $request->email)->first();
-        if (!isset($user)) return apiError(api('Wrong Email Address'));
+        $request->validate(['phone' => 'required|exists:students,phone']);
+        $user = Student::where('phone', $request->phone)->first();
+        if (!isset($user)) return apiError(api('Wrong phone'));
         //        Generate code
         $sms_code = generateCode(0, 9, 6);
-//        $sms_code = CODE_FIXED;
+        $sms_code = CODE_FIXED;
         $user->update(['generatedCode' => $sms_code]);
 
-        Mail::send('/emails/forget_password', ['user' => $user], function ($m) use ($user) {
-            $m->to($user->email)->subject(trans('Verification Code'))->getSwiftMessage()
-                ->getHeaders()
-                ->addTextHeader('x-mailgun-native-send', 'true');
-        });
-
-//        \Illuminate\Support\Facades\Mail::to($user->email)->send(new \App\Mail\ForgetPasswordEmail($user));
-        return apiSuccess(null, api('We sent to your email verification code, please check your email'));
+//TODO Send sms to this mobile number
+        return apiSuccess(new ProfileResource($user), api('We sent to your SMS verification code, please check your phone'));
     }
 
     public function login(Request $request)
@@ -121,6 +115,7 @@ class AuthController extends Controller
         $student = Student::create($data);
         return $this->student_login($request);
     }
+
     private function teacher_register(Request $request)
     {
         $data = $request->except(['password', 'password_confirmation', 'type']);

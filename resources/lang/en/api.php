@@ -158,5 +158,6 @@ return [
   'Wrong ad id' => 'Wrong ad id',
   
   'Wrong User Password' => 'Wrong User Password',  
-  'Wrong mobile Number' => 'Wrong mobile Number',
+  'Wrong mobile Number' => 'Wrong mobile Number',  
+  'We sent to your SMS verification code, please check your phone' => 'We sent to your SMS verification code, please check your phone',
 ];
