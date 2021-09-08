@@ -26,15 +26,15 @@ class SettingController extends Controller
 
     public function home()
     {
-        $users = User::count();
-        $packages = Package::count();
-        $services = Service::count();
-        $blogs = Blog::count();
-        $advantages = Advantage::count();
-        $statistics = Statistic::count();
-        $customerReviews = CustomerReviews::count();
-        $fAQs = Faq::count();
-        $contactUsMessages = ContactUs::count();
+        $users =0;// User::count();
+        $packages =0;// Package::count();
+        $services = 0;//Service::count();
+        $blogs = 0;//Blog::count();
+        $advantages =0;// Advantage::count();
+        $statistics = 0;//Statistic::count();
+        $customerReviews = 0;//CustomerReviews::count();
+        $fAQs = 0;//Faq::count();
+        $contactUsMessages = 0;//ContactUs::count();
 
 
         return view('manager.home', compact('users', 'packages', 'services', 'blogs', 'advantages', 'statistics', 'customerReviews', 'fAQs', 'contactUsMessages'));

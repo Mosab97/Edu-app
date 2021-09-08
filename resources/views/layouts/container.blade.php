@@ -82,11 +82,11 @@
                                 <li>
                                     <a href="javascript:;">{{w('Services')}}<span></span></a>
                                     <ul>
-                                        @foreach($services as $index=>$service)
-                                            <li>
-                                                <a href="{{route('view_service_details',$service->id)}}">{{$service->name}}</a>
-                                            </li>
-                                        @endforeach
+{{--                                        @foreach($services as $index=>$service)--}}
+{{--                                            <li>--}}
+{{--                                                <a href="{{route('view_service_details',$service->id)}}">{{$service->name}}</a>--}}
+{{--                                            </li>--}}
+{{--                                        @endforeach--}}
                                     </ul>
                                 </li>
                                 <li><a href="{{route('view_special_service_form')}}">{{w('Request Service')}}
@@ -128,7 +128,7 @@
                                 </ul>
                             </li>
                         </ul>
-                        @else  
+                        @else
                          <a class="btnC_info" href="{{route('login')}}"><i
                                         class="fa fa-arrow-down"></i><b> {{w('Login')}}</b></a>
                         @endif
@@ -206,12 +206,12 @@
                     <div class="widget">
                         <h5>Product</h5>
                         <ul>
-                            @foreach($services as $index=>$item)
-                                <li><a class="a-underline"
-                                       href="{{route('view_service_details',$item->id)}}">{{$item->name}}
-                                        <span></span></a>
-                                </li>
-                            @endforeach
+{{--                            @foreach($services as $index=>$item)--}}
+{{--                                <li><a class="a-underline"--}}
+{{--                                       href="{{route('view_service_details',$item->id)}}">{{$item->name}}--}}
+{{--                                        <span></span></a>--}}
+{{--                                </li>--}}
+{{--                            @endforeach--}}
                         </ul>
                     </div>
                 </div>

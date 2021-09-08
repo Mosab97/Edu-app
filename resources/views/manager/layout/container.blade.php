@@ -252,63 +252,6 @@
                                 <span class="kt-menu__link-text">{{ t('Payments') }}</span>
                             </a>
                         </li>
-                        {{--                        @endcan--}}
-                        @can('Blogs')
-                            <li class="kt-menu__item  @if(Request::is('manager/blog*') ) kt-menu__item--active @endif"
-                                aria-haspopup="true">
-                                <a href="{{route(\App\Models\Blog::manager_route . 'index')}}" class="kt-menu__link ">
-                                    <i class="kt-menu__link-icon flaticon2-email"></i>
-                                    <span class="kt-menu__link-text">{{ t('Blogs') }}</span>
-                                </a>
-                            </li>
-                        @endcan
-                        @can('Advantages')
-                            <li class="kt-menu__item  @if(Request::is('manager/advantage*') ) kt-menu__item--active @endif"
-                                aria-haspopup="true">
-                                <a href="{{route(\App\Models\Advantage::manager_route . 'index')}}"
-                                   class="kt-menu__link ">
-                                    <i class="kt-menu__link-icon flaticon2-email"></i>
-                                    <span class="kt-menu__link-text">{{ t('Advantages') }}</span>
-                                </a>
-                            </li>
-                        @endcan
-                        @can('Statistics')
-                            <li class="kt-menu__item  @if(Request::is('manager/statistic*') ) kt-menu__item--active @endif"
-                                aria-haspopup="true">
-                                <a href="{{route(\App\Models\Statistic::manager_route . 'index')}}"
-                                   class="kt-menu__link ">
-                                    <i class="kt-menu__link-icon flaticon2-email"></i>
-                                    <span class="kt-menu__link-text">{{ t('Statistics') }}</span>
-                                </a>
-                            </li>
-                        @endcan
-                        @can('Customer Reviews')
-                            <li class="kt-menu__item  @if(Request::is('manager/customer_review*') ) kt-menu__item--active @endif"
-                                aria-haspopup="true">
-                                <a href="{{route('manager.customer_review.index')}}" class="kt-menu__link ">
-                                    <i class="kt-menu__link-icon flaticon2-email"></i>
-                                    <span class="kt-menu__link-text">{{ t('Customer Reviews') }}</span>
-                                </a>
-                            </li>
-                        @endcan
-                        @can('Faq')
-                            <li class="kt-menu__item  @if(Request::is('manager/faq*') ) kt-menu__item--active @endif"
-                                aria-haspopup="true">
-                                <a href="{{route('manager.faq.index')}}" class="kt-menu__link ">
-                                    <i class="kt-menu__link-icon flaticon2-email"></i>
-                                    <span class="kt-menu__link-text">{{ t('Faq') }}</span>
-                                </a>
-                            </li>
-                        @endcan
-                        @can('Contact Us')
-                            <li class="kt-menu__item  @if(Request::is('manager/contact*') ) kt-menu__item--active @endif"
-                                aria-haspopup="true">
-                                <a href="{{route('manager.contact_us.index')}}" class="kt-menu__link ">
-                                    <i class="kt-menu__link-icon flaticon2-email"></i>
-                                    <span class="kt-menu__link-text">{{ t('Contact Us') }}</span>
-                                </a>
-                            </li>
-                        @endcan
                     </ul>
                 </div>
             </div>
@@ -660,7 +603,7 @@
                     <div class="form-group">
                         <label for="recipient-name" class="form-control-label">{{ t('Recipients') }}:</label>
                         <select name="recipients" class="form-control" id="notification_type">
-                            <option value="{{ALL_USERS}}">{{ t('All Users') }}</option>
+{{--                            <option value="{{ALL_USERS}}">{{ t('All Users') }}</option>--}}
                         </select>
                     </div>
                     <div class="form-group">
