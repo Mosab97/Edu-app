@@ -26,7 +26,11 @@ class AuthController extends Controller
     {
         $request->validate(['password' => password_rules(true, 6, true)]);
         $user = user('student');
-        if (!isset($user)) return apiError('User not found');
+        if (!isset($user)) {
+            $user = user('teacher');
+            if (!isset($user)) return apiError(api('User Not Found'));
+        }
+//        if (!isset($user)) return apiError('User not found');
         $user->update(['password' => Hash::make($request->password)]);
         Auth::login($user);
         if (!$userToken = JWTAuth::fromUser($user)) return response()->json(['error' => 'invalid_credentials'], 401);
@@ -59,9 +63,10 @@ class AuthController extends Controller
     public function register(Request $request)
     {
 
+//        dd(checkRequestIsWorkingOrNot());
         $request->validate([
             'name' => 'required|min:3|max:100',
-            'phone' => ['required', 'numeric', 'unique:' . ($request->type == LOGIN_INFO_TYPES['STUDENT'] ? 'students' : 'teachers') . ',phone'],
+            'phone' => ['required', 'unique:' . ($request->type == LOGIN_INFO_TYPES['STUDENT'] ? 'students' : 'teachers') . ',phone'],
             'password' => password_rules(true, 6, true),
             'type' => 'required|in:' . implode(',', LOGIN_INFO_TYPES),
         ]);
@@ -148,8 +153,7 @@ class AuthController extends Controller
     public function logout()
     {
         auth()->logout();
-
-        return response()->json(['message' => 'Successfully logged out']);
+        return apiSuccess('Successfully logged out');
     }
 
     protected function respondWithToken($token)

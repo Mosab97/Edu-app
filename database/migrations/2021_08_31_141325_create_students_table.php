@@ -29,8 +29,8 @@ class CreateStudentsTable extends Migration
             $table->enum('local', ['en', 'ar'])->default('ar');
             $table->date('dob')->nullable();
             $table->string('password')->nullable();
-            $table->string('provider');
-            $table->string('provider_id');
+            $table->string('provider')->nullable();
+            $table->string('provider_id')->nullable();
             $table->string('google_provider_id')->nullable();
             $table->softDeletes();
             $table->rememberToken();

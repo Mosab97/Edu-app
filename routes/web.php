@@ -6,6 +6,16 @@ Route::group(['middleware' => 'localWeb'], function () {
     Auth::routes();
 
     Route::get('/', 'Web\HomeController@welcome')->name('home');
+
+    Route::get('lang/{local}', function ($local) {
+        session(['lang' => $local]);
+        if (Auth::check())
+            $user = Auth::user()->update(['local' => $local,]);
+
+        app()->setLocale($local);
+        return back();
+    })->name('switch-language');
+
     Route::group(['prefix' => 'manager'], function () {
         Route::get('/login', 'ManagerAuth\LoginController@showLoginForm')->name('manager.login');
         Route::post('/login', 'ManagerAuth\LoginController@login');

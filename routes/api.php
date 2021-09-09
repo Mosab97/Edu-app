@@ -6,10 +6,7 @@ Route::group(['prefix' => 'v1', 'namespace' => ROOT_NAMESPACE], function () {
         Route::post('teacher/login', 'AuthController@teacher_login');
         Route::post('register', 'AuthController@register');
         Route::post('forget_password', 'AuthController@forget_password');
-        Route::group(['middleware' => 'auth:api'], function () {
             Route::post('logout', 'AuthController@logout');
-            Route::post('verify_account', 'AuthController@verifiy_account')->middleware(["auth:api"]);
-        });
         Route::post('change_password', 'AuthController@change_password')->middleware(['auth_guard:student']);
         Route::post('verified_code', 'AuthController@verified_code');
         Route::post('logoutAllAuthUsers', 'AuthController@logoutAllAuthUsers');
