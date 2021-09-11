@@ -17,16 +17,23 @@ class CreateGroupsTable extends Migration
             $table->id();
             $table->string('name')->nullable();
             $table->unsignedBigInteger('teacher_id');
+            $table->string('video')->nullable();
             $table->string('image')->nullable();
             $table->double('price')->nullable();
             $table->double('students_number_max')->nullable();
-            $table->integer('level')->default(\App\Models\Group::levels['level One']);
+            $table->double('number_of_live_lessons')->nullable();
+            $table->double('number_of_exercises_and_games')->nullable();
             $table->integer('gender')->default(Gender['MALE']);
-            $table->string('time')->nullable();
+            $table->dateTime('course_date_and_time')->nullable();
+            $table->string('what_will_i_learn')->nullable();
             $table->unsignedBigInteger('course_id');
+            $table->unsignedBigInteger('level_id');
+            $table->unsignedBigInteger('age_id');
             $table->timestamps();
             $table->foreign('course_id')->on('courses')->references('id');
             $table->foreign('teacher_id')->on('teachers')->references('id');
+            $table->foreign('level_id')->on('levels')->references('id');
+            $table->foreign('age_id')->on('ages')->references('id');
         });
     }
 

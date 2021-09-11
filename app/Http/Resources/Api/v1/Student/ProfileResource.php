@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources\Api\v1\User;
+namespace App\Http\Resources\Api\v1\Student;
 
 use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -13,19 +13,17 @@ class ProfileResource extends JsonResource
         $response = [
             'id' => $this->id,
             'name' => $this->name,
-            'username' => $this->username,
+            'major' => $this->major,
+            'experience' => $this->experience,
+            'demonstration_video' => $this->demonstration_video,
             'image' => $this->image,
             'phone' => $this->phone,
-            'email' => $this->email,
+//            'email' => $this->email,
             'verified' => (bool)$this->verified,
-            'gender' => $this->gender,
-            'gender_name' => gender($this->gender),
+//            'gender' => $this->gender,
+            'gender' => gender($this->gender),
             'code' => $this->generatedCode,
-            'lat' => $this->lat,
-            'lng' => $this->lng,
-            'dob' => $this->dob,
             'created_at' => Carbon::parse($this->created_at)->format(DATE_FORMAT_DOTTED),
-            'local' => $this->local,
             'notification' => (bool)$this->notification,
             'unread_notifications' => (int)$this->unread_notifications,
             'access_token' => $this->access_token,

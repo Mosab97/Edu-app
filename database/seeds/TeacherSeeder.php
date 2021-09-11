@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Resources\Api\v1\General\AgeResource;
+use App\Http\Resources\Api\v1\General\LevelResource;
+use App\Http\Resources\Api\v1\Teacher\CourseResource;
+use App\Http\Resources\Api\v1\Teacher\ProfileResource;
 use Illuminate\Database\Seeder;
 use \App\Models\Student;
 
@@ -41,9 +45,14 @@ class TeacherSeeder extends Seeder
                     'name' => 'group ' . $group,
                     'price' => $group,
                     'students_number_max' => $group,
-                    'level' => collect(\App\Models\Group::levels)->random(),
-                    'gender' => collect(Gender)->random(),
+                    'number_of_live_lessons' => $group,
+                    'number_of_exercises_and_games' => $group,
+                    'course_date_and_time' => \Carbon\Carbon::now(),
+                    'what_will_i_learn' => 'what_will_i_learn',
                     'course_id' => \App\Models\Course::get()->pluck('id')->random(),
+                    'level_id' => \App\Models\Level::get()->pluck('id')->random(),
+                    'age_id' => \App\Models\Age::get()->pluck('id')->random(),
+                    'gender' => collect(Gender)->random(),
                 ]);
         }
 

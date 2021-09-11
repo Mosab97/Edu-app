@@ -6,16 +6,23 @@ use Illuminate\Database\Eloquent\Model;
 
 class Group extends Model
 {
-    public const levels = [
-        'level One' => 1,
-        'level Two' => 2,
-        'level Three' => 3,
-    ];
+//    public const levels = [
+//        'level One' => 1,
+//        'level Two' => 2,
+//        'level Three' => 3,
+//    ];
+protected $guarded = [];
 
     public function getImageAttribute($value)
     {
         return is_null($value) ? defaultUserImage() : asset($value);
     }
+
+    public function getVideoAttribute($value)
+    {
+        return is_null($value) ? defaultUserVideo() : asset($value);
+    }
+
 
     public function students()
     {
@@ -31,5 +38,20 @@ class Group extends Model
     {
         return $this->belongsTo(Teacher::class);
     }
+
+    public function level()
+    {
+        return $this->belongsTo(Level::class);
+    }
+
+    public function age()
+    {
+        return $this->belongsTo(Age::class);
+    }
+
+    protected $casts = [
+        'gender' => 'integer'
+    ];
+
 
 }

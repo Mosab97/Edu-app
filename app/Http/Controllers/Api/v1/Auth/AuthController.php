@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Api\v1\Auth;
 
 use App\Http\Controllers\Api\v1\Controller;
 
-use App\Http\Resources\Api\v1\User\ProfileResource;
+use App\Http\Resources\Api\v1\Teacher\ProfileResource as TeacherProfile;
+use App\Http\Resources\Api\v1\Student\ProfileResource as StudentsProfile;
 use App\Models\Student;
 use App\Models\Teacher;
 use App\Models\User;
@@ -35,17 +36,18 @@ class AuthController extends Controller
         Auth::login($user);
         if (!$userToken = JWTAuth::fromUser($user)) return response()->json(['error' => 'invalid_credentials'], 401);
         $user['access_token'] = $userToken;
-        return apiSuccess(new ProfileResource($user), apiTrans('Password Successfully Changed'));
+
+        return apiSuccess(($user instanceof Teacher) ? new TeacherProfile($user) : new StudentsProfile($user), apiTrans('Password Successfully Changed'));
     }
 
-    public function verifiy_account(Request $request)
-    {
-        $user = apiUser();
-        if ($user->verified == true) return apiError(api('Account Already vitrified'));
-        apiUser()->update(['verified' => true]);
-        $user['access_token'] = $user->createToken(API_ACCESS_TOKEN_NAME)->accessToken;
-        return apiSuccess(new ProfileResource($user), api('Account vitrified successfully'));
-    }
+//    public function verifiy_account(Request $request)
+//    {
+//        $user = apiUser();
+//        if ($user->verified == true) return apiError(api('Account Already vitrified'));
+//        apiUser()->update(['verified' => true]);
+//        $user['access_token'] = $user->createToken(API_ACCESS_TOKEN_NAME)->accessToken;
+//        return apiSuccess(($user instanceof Teacher) ? new TeacherProfile($user) :  new StudentsProfile($user) ,, api('Account vitrified successfully'));
+//    }
 
 
     public function login(Request $request)
@@ -88,7 +90,7 @@ class AuthController extends Controller
         $user->update(['generatedCode' => $sms_code]);
 
 //TODO Send sms to this mobile number
-        return apiSuccess(new ProfileResource($user), api('We sent to your SMS verification code, please check your phone'));
+        return apiSuccess(($user instanceof Teacher) ? new TeacherProfile($user) : new StudentsProfile($user) , api('We sent to your SMS verification code, please check your phone'));
     }
 
     public function verified_code(Request $request)
@@ -111,7 +113,7 @@ class AuthController extends Controller
 
         if (!$userToken = JWTAuth::fromUser($user)) return response()->json(['error' => 'invalid_credentials'], 401);
         $user['access_token'] = $userToken;
-        return apiSuccess(new ProfileResource($user), apiTrans('Successfully verified'));
+        return apiSuccess(($user instanceof Teacher) ? new TeacherProfile($user) : new StudentsProfile($user), apiTrans('Successfully verified'));
     }
 
 
@@ -146,7 +148,7 @@ class AuthController extends Controller
             return apiError('Unauthorized', 401);
         $user = user('teacher');
         $user['access_token'] = $token;
-        return apiSuccess(new ProfileResource($user));
+        return apiSuccess(($user instanceof Teacher) ? new TeacherProfile($user) : new StudentsProfile($user));
 
     }
 
@@ -160,7 +162,7 @@ class AuthController extends Controller
     {
         $user = user('student');
         $user['access_token'] = $token;
-        return apiSuccess(new ProfileResource($user));
+        return apiSuccess(($user instanceof Teacher) ? new TeacherProfile($user) : new StudentsProfile($user));
     }
 
 }

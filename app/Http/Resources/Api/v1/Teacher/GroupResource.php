@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources\Api\v1\Teacher;
 
+use App\Http\Resources\Api\v1\General\AgeResource;
+use App\Http\Resources\Api\v1\General\LevelResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class GroupResource extends JsonResource
@@ -12,15 +14,21 @@ class GroupResource extends JsonResource
 
         $response = [
             'id' => $this->id,
-            'image' => $this->image,
             'name' => $this->name,
+            'video' => $this->video,
+            'image' => $this->image,
             'price' => $this->price,
             'students_number_max' => $this->students_number_max,
-            'level' => $this->level,
-            'gender' => $this->gender,
-            'time' => $this->time,
-            'course' => new \App\Http\Resources\Api\v1\Teacher\CourseResource($this->course),
+            'number_of_live_lessons' => $this->number_of_live_lessons,
+            'number_of_exercises_and_games' => $this->number_of_exercises_and_games,
+            'course_date_and_time' => $this->course_date_and_time,
+            'what_will_i_learn' => $this->what_will_i_learn,
             'number_of_joined_students' => $this->students->count(),
+            'teacher' => new ProfileResource($this->teacher),
+            'course' => new CourseResource($this->course),
+            'level' => new LevelResource($this->level),
+            'age' => new AgeResource($this->age),
+            'gender' => gender($this->gender),
         ];
         return $response;
     }
