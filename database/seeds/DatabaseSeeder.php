@@ -9,8 +9,8 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(ManagerTableSeeder::class);
 //        $this->call(ClientSeeder::class);
-        $this->call(TeacherSeeder::class);
         $this->call(CourseSeeder::class);
+        $this->call(TeacherSeeder::class);
         $this->call(StudentSeeder::class);
         $this->call(SettingsSeeder::class);
         $this->call(PermissionTableSeeder::class);

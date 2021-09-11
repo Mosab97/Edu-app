@@ -22,4 +22,14 @@ class Group extends Model
         return $this->hasMany(StudentGroups::class);
     }
 
+    public function course()
+    {
+        return $this->belongsTo(Course::class);
+    }
+
+    public function teacher()
+    {
+        return $this->belongsTo(Teacher::class);
+    }
+
 }

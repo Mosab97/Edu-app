@@ -10,7 +10,8 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
 //use Laravel\Passport\HasApiTokens;
 use Tymon\JWTAuth\Contracts\JWTSubject;
-class Teacher  extends Authenticatable implements JWTSubject
+
+class Teacher extends Authenticatable implements JWTSubject
 {
     use  Notifiable;
 //    protected $fillable = ['name', 'phone', 'password'];
@@ -42,4 +43,20 @@ class Teacher  extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+    public function getDemonstrationVideoAttribute($value)
+    {
+        return is_null($value) ? defaultUserVideo() : asset($value);
+    }
+
+    public function getImageAttribute($value)
+    {
+        return is_null($value) ? defaultUserImage() : asset($value);
+    }
+
+    public function groups()
+    {
+        return $this->hasMany(Group::class);
+    }
+
 }

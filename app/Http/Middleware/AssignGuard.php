@@ -29,14 +29,15 @@ class AssignGuard
 //                  $user = $this->auth->authenticate($request); //check authenticted user
                 $user = JWTAuth::parseToken()->authenticate();
             } catch (TokenExpiredException $e) {
-                return   response()->json([
-                    'code' => 0,
-                    'message' => 'failed',
-                    'errors' => [
-                        $e->getMessage()
-                    ],
-                    'data' => null
-                ] , 401);
+                return apiError($e->getMessage(),401);
+//                return   response()->json([
+//                    'code' => 0,
+//                    'message' => 'failed',
+//                    'errors' => [
+//
+//                    ],
+//                    'data' => null
+//                ] , 401);
             }
 
         }

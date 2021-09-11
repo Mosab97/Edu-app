@@ -16,15 +16,17 @@ class CreateGroupsTable extends Migration
         Schema::create('groups', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
+            $table->unsignedBigInteger('teacher_id');
             $table->string('image')->nullable();
             $table->double('price')->nullable();
             $table->double('students_number_max')->nullable();
             $table->integer('level')->default(\App\Models\Group::levels['level One']);
             $table->integer('gender')->default(Gender['MALE']);
             $table->string('time')->nullable();
-            $table->unsignedBigInteger('course_id')->nullable();
+            $table->unsignedBigInteger('course_id');
             $table->timestamps();
             $table->foreign('course_id')->on('courses')->references('id');
+            $table->foreign('teacher_id')->on('teachers')->references('id');
         });
     }
 

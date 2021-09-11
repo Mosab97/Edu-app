@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Api\v1\Student;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Api\v1\CourseResource;
-use App\Http\Resources\Api\v1\GroupResource;
-use App\Http\Resources\Api\v1\QuestionResource;
+use App\Http\Resources\Api\v1\Student\CourseResource;
+use App\Http\Resources\Api\v1\Student\GroupResource;
+use App\Http\Resources\Api\v1\Student\QuestionResource;
 use App\Models\Course;
 use App\Models\Group;
 use Illuminate\Http\Request;

@@ -55,4 +55,11 @@ class Student extends Authenticatable implements JWTSubject
     {
         return $this->hasMany(StudentGroups::class);
     }
+
+    public function getImageAttribute($value)
+    {
+        return is_null($value) ? defaultUserImage() : asset($value);
+    }
+
+
 }

@@ -547,6 +547,11 @@ function defaultUserImage()
     return asset_public('user_image.png');
 //    return "public/assets/img/default.png";
 }
+function defaultUserVideo()
+{
+    return asset_public('defualts/def_videos/demonstration_video.mp4');
+//    return "public/assets/img/default.png";
+}
 
 function defaultManagerImage()
 {

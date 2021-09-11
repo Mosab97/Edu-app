@@ -13,28 +13,33 @@ Route::group(['prefix' => 'v1', 'namespace' => ROOT_NAMESPACE], function () {
     });
 
 
-    Route::group(['prefix' => 'student', 'namespace' => 'Student'], function () {
+    Route::group(['prefix' => 'teacher', 'namespace' => 'Teacher','middleware' => ['auth_guard:teacher']], function () {
+        Route::get('profile', 'ProfileController@profile');
+        Route::post('update_profile', 'ProfileController@updateProfile');
 
-        Route::post('sign-up', 'StaffController@signUp');
-        //unauthenticated routes for customers here
-
-        Route::group(['middleware' => ['auth_guard:student']], function () {
-            Route::get('courses', 'CourseController@courses');
-            Route::get('questions/{course_id}', 'CourseController@questions');
-            Route::get('groups/{course_id}', 'CourseController@groups');
-            Route::get('group/{group_id}', 'CourseController@group');
-            Route::get('my_groups', 'CourseController@my_groups');
-            Route::post('test', 'StudentController@index');
-            Route::get('notifications', 'NotificationController@notifications');
-            Route::get('notification/{id}', 'NotificationController@notification');
-            Route::post('sendNotificationForAllStudents', 'NotificationController@sendNotificationForAllStudents');
+        Route::get('courses', 'CourseController@courses');
+        Route::get('questions/{course_id}', 'CourseController@questions');
+        Route::get('groups/{course_id}', 'CourseController@groups');
+        Route::get('group/{group_id}', 'CourseController@group');
+        Route::get('my_groups', 'CourseController@my_groups');
+        Route::get('notifications', 'NotificationController@notifications');
+        Route::get('notification/{id}', 'NotificationController@notification');
+        Route::post('sendNotificationForAllStudents', 'NotificationController@sendNotificationForAllStudents');
 
 
-            Route::get('profile', 'ProfileController@profile');
-            Route::post('update_profile', 'ProfileController@updateProfile');
-            Route::post('update_language', 'ProfileController@updateLanguage');
-            Route::post('update_location', 'ProfileController@update_location');
-        });
+
+    });
+    Route::group(['prefix' => 'student', 'namespace' => 'Student','middleware' => ['auth_guard:student']], function () {
+        Route::get('courses', 'CourseController@courses');
+        Route::get('questions/{course_id}', 'CourseController@questions');
+        Route::get('groups/{course_id}', 'CourseController@groups');
+        Route::get('group/{group_id}', 'CourseController@group');
+        Route::get('my_groups', 'CourseController@my_groups');
+        Route::get('notifications', 'NotificationController@notifications');
+        Route::get('notification/{id}', 'NotificationController@notification');
+        Route::post('sendNotificationForAllStudents', 'NotificationController@sendNotificationForAllStudents');
+        Route::get('profile', 'ProfileController@profile');
+        Route::post('update_profile', 'ProfileController@updateProfile');
     });
 
 
