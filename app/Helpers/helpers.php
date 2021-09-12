@@ -530,39 +530,22 @@ function days($index)
     return t($days[$index]);
 }
 
-function defaultImage()
-{
-    return asset_public('meal_image.png');
-//    return "public/assets/img/default.png";
-}
-
-function defaultAdImage()
-{
-    return asset_public('ad_image.png');
-//    return "public/assets/img/default.png";
-}
 
 function defaultUserImage()
 {
-    return asset_public('user_image.png');
-//    return "public/assets/img/default.png";
+    return asset_public('defaults/def_images/user_image.png');
 }
+
 function defaultUserVideo()
 {
-    return asset_public('defualts/def_videos/demonstration_video.mp4');
-//    return "public/assets/img/default.png";
+    return asset_public('defaults/def_videos/demonstration_video.mp4');
 }
 
 function defaultManagerImage()
 {
-    return asset_public('manager_image.png');
+    return asset_public('defaults/def_images/manager_image.png');
 }
 
-function defaultBankImage()
-{
-    return asset_public('bank_image.png');
-//    return "public/assets/img/default.png";
-}
 
 function status($status, $type = '')
 {

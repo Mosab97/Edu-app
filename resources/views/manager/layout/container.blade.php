@@ -136,118 +136,10 @@
                             </a>
                         </li>
 
-                        @canany(['Users'])
-                            <li class="kt-menu__item kt-menu__item--submenu   @if(Request::is('manager/users*') ) kt-menu__item--active @endif @if(Request::is('manager/drivers*') ) kt-menu__item--active @endif"
-                                aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
-                                <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
-                                    <span class="kt-menu__link-icon">
-                                        <i class="kt-menu__link-icon flaticon2-group"></i>
-                                    </span>
-                                    <span class="kt-menu__link-text">{{t('Users')}}</span>
-                                    <i class="kt-menu__ver-arrow la la-angle-right"></i>
-                                </a>
-                                <div class="kt-menu__submenu " kt-hidden-height="200"
-                                     style="display: none; overflow: hidden;"><span class="kt-menu__arrow"></span>
-                                    <ul class="kt-menu__subnav">
-                                        <li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true"><span
-                                                class="kt-menu__link"><span
-                                                    class="kt-menu__link-text">{{t('Drivers')}}</span></span></li>
-                                        @can('Drivers')
-                                            <li class="kt-menu__item " aria-haspopup="true"><a
-                                                    href="{{route('manager.driver.index')}}" class="kt-menu__link "><i
-                                                        class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span
-                                                        class="kt-menu__link-text">{{ t('Drivers') }}</span></a></li>
-                                        @endcan
-                                        @can('Users')
-                                            <li class="kt-menu__item " aria-haspopup="true"><a
-                                                    href="{{route('manager.user.index')}}" class="kt-menu__link "><i
-                                                        class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span
-                                                        class="kt-menu__link-text">{{ t('Clients') }}</span></a></li>
-                                        @endcan
-                                    </ul>
-                                </div>
-                            </li>
-                        @endcanany
-                        @canany(['Packages','Package Values'])
-                            <li class="kt-menu__item kt-menu__item--submenu   @if(Request::is('manager/package_value*') ) kt-menu__item--active
-@endif @if(Request::is('manager/package*') ) kt-menu__item--active @endif"
-                                aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
-                                <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
-                                    <span class="kt-menu__link-icon">
-                                        <i class="kt-menu__link-icon flaticon2-group"></i>
-                                    </span>
-                                    <span class="kt-menu__link-text">{{t('Packages')}}</span>
-                                    <i class="kt-menu__ver-arrow la la-angle-right"></i>
-                                </a>
-                                <div class="kt-menu__submenu " kt-hidden-height="200"
-                                     style="display: none; overflow: hidden;"><span class="kt-menu__arrow"></span>
-                                    <ul class="kt-menu__subnav">
-                                        <li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true"><span
-                                                class="kt-menu__link"><span
-                                                    class="kt-menu__link-text">{{t('Packages')}}</span></span></li>
-                                        @can('Packages')
-                                            <li class="kt-menu__item " aria-haspopup="true"><a
-                                                    href="{{route('manager.package.index')}}" class="kt-menu__link "><i
-                                                        class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span
-                                                        class="kt-menu__link-text">{{ t('Packages') }}</span></a></li>
-                                        @endcan
-                                        @can('Package Values')
-                                            <li class="kt-menu__item " aria-haspopup="true"><a
-                                                    href="{{route('manager.package_value.index')}}"
-                                                    class="kt-menu__link "><i
-                                                        class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span
-                                                        class="kt-menu__link-text">{{ t('Package Values') }}</span></a>
-                                            </li>
-                                        @endcan
-
-                                    </ul>
-                                </div>
-                            </li>
-                        @endcanany
-                        @canany(['Services','Special services'])
-                            <li class="kt-menu__item kt-menu__item--submenu   @if(Request::is('manager/services*') ) kt-menu__item--active @endif @if(Request::is('manager/services*') ) kt-menu__item--active @endif"
-                                aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
-                                <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
-                                    <span class="kt-menu__link-icon">
-                                        <i class="kt-menu__link-icon flaticon2-group"></i>
-                                    </span>
-                                    <span class="kt-menu__link-text">{{t('Services')}}</span>
-                                    <i class="kt-menu__ver-arrow la la-angle-right"></i>
-                                </a>
-                                <div class="kt-menu__submenu " kt-hidden-height="200"
-                                     style="display: none; overflow: hidden;"><span class="kt-menu__arrow"></span>
-                                    <ul class="kt-menu__subnav">
-                                        <li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true"><span
-                                                class="kt-menu__link"><span
-                                                    class="kt-menu__link-text">{{t('Services')}}</span></span></li>
-                                        @can('Services')
-                                            <li class="kt-menu__item " aria-haspopup="true"><a
-                                                    href="{{route('manager.service.index')}}" class="kt-menu__link "><i
-                                                        class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span
-                                                        class="kt-menu__link-text">{{ t('Services') }}</span></a></li>
-                                        @endcan
-                                        @can('Orders')
-                                            <li class="kt-menu__item " aria-haspopup="true"><a
-                                                    href="{{route('manager.order.index')}}" class="kt-menu__link "><i
-                                                        class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span
-                                                        class="kt-menu__link-text">{{ t('Orders') }}</span></a></li>
-                                        @endcan
-                                        @can('Special Services')
-                                            <li class="kt-menu__item " aria-haspopup="true"><a
-                                                    href="{{route('manager.special_services.index')}}"
-                                                    class="kt-menu__link "><i
-                                                        class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span
-                                                        class="kt-menu__link-text">{{ t('Special Services') }}</span></a>
-                                            </li>
-                                        @endcan
-                                    </ul>
-                                </div>
-                            </li>
-                        @endcanany
-                        {{--                        @can('Payments')--}}
                         <li class="kt-menu__item  @if(Request::is('manager/payment*') ) kt-menu__item--active @endif"
                             aria-haspopup="true">
-                            <a href="{{route('manager.'.\App\Models\Payment::manager_route . '.index')}}" class="kt-menu__link ">
+                            <a href="{{route('manager.'.\App\Models\Payment::manager_route . '.index')}}"
+                               class="kt-menu__link ">
                                 <i class="kt-menu__link-icon flaticon2-email"></i>
                                 <span class="kt-menu__link-text">{{ t('Payments') }}</span>
                             </a>
@@ -326,28 +218,28 @@
                                                     </a>
                                                 </li>
                                             @endcan
-                                            @can('Managers')
-                                                <li class="kt-menu__item" aria-haspopup="true">
-                                                    <a href="{{route('manager.manager.index')}}" class="kt-menu__link">
-                                                        <i class="kt-menu__link-bullet kt-menu__link-bullet--dot">
-                                                            <span></span>
-                                                        </i>
-                                                        <span class="kt-menu__link-text">{{ t('Managers') }}</span>
-                                                    </a>
-                                                </li>
-                                            @endcan
-                                            @can('Roles')
-                                                <li class="kt-menu__item" aria-haspopup="true">
-                                                    <a href="{{route('manager.manager_roles.index')}}"
-                                                       class="kt-menu__link">
-                                                        <i class="kt-menu__link-bullet kt-menu__link-bullet--dot">
-                                                            <span></span>
-                                                        </i>
-                                                        <span
-                                                            class="kt-menu__link-text">{{ t('Managers Roles') }}</span>
-                                                    </a>
-                                                </li>
-                                            @endcan
+{{--                                            @can('Managers')--}}
+{{--                                                <li class="kt-menu__item" aria-haspopup="true">--}}
+{{--                                                    <a href="{{route('manager.manager.index')}}" class="kt-menu__link">--}}
+{{--                                                        <i class="kt-menu__link-bullet kt-menu__link-bullet--dot">--}}
+{{--                                                            <span></span>--}}
+{{--                                                        </i>--}}
+{{--                                                        <span class="kt-menu__link-text">{{ t('Managers') }}</span>--}}
+{{--                                                    </a>--}}
+{{--                                                </li>--}}
+{{--                                            @endcan--}}
+{{--                                            @can('Roles')--}}
+{{--                                                <li class="kt-menu__item" aria-haspopup="true">--}}
+{{--                                                    <a href="{{route('manager.manager_roles.index')}}"--}}
+{{--                                                       class="kt-menu__link">--}}
+{{--                                                        <i class="kt-menu__link-bullet kt-menu__link-bullet--dot">--}}
+{{--                                                            <span></span>--}}
+{{--                                                        </i>--}}
+{{--                                                        <span--}}
+{{--                                                            class="kt-menu__link-text">{{ t('Managers Roles') }}</span>--}}
+{{--                                                    </a>--}}
+{{--                                                </li>--}}
+{{--                                            @endcan--}}
                                         </ul>
                                     </div>
                                 </li>
@@ -603,7 +495,7 @@
                     <div class="form-group">
                         <label for="recipient-name" class="form-control-label">{{ t('Recipients') }}:</label>
                         <select name="recipients" class="form-control" id="notification_type">
-{{--                            <option value="{{ALL_USERS}}">{{ t('All Users') }}</option>--}}
+                            {{--                            <option value="{{ALL_USERS}}">{{ t('All Users') }}</option>--}}
                         </select>
                     </div>
                     <div class="form-group">

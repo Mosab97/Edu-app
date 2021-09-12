@@ -19,7 +19,7 @@ class SettingsSeeder extends Seeder
         setting(['calendly_url' => 'http://ingaz.test/manager/settings'])->save();
         setting(['join_us_url' => 'http://ingaz.test/manager/settings'])->save();
         setting(['mobile' => '+966547896541'])->save();
-        setting(['logo' => 'img/def_image.png'])->save();
+        setting(['logo' => 'defaults/def_images/def_image.png'])->save();
         setting(['logo_light' => 'img/def_image.png'])->save();
         setting(['logo_min' => 'img/def_image.png'])->save();
         setting(['about_us_image' => 'img/def_image.png'])->save();

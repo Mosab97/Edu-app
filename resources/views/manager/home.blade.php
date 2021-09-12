@@ -1,4 +1,4 @@
-@extends('manager.layout.container')
+@extends('manager/layout/container')
 @section('style')
     <style>
         #chartdiv1, #chartdiv2, #chartdiv3, #chartdiv0 {
