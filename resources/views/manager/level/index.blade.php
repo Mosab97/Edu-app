@@ -6,7 +6,7 @@
 @section('content')
     @push('breadcrumb')
         <li class="breadcrumb-item">
-            {{t('Category')}}
+            {{t('Level')}}
         </li>
     @endpush
     @push('search')
@@ -39,16 +39,16 @@
                 <div class="kt-portlet__head">
                     <div class="kt-portlet__head-label">
                         <h3 class="kt-portlet__head-title">
-                            {{t('Category')}}
+                            {{t('Level')}}
                         </h3>
                     </div>
                     <div class="kt-portlet__head-toolbar">
                         <div class="kt-portlet__head-wrapper">
                             <div class="kt-portlet__head-actions">
-                                <a href="{{ route('manager.category.create') }}"
+                                <a href="{{ route('manager.'.\App\Models\Level::manager_route.'.create') }}"
                                    class="btn btn-danger btn-elevate btn-icon-sm">
                                     <i class="la la-plus"></i>
-                                    {{t('Add Category')}}
+                                    {{t('Add Level')}}
                                 </a>
                             </div>
                         </div>
@@ -125,7 +125,7 @@
         $(document).ready(function () {
             $(document).on('click', '.deleteRecord', (function () {
                 var id = $(this).data("id");
-                var url = '{{ route("manager.category.destroy", ":id") }}';
+                var url = '{{ route('manager.'.\App\Models\Level::manager_route.'.destroy', ":id") }}';
                 url = url.replace(':id', id);
                 $('#delete_form').attr('action', url);
             }));
@@ -141,7 +141,7 @@
                         'print'
                     ],
                     ajax: {
-                        url: '{{ route('manager.category.index') }}',
+                        url: '{{ route('manager.'.\App\Models\Level::manager_route.'.index') }}',
                         data: function (d) {
                             d.search = $("#search").val();
                             d.name = $("#name").val();

@@ -799,4 +799,10 @@ return [
   'Project Details' => 'Project Details',  
   'Other Help Attachments' => 'Other Help Attachments',  
   'Show Special Service' => 'Show Special Service',
+  
+  'Levels' => 'Levels',  
+  'Show Levels' => 'Show Levels',  
+  'Level' => 'Level',  
+  'Add Level' => 'Add Level',  
+  'Edit Level' => 'Edit Level',
 ];

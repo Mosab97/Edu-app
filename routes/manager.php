@@ -22,52 +22,15 @@ Route::group(['namespace' => 'Manager'], function () {
     Route::get('profile', 'SettingController@view_profile')->name('profile.show');
     Route::post('profile', 'SettingController@profile')->name('profile.update');
 
-    //City Routes
-    Route::resource('city', 'CityController');
-
-    //advantage Routes
-    Route::resource('advantage', 'AdvantageController');
-
-    //customer_review Routes
-    Route::resource('customer_review', 'CustomerReviewController');
-
-    //blog Routes
-    Route::resource('blog', 'BlogController');
+    //Level Routes
+    Route::resource(\App\Models\Level::manager_route, 'LevelController');
 
     //payments Routes
     Route::resource('payment', 'PaymentController');
-    //special_services Routes
-    Route::resource('special_services', 'SpecialServicesController');
-    //orders Routes
-    Route::resource('order', 'OrderController');
-
-    //Statistics Routes
-    Route::resource('statistic', 'StatisticController');
-
-    //Faq Routes
-    Route::resource('faq', 'FaqController');
-    //Bank Routes
-    Route::resource('bank', 'BankController');
     //User Routes
     Route::resource('user', 'UserController');
 
-
     Route::get('user_notifications', 'UserController@notifications')->name('user.notifications');
-
-    //Category Routes
-    Route::resource('category', 'CategoryController');
-
-
-    //Package Routes
-    Route::resource('package', 'PackageController');
-    //package_value Routes
-    Route::resource('package_value', 'PackageValuesController');
-
-    //type_of_services Routes
-    Route::resource('orders', 'OrderController');
-    //services Routes
-    Route::resource('service', 'ServiceController');
-
 
     Route::post('sendNotification/{id}', 'OrderController@sendNotification')->name('order.sendNotification');
 

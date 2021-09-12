@@ -804,4 +804,10 @@ return [
   'Service Type' => 'نوع الخدمة',
   'Payment ID' => 'الرقم التسلسلي للدفعة',
   'Show Special Service' => 'أظهر الخدمات الخاصة',
+  
+  'Levels' => 'Levels',  
+  'Show Levels' => 'Show Levels',  
+  'Level' => 'Level',  
+  'Add Level' => 'Add Level',  
+  'Edit Level' => 'Edit Level',
 ];

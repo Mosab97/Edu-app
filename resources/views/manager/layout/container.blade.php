@@ -136,6 +136,14 @@
                             </a>
                         </li>
 
+                        <li class="kt-menu__item  @if(Request::is('manager/levels*') ) kt-menu__item--active @endif"
+                            aria-haspopup="true">
+                            <a href="{{route('manager.'.\App\Models\Level::manager_route . '.index')}}"
+                               class="kt-menu__link ">
+                                <i class="kt-menu__link-icon flaticon2-email"></i>
+                                <span class="kt-menu__link-text">{{ t('Levels') }}</span>
+                            </a>
+                        </li>
                         <li class="kt-menu__item  @if(Request::is('manager/payment*') ) kt-menu__item--active @endif"
                             aria-haspopup="true">
                             <a href="{{route('manager.'.\App\Models\Payment::manager_route . '.index')}}"
@@ -254,37 +262,37 @@
 
 
                     <!--begin: Language bar -->
-                    <div class="kt-header__topbar-item kt-header__topbar-item--langs">
-                        <div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="10px,0px">
-									<span class="kt-header__topbar-icon kt-header__topbar-icon--brand">
-                                        @if(isRtl())
-                                            <img class="" src="{{ asset("assets/media/flags/008-saudi-arabia.svg") }}"
-                                                 alt=""/>
-                                        @else
-                                            <img class="" src="{{ asset("assets/media/flags/020-flag.svg") }}" alt=""/>
-                                        @endif
-									</span>
-                        </div>
-                        <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim">
-                            <ul class="kt-nav kt-margin-t-10 kt-margin-b-10">
-                                <li class="kt-nav__item kt-nav__item--active">
-                                    <a href="{{ route('manager.switch-language', 'en') }}" class="kt-nav__link">
-                                        <span class="kt-nav__link-icon"><img
-                                                src="{{ asset("assets/media/flags/020-flag.svg") }}" alt=""/></span>
-                                        <span class="kt-nav__link-text">English</span>
-                                    </a>
-                                </li>
-                                <li class="kt-nav__item">
-                                    <a href="{{ route('manager.switch-language', 'ar') }}" class="kt-nav__link">
-                                        <span class="kt-nav__link-icon"><img
-                                                src="{{ asset("assets/media/flags/008-saudi-arabia.svg") }}"
-                                                alt=""/></span>
-                                        <span class="kt-nav__link-text">العربية</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+{{--                    <div class="kt-header__topbar-item kt-header__topbar-item--langs">--}}
+{{--                        <div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="10px,0px">--}}
+{{--									<span class="kt-header__topbar-icon kt-header__topbar-icon--brand">--}}
+{{--                                        @if(isRtl())--}}
+{{--                                            <img class="" src="{{ asset("assets/media/flags/008-saudi-arabia.svg") }}"--}}
+{{--                                                 alt=""/>--}}
+{{--                                        @else--}}
+{{--                                            <img class="" src="{{ asset("assets/media/flags/020-flag.svg") }}" alt=""/>--}}
+{{--                                        @endif--}}
+{{--									</span>--}}
+{{--                        </div>--}}
+{{--                        <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim">--}}
+{{--                            <ul class="kt-nav kt-margin-t-10 kt-margin-b-10">--}}
+{{--                                <li class="kt-nav__item kt-nav__item--active">--}}
+{{--                                    <a href="{{ route('manager.switch-language', 'en') }}" class="kt-nav__link">--}}
+{{--                                        <span class="kt-nav__link-icon"><img--}}
+{{--                                                src="{{ asset("assets/media/flags/020-flag.svg") }}" alt=""/></span>--}}
+{{--                                        <span class="kt-nav__link-text">English</span>--}}
+{{--                                    </a>--}}
+{{--                                </li>--}}
+{{--                                <li class="kt-nav__item">--}}
+{{--                                    <a href="{{ route('manager.switch-language', 'ar') }}" class="kt-nav__link">--}}
+{{--                                        <span class="kt-nav__link-icon"><img--}}
+{{--                                                src="{{ asset("assets/media/flags/008-saudi-arabia.svg") }}"--}}
+{{--                                                alt=""/></span>--}}
+{{--                                        <span class="kt-nav__link-text">العربية</span>--}}
+{{--                                    </a>--}}
+{{--                                </li>--}}
+{{--                            </ul>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
                     <!--end: Language bar -->
                     <!--begin: Notifications -->
                     @php
@@ -434,19 +442,19 @@
                         </div>
                     @endif
                 <!--Begin::Dashboard 6-->
-                    {{--
-                    @if(Session::has('message'))
-                        <div class="alert alert-{{ Session::get('m-class') }} role="alert">
-                            <div class="alert-text">{{ Session::get('message') }}</div>
-                            <div class="alert-close">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true"><i class="la la-close"></i></span>
-                                </button>
-                            </div>
-                        </div>
-                    @endif
+{{--                    --}}{{----}}
+{{--                    @if(Session::has('message'))--}}
+{{--                        <div class="alert alert-{{ Session::get('m-class') }} role="alert">--}}
+{{--                            <div class="alert-text">{{ Session::get('message') }}</div>--}}
+{{--                            <div class="alert-close">--}}
+{{--                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">--}}
+{{--                                    <span aria-hidden="true"><i class="la la-close"></i></span>--}}
+{{--                                </button>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    @endif--}}
 
-                    --}}
+{{--                    --}}
                     @if (count($errors) > 0)
                         <div class="alert alert-warning">
                             <ul style="width: 100%;">

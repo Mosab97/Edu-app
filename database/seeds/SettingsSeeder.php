@@ -7,8 +7,8 @@ class SettingsSeeder extends Seeder
     public function run()
     {
         setting(['name' => [
-            'ar' => 'تطبيق انجاز',
-            'en' => 'Ingaz',
+            'ar' => 'المعلم',
+            'en' => 'Teacher',
         ]])->save();
         setting(['address' => [
             'ar' => 'address ar',
