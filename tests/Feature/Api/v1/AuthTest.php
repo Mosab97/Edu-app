@@ -4,10 +4,8 @@ namespace Tests\Feature\Api\v1;
 
 use App\Models\Student;
 use App\Models\Teacher;
-use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
-use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthTest extends TestCase
 {

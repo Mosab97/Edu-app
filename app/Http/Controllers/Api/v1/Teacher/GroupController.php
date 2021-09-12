@@ -44,6 +44,7 @@ class GroupController extends Controller
             'image' => 'sometimes|image',
             'video' => 'sometimes|mimes:mp4,mov,ogg,qt | max:20000',
             'level_id' => 'required|exists:levels,id',
+            'age_id' => 'required|exists:ages,id',
             'students_number_max' => 'required|numeric',
             'number_of_live_lessons' => 'required|numeric',
             'number_of_exercises_and_games' => 'required|numeric',

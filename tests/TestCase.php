@@ -35,4 +35,15 @@ abstract class TestCase extends BaseTestCase
             ->make($mockedRequestData, $rules)
             ->passes();
     }
+
+    public function getToken($user)
+    {
+        $logged_in_user = $this->post('api/v1/login', [
+            'phone' => $user->phone,
+            'password' => PASSWORD,
+            'type' => LOGIN_INFO_TYPES['TEACHER'],
+        ])->assertSuccessful();
+        return  json_decode($logged_in_user->getContent())->data->access_token;
+
+    }
 }
