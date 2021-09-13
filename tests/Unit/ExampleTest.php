@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 class ExampleTest extends TestCase
 {
     public function testBasicTest(){
-        dd(collect([1,2,3,4,5,6])->random());
+//        dd(collect([1,2,3,4,5,6])->random());
         $this->assertTrue(true);
 
     }

@@ -55,7 +55,30 @@ class GroupTest extends TestCase
         $course = factory(Course::class)->create();
         $level = factory(Level::class)->create();
         $age = factory(Age::class)->create();
-        $this->post('api/v1/teacher/add_group',[
+        $this->post('api/v1/teacher/add_group', [
+            'name' => 'sdsd',
+            'course_id' => $course->id,
+            'price' => 56,
+            'level_id' => $level->id,
+            'age_id' => $age->id,
+            'students_number_max' => 65,
+            'number_of_live_lessons' => 65,
+            'number_of_exercises_and_games' => 6,
+            'course_date_and_time' => Carbon::now()->format('Y-m-d H:i'),
+        ], ['Authorization' => $access_token])->assertSuccessful();
+    }
+
+    /** @test */
+    public function teacher_can_update_group()
+    {
+        $this->withoutExceptionHandling();
+        $user = factory(Teacher::class)->create();
+        $access_token = $this->getToken($user);
+        $course = factory(Course::class)->create();
+        $level = factory(Level::class)->create();
+        $age = factory(Age::class)->create();
+        $group = factory(Group::class)->create();
+        $this->put('api/v1/teacher/update_group/' . $group->id, [
             'name' => 'sdsd',
             'course_id' => $course->id,
             'price' => 56,
