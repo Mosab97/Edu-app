@@ -25,6 +25,12 @@ Route::group(['namespace' => 'Manager'], function () {
     //Level Routes
     Route::resource(\App\Models\Level::manager_route, 'LevelController');
 
+    //Age Routes
+    Route::resource(\App\Models\Age::manager_route, 'AgeController');
+
+    //Course Routes
+    Route::resource(\App\Models\Course::manager_route, 'CourseController');
+
     //payments Routes
     Route::resource('payment', 'PaymentController');
     //User Routes

@@ -3,9 +3,24 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Course extends Model
 {
+
+    public const manager_route = 'course';
+    public function getActionButtonsAttribute()
+    {
+        if (Auth::guard('manager')->check()) {
+            $button = '';
+            $button .= '<a href="' . route('manager.' . self::manager_route . '.edit', $this->id) . '" class="btn btn-icon btn-danger "><i class="la la-pencil"></i></a> ';
+            $button .= '<button type="button" data-id="' . $this->id . '" data-toggle="modal" data-target="#deleteModel" class="deleteRecord btn btn-icon btn-danger"><i class="la la-trash"></i></button>';
+            return $button;
+        }
+    }
+
+
+
     public function groups()
     {
         return $this->hasMany(Group::class);

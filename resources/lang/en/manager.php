@@ -804,5 +804,10 @@ return [
   'Show Levels' => 'Show Levels',  
   'Level' => 'Level',  
   'Add Level' => 'Add Level',  
-  'Edit Level' => 'Edit Level',
+  'Edit Level' => 'Edit Level',  
+  'Ages' => 'Ages',  
+  'Show Ages' => 'Show Ages',  
+  'Age' => 'Age',  
+  'Add Age' => 'Add Age',  
+  'Edit Age' => 'Edit Age',
 ];
