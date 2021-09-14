@@ -19,9 +19,9 @@ class CreateStudentGroupsTable extends Migration
             $table->unsignedBigInteger('course_id');
             $table->unsignedBigInteger('group_id');
             $table->timestamps();
-            $table->foreign('student_id')->on('students')->references('id');
-            $table->foreign('course_id')->on('courses')->references('id');
-            $table->foreign('group_id')->on('groups')->references('id');
+            $table->foreign('student_id')->on('students')->references('id')->cascadeOnDelete();
+            $table->foreign('course_id')->on('courses')->references('id')->cascadeOnDelete();
+            $table->foreign('group_id')->on('groups')->references('id')->cascadeOnDelete();
         });
     }
 

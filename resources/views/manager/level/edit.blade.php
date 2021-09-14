@@ -34,13 +34,13 @@
                     <div class="kt-portlet__body">
                         <div class="kt-section kt-section--first">
                             <div class="kt-section__body">
-                                    <div class="form-group row">
-                                        <label class="col-xl-3 col-lg-3 col-form-label">{{ t('Name') }}</label>
-                                        <div class="col-lg-9 col-xl-6">
-                                            <input class="form-control" name="name" type="text"
-                                                   value="{{  isset($name)?optional($name)[$local]: old("name[$local]")}}">
-                                        </div>
+                                <div class="form-group row">
+                                    <label class="col-xl-3 col-lg-3 col-form-label">{{ t('Name') }}</label>
+                                    <div class="col-lg-9 col-xl-6">
+                                        <input class="form-control" name="name" type="text"
+                                               value="{{  isset($level)?$level->name: old("name")}}">
                                     </div>
+                                </div>
                             </div>
                         </div>
                     </div>

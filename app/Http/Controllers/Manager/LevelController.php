@@ -58,20 +58,12 @@ class LevelController extends Controller
 
     public function store(Request $request)
     {
-        if (isset($request->city_id)) {
-            $store = $this->_model->findOrFail($request->city_id);
-        } else {
-            $store = new $this->_model();
-        }
+        $store = isset($request->level_id) ? $this->_model->findOrFail($request->level_id) : new $this->_model();
         $request->validate($this->validationRules);
         $store->name = $request->name;
-        $store->draft = $request->get('draft', 0);
         $store->save();
-        if (isset($request->city_id)) {
-            return redirect()->route('manager.city.index')->with('m-class', 'success')->with('message', t('Successfully Updated'));
-        } else {
-            return redirect()->route('manager.city.index')->with('m-class', 'success')->with('message', t('Successfully Created'));
-        }
+        $message = isset($request->level_id) ? t('Successfully Updated') : t('Successfully Created');
+        return redirect()->route('manager.' . Level::manager_route . '.index')->with('m-class', 'success')->with('message', $message);
     }
 
 
@@ -86,10 +78,8 @@ class LevelController extends Controller
 
     public function destroy($id)
     {
-        $item = City::query()->findOrFail($id);
-//        if($item->joinUs()->count()) return redirect()->back()->with('m-class', 'error')->with('message', t('cannot delete city it has join us'));
-        if ($item->users()->count()) return redirect()->back()->with('m-class', 'error')->with('message', t('cannot delete city it has users'));
+        $item = $this->_model->query()->findOrFail($id);
         $item->delete();
-        return redirect()->route('manager.city.index')->with('m-class', 'success')->with('message', t('Successfully Deleted'));
+        return redirect()->route('manager.' . Level::manager_route . '.index')->with('m-class', 'success')->with('message', t('Successfully Deleted'));
     }
 }

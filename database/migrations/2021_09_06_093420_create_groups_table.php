@@ -30,10 +30,10 @@ class CreateGroupsTable extends Migration
             $table->unsignedBigInteger('level_id');
             $table->unsignedBigInteger('age_id');
             $table->timestamps();
-            $table->foreign('course_id')->on('courses')->references('id');
-            $table->foreign('teacher_id')->on('teachers')->references('id');
-            $table->foreign('level_id')->on('levels')->references('id');
-            $table->foreign('age_id')->on('ages')->references('id');
+            $table->foreign('course_id')->on('courses')->references('id')->cascadeOnDelete();
+            $table->foreign('teacher_id')->on('teachers')->references('id')->cascadeOnDelete();
+            $table->foreign('level_id')->on('levels')->references('id')->cascadeOnDelete();
+            $table->foreign('age_id')->on('ages')->references('id')->cascadeOnDelete();
         });
     }
 
