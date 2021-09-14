@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Manager;
 
 use App\Http\Controllers\Controller;
-use App\Models\Age;
+use App\Models\Course;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Proengsoft\JsValidation\Facades\JsValidatorFacade as JsValidator;
@@ -13,15 +13,15 @@ class CourseController extends Controller
 {
     private $_model;
 
-    public function __construct(Age $age)
+    public function __construct(Course $course)
     {
         parent::__construct();
-        $this->_model = $age;
+        $this->_model = $course;
     }
 
     public function index()
     {
-        $title = t('Show Ages');
+        $title = t('Show Courses');
         if (request()->ajax()) {
             $search = request()->get('search', false);
             $items = $this->_model->query()->when($search, function ($query) use ($search) {
@@ -40,14 +40,14 @@ class CourseController extends Controller
                 })
                 ->make();
         }
-        return view('manager.' . Age::manager_route . '.index', compact('title'));
+        return view('manager.' . Course::manager_route . '.index', compact('title'));
     }
 
     public function create()
     {
-        $title = t('Add Age');
+        $title = t('Add Course');
         $validator = JsValidator::make($this->validationRules, $this->validationMessages);
-        return view('manager.' . Age::manager_route . '.edit', compact('title', 'validator'));
+        return view('manager.' . Course::manager_route . '.edit', compact('title', 'validator'));
     }
 
     public function store(Request $request)
@@ -57,16 +57,16 @@ class CourseController extends Controller
         $store->name = $request->name;
         $store->save();
         $message = isset($request->age_id) ? t('Successfully Updated') : t('Successfully Created');
-        return redirect()->route('manager.' . Age::manager_route . '.index')->with('m-class', 'success')->with('message', $message);
+        return redirect()->route('manager.' . Course::manager_route . '.index')->with('m-class', 'success')->with('message', $message);
     }
 
 
     public function edit($id)
     {
-        $title = t('Edit Age');
+        $title = t('Edit Course');
         $validator = JsValidator::make($this->validationRules, $this->validationMessages);
         $age = $this->_model->query()->findOrFail($id);
-        return view('manager.' . Age::manager_route . '.edit', compact('title', 'age', 'validator'));
+        return view('manager.' . Course::manager_route . '.edit', compact('title', 'age', 'validator'));
     }
 
 
@@ -74,6 +74,6 @@ class CourseController extends Controller
     {
         $item = $this->_model->query()->findOrFail($id);
         $item->delete();
-        return redirect()->route('manager.' . Age::manager_route . '.index')->with('m-class', 'success')->with('message', t('Successfully Deleted'));
+        return redirect()->route('manager.' . Course::manager_route . '.index')->with('m-class', 'success')->with('message', t('Successfully Deleted'));
     }
 }

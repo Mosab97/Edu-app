@@ -152,6 +152,14 @@
                                 <span class="kt-menu__link-text">{{ t('Ages') }}</span>
                             </a>
                         </li>
+                        <li class="kt-menu__item  @if(Request::is('manager/courses*') ) kt-menu__item--active @endif"
+                            aria-haspopup="true">
+                            <a href="{{route('manager.'.\App\Models\Course::manager_route . '.index')}}"
+                               class="kt-menu__link ">
+                                <i class="kt-menu__link-icon flaticon2-email"></i>
+                                <span class="kt-menu__link-text">{{ t('Courses') }}</span>
+                            </a>
+                        </li>
                         <li class="kt-menu__item  @if(Request::is('manager/payment*') ) kt-menu__item--active @endif"
                             aria-haspopup="true">
                             <a href="{{route('manager.'.\App\Models\Payment::manager_route . '.index')}}"

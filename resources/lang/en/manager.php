@@ -809,5 +809,9 @@ return [
   'Show Ages' => 'Show Ages',  
   'Age' => 'Age',  
   'Add Age' => 'Add Age',  
-  'Edit Age' => 'Edit Age',
+  'Edit Age' => 'Edit Age',  
+  'Courses' => 'Courses',  
+  'Show Courses' => 'Show Courses',  
+  'Course' => 'Course',  
+  'Add Course' => 'Add Course',
 ];
