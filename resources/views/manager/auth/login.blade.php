@@ -1,7 +1,8 @@
 @php
     $logo = Setting('logo');
-    $logo_min = Setting('logo_min');
-    //dd($logo_min,$logo);
+   $logo = isset($logo)?$logo : dashboard_logo();
+   $logo_min = Setting('logo_min');
+   $logo_min = isset($logo_min)?$logo_min : dashboard_logo();
 @endphp
 
     <!DOCTYPE html>
@@ -49,7 +50,7 @@
     <!--begin::Layout Skins(used by all pages) -->
     <!--end::Layout Skins -->
     @if(isset($logo_min))
-        <link rel="shortcut icon" href="{{ asset_public($logo_min) }}"/>
+        <link rel="shortcut icon" href="{{ asset($logo_min) }}"/>
     @endif
 </head>
 
@@ -71,7 +72,8 @@
                             <div class="kt-login__logo">
                                 <a href="{{ url('/') }}">
                                     @if(isset($logo))
-                                        <img src="{{ asset($logo) }}" width="35%" alt="logo" class="img-fluid"/>
+                                        <img src="{{ asset($logo) }}" width="35%" alt="logo"
+                                             class="img-fluid"/>
                                     @else
                                         <h3>App Logo</h3>
                                     @endif
@@ -84,8 +86,7 @@
 
                                         <div class="form-group">
                                             <input class="form-control {{ $errors->has('email') ? ' has-error' : '' }}"
-                                                   type="text"
-                                                   placeholder="{{ t('Email') }}" name="email">
+                                                   type="text" placeholder="{{ t('Email') }}" name="email">
                                             @if ($errors->has('email'))
                                                 <span class="help-block">
                                                         <strong>{{ $errors->first('email') }}</strong>
@@ -103,11 +104,10 @@
                                             @endif
                                         </div>
                                         <div class="kt-login__extra">
-{{--                                            <label class="kt-checkbox">--}}
-{{--                                                <input type="checkbox" name="remember"> {{ t('Remember me') }}--}}
-{{--                                                <span></span>--}}
-{{--                                            </label>--}}
-                                            <a href="{{url('/manager/password/reset')}}">{{t('Forget Password ?')}}</a>
+                                            <label class="kt-checkbox">
+                                                <input type="checkbox" name="remember"> {{ t('Remember me') }}
+                                                <span></span>
+                                            </label>
                                         </div>
                                         <div class="kt-login__actions">
 

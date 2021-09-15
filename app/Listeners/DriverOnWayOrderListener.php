@@ -9,7 +9,6 @@ use App\Events\DriverOnWayOrderEvent;
 use App\Models\Branch;
 use App\Models\Delivery;
 use App\Models\Order;
-use App\Models\OrderStatusTimeLine;
 use App\Models\User;
 use App\Notifications\AcceptOrderNotification;
 use App\Notifications\DriverAcceptOrderNotification;
@@ -25,27 +24,15 @@ class DriverOnWayOrderListener
     {
         $order = $event->order;
         if ($order instanceof Order) {
-            $branch = Branch::where('id', $order->branch_id)->first();
-            $user = User::where('id', $order->user_id)->first();
+            $branch = Branch::query()->where('id', $order->branch_id)->first();
+            $user = User::query()->where('id', $order->user_id)->first();
 
             if ($branch) Notification::send($branch, new DriverOnWayOrderNotification($order));
             if ($user) Notification::send($user, new DriverOnWayOrderNotification($order));
             $order->update([
                 'status' => Order::ON_WAY,
+                'status_time_line' => getNewEncodedArray(getAnonymousStatusObj(Order::ON_WAY_DONE, 'ON_WAY_DONE'), $order->status_time_line),
             ]);
-            $statusTimeLine = OrderStatusTimeLine::create([
-                'order_id' => $order->id,
-                'key_name' => [
-                    'ar' => 'جاري التوصيل',
-                    'en' => 'On Way',
-                ],
-                'value' => Carbon::now(),
-                'details' => [
-                    'ar' => 'تحرك المندوب لتوصيل الطلب',
-                    'en' => 'Driver move to deliver your order',
-                ],
-            ]);
-
         }
     }
 }

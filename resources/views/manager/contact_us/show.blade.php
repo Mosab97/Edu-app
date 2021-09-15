@@ -1,3 +1,8 @@
+{{--
+Dev Mosab Irwished
+eng.mosabirwished@gmail.com
+WhatsApp +970592879186
+ --}}
 @extends('manager.layout.container')
 @section('style')
 
@@ -34,20 +39,14 @@
                                         </div>
                                         <div class="kt-widget__content">
                                             <div class="kt-widget__head">
-                                                <a href="#" class="kt-widget__username">
+                                                <a href="{{isset($contact->user_id)?route_manager('user.show',$contact->user_id):'javascript:;'}}"
+                                                   class="kt-widget__username">
                                                     {{ $contact->name }}
                                                 </a>
                                             </div>
+
                                             <div class="kt-widget__subhead">
                                                 <a href="#"> <i class="flaticon2-phone"> </i> {{  $contact->mobile }}
-                                                </a>
-                                            </div>
-                                            <div class="kt-widget__subhead">
-                                                <a href="#"> {{t('Target:')}}  {{  $contact->target_name }}
-                                                </a>
-                                            </div>
-                                            <div class="kt-widget__subhead">
-                                                <a href="#"> {{t('How Did You Hear About Injaz:')}} {{  $contact->how_did_you_hear_about_ingaz_name }}
                                                 </a>
                                             </div>
                                         </div>

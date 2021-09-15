@@ -2,41 +2,36 @@
 @section('style')
 @endsection
 
-@php
-    $breadcrumb = true;
-    $title = $blog->title;
-@endphp
-
-
 
 @section('content')
-
-    <!-- section begin -->
-    <section aria-label="section">
+    <div class="sinlgeDetails mt-5">
         <div class="container">
             <div class="row">
-                <div class="col-md-8">
-                    <div class="blog-read">
-
-                        <img alt="" src="{{$blog->image}}" class="img-fullwidth">
-
-                        <div class="post-text">
-                            <p>{{$blog->title}}</p>
-                            <p>{!! $blog->details !!}</p>
-                            <span class="post-date">{{$blog->created_at}}</span>
+                <div class="col-lg-6 mb-5 mb-lg-5">
+                    <div class="product_view owl-carousel owl_4">
+                        <div class="single_view">
+                            <img src="{{$blog->image}}" alt="">
                         </div>
-
                     </div>
                 </div>
-
+                <div class="col-lg-6">
+                    <div class="single_details_col">
+                        <div class="Products_name mt-3">
+                            <h2> {{optional($blog)->title}}</h2>
+                        </div>
+                        <hr class="w-75 float-left">
+                        <div class="clearfix"></div>
+                        <div class="Productcaption d-block">
+                            <p class="Details">{{w('Details')}}</p>
+                            <p>{{$blog->description}} </p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </section>
-
+    </div>
 @endsection
 
 
-@section('script')
+@section('js')
 @endsection
-
-

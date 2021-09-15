@@ -5,7 +5,6 @@ namespace App\Listeners;
 use App\Events\AcceptOrderEvent;
 use App\Events\CancelOrderEvent;
 use App\Models\Order;
-use App\Models\OrderStatusTimeLine;
 use App\Models\User;
 use App\Notifications\AcceptOrderNotification;
 use Carbon\Carbon;
@@ -22,6 +21,9 @@ class AcceptOrderListener
             $user = User::query()->where('id', $order->user_id)->first();
             if ($user) {
                 Notification::send($user, new AcceptOrderNotification($order));
+                $order->update([
+                    'status_time_line' => getNewEncodedArray(getAnonymousStatusObj(Order::ACCEPTED, 'ACCEPTED'), $order->status_time_line)
+                ]);
             }
         }
     }

@@ -1,124 +1,77 @@
-@extends('layouts.container')
-@section('style')
-@endsection
-
-@php
-    $breadcrumb = true;
-    $title = w('Register');
-@endphp
-
-
+@extends('layouts.app')
 
 @section('content')
-    {{--    @if(isset($errors) && sizeof($errors) > 0)--}}
-    @foreach($errors as $item)
-        {{dd($item)}}
-    @endforeach
-    {{--    @endif--}}
-    <section aria-label="section">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8 offset-md-2">
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">{{ __('Register') }}</div>
 
-
-                    <form name="contactForm" id='form_information' class="form-border" method="post"
-                          action='{{url('/register')}}'>
+                <div class="card-body">
+                    <form method="POST" action="{{ route('register') }}">
                         @csrf
-                        <div class="row">
+
+                        <div class="form-group row">
+                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
 
                             <div class="col-md-6">
-                                <div class="field-set">
-                                    <label>{{w('Name')}}</label>
-                                    <input type='text' name='name' id='name' class="form-control">
-                                </div>
+                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+
+                                @error('name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
-                            <div class="col-md-6">
-                                <div class="field-set">
-                                    <label>{{w('Email')}}</label>
-                                    <input type='email' name='email' id='email' class="form-control">
-                                </div>
-                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 
                             <div class="col-md-6">
-                                <div class="field-set">
-                                    <label>{{w('Phone')}}</label>
-                                    <input type='text' name='phone' id='phone' class="form-control">
-                                </div>
+                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+
+                                @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
 
                             <div class="col-md-6">
-                                <div class="field-set">
-                                    <label>{{w('Country')}}</label>
-                                    <input type='text' name='country' id='country' class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="field-set">
-                                    <label>{{w('City')}}</label>
-                                    <input type='text' name='city' id='city' class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="field-set">
-                                    <label>{{w('Client Type')}}</label>
-                                    <select name="client_type" id="client_type" class="form-control">
-                                        <option
-                                            value="{{\App\Models\User::client_type['CLIENT']}}"{{isset($user)&& $user->client_type == \App\Models\User::client_type['CLIENT']? 'selected':''}}>{{t('Client')}}</option>
-                                        <option
-                                            value="{{\App\Models\User::client_type['COMPANY']}}" {{isset($user)&& $user->client_type == \App\Models\User::client_type['COMPANY']? 'selected':''}}>{{t('Company')}}</option>
-                                    </select>
-                                </div>
-                            </div>
-                            {{--                            <div class="col-md-6">--}}
-                            {{--                                <div class="field-set">--}}
-                            {{--                                    <label for="url">{{w('Url')}}</label>--}}
-                            {{--                                    <input type='url' name='url' id='url' class="form-control">--}}
-                            {{--                                </div>--}}
-                            {{--                            </div>--}}
-                            <div class="col-md-6">
-                                <div class="field-set">
-                                    <label for="username">{{w('Username')}}</label>
-                                    <input type='text' name='username' id='username' class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="field-set">
-                                    <label for="password">{{w('Password')}}</label>
-                                    <input type='password' name='password' id='password' class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div id='submit' class="pull-left">
-                                    <input type='submit' value='{{w('Register')}}'
-                                           class="btn btn-custom color-2">
-                                </div>
+                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
 
-                                <div id='mail_success' class='success'>Your message has been sent successfully.</div>
-                                <div id='mail_fail' class='error'>Sorry, error occured this time sending your message.
-                                </div>
-                                <div class="clearfix"></div>
-
+                                @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
+                        </div>
 
+                        <div class="form-group row">
+                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-0">
+                            <div class="col-md-6 offset-md-4">
+                                <button type="submit" class="btn btn-primary">
+                                    {{ __('Register') }}
+                                </button>
+                            </div>
                         </div>
                     </form>
-
                 </div>
             </div>
         </div>
-    </section>
-
+    </div>
+</div>
 @endsection
-
-
-
-
-@section('script')
-    <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
-    <script src="{{ asset('assets/vendors/general/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"
-            type="text/javascript"></script>
-
-    {!! $validator->selector('#form_information') !!}
-@endsection
-
-

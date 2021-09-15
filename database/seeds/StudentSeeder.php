@@ -8,8 +8,9 @@ class StudentSeeder extends Seeder
 {
     public function run()
     {
-        $client = Student::create([
+        $client = \App\Models\User::create([
             'name' => 'user',
+            'user_type' => \App\Models\User::user_type['STUDENT'],
             'email' => 'u@u.com',
             'username' => generateRandomString(7),
             'phone' => STUDENT_DEFAULT_PHONE,
@@ -21,8 +22,9 @@ class StudentSeeder extends Seeder
             'password' => \Illuminate\Support\Facades\Hash::make(PASSWORD),
         ]);
         for ($item = 1; $item <= 3; $item++) {
-            $client = Student::create([
+            $client = \App\Models\User::create([
                 'name' => 'user' . $item,
+                'user_type' => \App\Models\User::user_type['STUDENT'],
                 'username' => generateRandomString(7),
                 'email' => 'user' . $item . '@u.com',
                 'dob' => \Carbon\Carbon::now(),
@@ -33,14 +35,14 @@ class StudentSeeder extends Seeder
                 'password' => \Illuminate\Support\Facades\Hash::make(PASSWORD),
             ]);
         }
-        foreach (Student::get() as $index => $item) {
-            $course = \App\Models\Course::query()->inRandomOrder()->first();
-            $group = $course->groups()->inRandomOrder()->first();
-            $item->groups()->create([
-                'course_id' => $course->id,
-                'group_id' => $group->id,
-            ]);
-        }
+//        foreach (\App\Models\User::student()->get() as $index => $item) {
+//            $course = \App\Models\Course::query()->inRandomOrder()->first();
+//            $group = $course->groups()->inRandomOrder()->first();
+//            $item->student_groups()->create([
+//                'course_id' => $course->id,
+//                'group_id' => $group->id,
+//            ]);
+//        }
     }
 
 }

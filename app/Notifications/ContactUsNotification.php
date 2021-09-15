@@ -53,7 +53,7 @@ class ContactUsNotification extends Notification
     {
         if ($notifiable instanceof User) {
             $notifiable->setLanguage();
-//            send_to_topic('user_' . $notifiable->id, $this->message);
+            send_to_topic('user_' . $notifiable->id, $this->message);
         }
     }
 }

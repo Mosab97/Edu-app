@@ -1,0 +1,37 @@
+.singleTes img {
+    left: -25px !important;
+}
+@media (min-width: 992px){
+.main-header .menu-container .main-menu.list-main-menu .menu_link:hover::before {
+    right: -20px;
+}}
+
+.Spreading::after{
+    right: -100px;
+}
+.servImg::before {
+  
+    right: -8px;}
+.productsSlide .owl-stage{
+    padding-right: 0px !important;
+}
+@media (max-width: 992px){
+.main-header .logo {
+    margin-left: auto;
+    margin-right: unset;
+}
+}
+.latestPosts_head h5::before{
+    left: unset;
+    right: 0;
+    transform: rotate(
+        90deg
+        );
+}
+
+
+.owlNavs .owl-nav{
+    transform: rotate(
+180deg
+);
+}

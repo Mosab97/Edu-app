@@ -167,7 +167,8 @@ class HomeController extends Controller
                 'items' => GiftResource::collection($gifts),
                 'paginate' => paginate($gifts),
             ]);
-        } elseif ($request->type == 'normal_offer') {
+        }
+        elseif ($request->type == 'normal_offer') {
             $product_query = $product_query->whereHas('price', function ($query) use ($request) {
                 $query->whereHas('offer', function ($qq) {
                     $qq->where('type', Offer::type['NORMAL'])
@@ -178,7 +179,8 @@ class HomeController extends Controller
                 'items' => ProductResource::collection($product_query),
                 'paginate' => paginate($product_query),
             ]);
-        } elseif ($request->type == 'limit_offer') {
+        }
+        elseif ($request->type == 'limit_offer') {
             $product_query = $product_query->whereHas('price', function ($query) use ($request, $now) {
                 $query->whereHas('offer', function ($query) use ($now) {
                     $query->where('active', true)->where(function ($query) use ($now) {
@@ -198,7 +200,8 @@ class HomeController extends Controller
                 'paginate' => paginate($product_query),
             ]);
 
-        } else {
+        }
+        else {
             $product_query = $product_query->paginate($this->perPage);
             return apiSuccess([
                 'items' => ProductResource::collection($product_query),

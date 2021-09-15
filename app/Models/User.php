@@ -53,11 +53,43 @@ class User extends Authenticatable
         return $query->where('phone', $param);
     }
 
+    public function scopeTeacher($query)
+    {
+        return $query->where('user_type', self::user_type['TEACHER']);
+    }
+
+    public function scopeStudent($query)
+    {
+        return $query->where('user_type', self::user_type['STUDENT']);
+    }
+
 
     public function scopeNotDraft($query)
     {
         return $query->where('users.draft', false);
     }
+
+    public function student_groups()
+    {
+        return $this->hasMany(StudentGroups::class);
+    }
+
+
+    public function getDemonstrationVideoAttribute($value)
+    {
+        return is_null($value) ? defaultUserVideo() : asset($value);
+    }
+
+    public function getImageAttribute($value)
+    {
+        return is_null($value) ? defaultUserImage() : asset($value);
+    }
+
+    public function teacher_groups()
+    {
+        return $this->hasMany(Group::class);
+    }
+
 
 //    attributes
     public function getStatusNameAttribute()
@@ -66,10 +98,6 @@ class User extends Authenticatable
     }
 
 
-    public function getImageAttribute($value)
-    {
-        return is_null($value) ? defaultUserImage() : asset($value);
-    }
 
     public function getActiveNameAttribute()
     {

@@ -13,6 +13,7 @@ class ProfileResource extends JsonResource
         $response = [
             'id' => $this->id,
             'name' => $this->name,
+            'user_type' => $this->user_type,
             'major' => $this->major,
             'experience' => $this->experience,
             'demonstration_video' => $this->demonstration_video,
@@ -27,7 +28,7 @@ class ProfileResource extends JsonResource
             'notification' => (bool)$this->notification,
             'unread_notifications' => (int)$this->unread_notifications,
             'access_token' => $this->access_token,
-            'expires_in' => auth('student')->factory()->getTTL() * 60
+//            'expires_in' => auth('student')->factory()->getTTL() * 60
         ];
         return $response;
     }

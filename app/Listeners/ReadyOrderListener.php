@@ -29,30 +29,22 @@ class ReadyOrderListener
                 $query->selectRaw("users.*,ROUND(6371 * acos( cos( radians({$lat}) ) * cos( radians( lat ) ) * cos( radians( lng ) - radians({$lng}) ) + sin( radians({$lat}) ) * sin(radians(lat)) ) ) AS distance")
                     ->having("distance", "<", $merchants_range)
                     ->orderBy('distance', "ASC");
-            });
-            $user = apiUser();
-            if (isset($user) && $user->type == User::DRIVER) {
-                $drivers = $drivers->where('id', '!=', $user->id);
-            }
-            $drivers = $drivers->get();
-            $branch_drivers = $branch->drivers;
-            if (count($branch_drivers) > 0) {
-                $drivers = $drivers->merge($branch_drivers);
-                $drivers = $drivers->unique();
-            }
+            })->get();
 
+            foreach ($drivers as $index => $driver) {
+                Delivery::create([
+                    'driver_id' => $driver->id,
+                    'order_id' => $order->id,
+                    'status' => Delivery::NEW_DELIVERY,
+                    'distance' => $order->distance,
+                ]);
+            }
 
             if (count($drivers) > 0) {
-                foreach ($drivers as $index => $driver) {
-                    Delivery::create([
-                        'driver_id' => $driver->id,
-                        'order_id' => $order->id,
-                        'status' => Delivery::NEW_DELIVERY,
-                        'distance' => $order->distance,
-                        'counter' => 60,//$time_min ,
-                    ]);
-                }
                 Notification::send($drivers, new ReadyOrderNotification($order));
+                $order->update([
+                    'status_time_line' => getNewEncodedArray(getAnonymousStatusObj(Order::READY, 'READY'), $order->status_time_line)
+                ]);
             }
         }
 

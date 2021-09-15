@@ -3,63 +3,71 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Proengsoft\JsValidation\Facades\JsValidatorFacade as JsValidator;
 
 class RegisterController extends Controller
 {
+    /*
+    |--------------------------------------------------------------------------
+    | Register Controller
+    |--------------------------------------------------------------------------
+    |
+    | This controller handles the registration of new users as well as their
+    | validation and creation. By default this controller uses a trait to
+    | provide this functionality without requiring any additional code.
+    |
+    */
+
     use RegistersUsers;
 
+    /**
+     * Where to redirect users after registration.
+     *
+     * @var string
+     */
     protected $redirectTo = RouteServiceProvider::HOME;
 
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
     public function __construct()
     {
         $this->middleware('guest');
     }
 
-    public function showRegistrationForm()
-    {
-        $this->validationRules["name"] = ['required', 'string', 'max:255'];
-        $this->validationRules['email'] = ['required', 'string', 'email', 'max:255', 'unique:users,email'];
-        $this->validationRules['phone'] = ['required', 'string', 'max:255', 'unique:users,phone'];
-        $this->validationRules['password'] = ['required', 'string', 'min:8'];
-        $this->validationRules['country'] = ['required', 'string', 'max:100'];
-        $this->validationRules['city'] = ['required', 'string', 'max:100'];
-        $this->validationRules['client_type'] = ['required', 'numeric', 'in:' . User::client_type['CLIENT'] . ',' . User::client_type['COMPANY']];
-        $this->validationRules['username'] =['required', 'string', 'max:255', 'unique:users,username'];
-        $validator = JsValidator::make($this->validationRules, $this->validationMessages);
-        return view('auth.register', compact('validator'));
-    }
-
+    /**
+     * Get a validator for an incoming registration request.
+     *
+     * @param  array  $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
     protected function validator(array $data)
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
 
+    /**
+     * Create a new user instance after a valid registration.
+     *
+     * @param  array  $data
+     * @return \App\User
+     */
     protected function create(array $data)
     {
-//        dd($data);
         return User::create([
-            'name' => [
-                'ar' => $data['name'],
-                'en' => $data['name'],
-            ],
+            'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'phone' => $data['phone'],
-            'country' => $data['country'],
-            'city' => $data['city'],
-            'client_type' => $data['client_type'],
-//            'url' => $data['url'],
-            'username' => $data['username'],
         ]);
     }
 }

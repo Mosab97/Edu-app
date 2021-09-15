@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Session\TokenMismatchException;
 use Illuminate\Validation\ValidationException;
-use Laravel\Passport\Exceptions\MissingScopeException;
 use Symfony\Component\Debug\Exception\FatalThrowableError;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -62,9 +61,6 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
-        if ($exception instanceof MissingScopeException && $request->wantsJson()) {
-            return apiError('Unauthenticated', 403);
-        }
 //        dd($exception);
         if (strpos($request->url(), '/api/') !== false || strpos($request->url(), '/admin_api_app_v1/') !== false || strpos($request->url(), '/web/') !== false) {
             \Log::debug('API Request Exception - ' . $request->url() . ' - ' . $exception->getMessage() . (!empty($request->all()) ? ' - ' . json_encode($request->except(['password'])) : ''));
@@ -160,8 +156,6 @@ class Handler extends ExceptionHandler
             }
 
         }
-
-
         return parent::render($request, $exception);
     }
 

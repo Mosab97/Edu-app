@@ -36,25 +36,30 @@ return [
     */
 
     'guards' => [
+        'adminapiapp' => [
+            'driver' => 'passport',
+            'provider' => 'adminapiapps',
+        ],
+
+
         'manager' => [
             'driver' => 'session',
             'provider' => 'managers',
         ],
+
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
         ],
+
+        'provider' => [
+            'driver' => 'session',
+            'provider' => 'providers',
+        ],
+
         'api' => [
-            'driver' => 'jwt',
+            'driver' => 'passport',
             'provider' => 'users',
-        ],
-        'student' => [
-            'driver' => 'jwt',
-            'provider' => 'student',
-        ],
-        'teacher' => [
-            'driver' => 'jwt',
-            'provider' => 'teacher',
         ],
     ],
 
@@ -76,23 +81,27 @@ return [
     */
 
     'providers' => [
+        'adminapiapps' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Adminapiapp::class,
+        ],
+
+
         'managers' => [
             'driver' => 'eloquent',
             'model' => App\Models\Manager::class,
         ],
+
+
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
-        'student' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\Student::class,
-        ],
-        'teacher' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\Teacher::class,
-        ],
 
+        // 'users' => [
+        //     'driver' => 'database',
+        //     'table' => 'users',
+        // ],
     ],
 
     /*
@@ -111,11 +120,24 @@ return [
     */
 
     'passwords' => [
+        'adminapiapps' => [
+            'provider' => 'adminapiapps',
+            'table' => 'adminapiapp_password_resets',
+            'expire' => 60,
+        ],
+
+        'admin_api_apps' => [
+            'provider' => 'admin_api_apps',
+            'table' => 'admin_api_app_password_resets',
+            'expire' => 60,
+        ],
+
         'managers' => [
             'provider' => 'managers',
             'table' => 'manager_password_resets',
             'expire' => 60,
         ],
+
         'users' => [
             'provider' => 'users',
             'table' => 'password_resets',

@@ -44,6 +44,7 @@ class GeneralNotification extends Notification
 
     public function toFcm($notifiable)
     {
+//        dd($notifiable->id);
         if (isset($notifiable) && $notifiable instanceof User) {
             $notifiable->setLanguage();
             send_to_topic('user_' . $notifiable->id, $this->message);

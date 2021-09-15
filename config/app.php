@@ -81,7 +81,7 @@ return [
     |
     */
 
-    'locale' => 'ar',
+    'locale' => 'en',
 
     /*
     |--------------------------------------------------------------------------
@@ -94,7 +94,7 @@ return [
     |
     */
 
-    'fallback_locale' => 'ar',
+    'fallback_locale' => 'en',
 
     /*
     |--------------------------------------------------------------------------
@@ -162,6 +162,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+
         /*
          * Package Service Providers...
          */
@@ -174,12 +175,12 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        Kreait\Laravel\Firebase\ServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
         Arcanedev\LogViewer\LogViewerServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         Akaunting\Setting\Provider::class,
-        Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
+        Kreait\Laravel\Firebase\ServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
 
     ],
 
@@ -234,6 +235,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
         'Setting' => Akaunting\Setting\Facade::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class
+
     ],
 
 ];

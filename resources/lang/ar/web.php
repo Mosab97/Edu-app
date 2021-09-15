@@ -1,171 +1,225 @@
 <?php
 /*
- * Dev Ashraf Al-Salibi
-ashraf.zza89@gmail.com
-WhatsApp 00970598466903
+Dev Mosab Irwished
+eng.mosabirwished@gmail.com
+WhatsApp +970592879186
 */
 
 return [
 
-    'Login' => 'تسجيل الدخول',
-    'Home' => 'الرئيسية',
-    'Services' => 'خدماتنا',
     'Confirm Delete' => 'تأكيد الحذف',
-    'Cancel' => 'الغاء',
-    'Delete' => 'Delete',
-    'About Us' => 'من نحن',
-    'Contact Us' => 'تواصل معنا',
-    'Your Name' => 'الاسم',
-    'Your Email' => 'الايميل',
-    'Your Phone' => 'رقم الهاتف',
-    'Services Of Ingaz' => 'خدماتنا',
-    'Compilations And Suggestions' => 'التجميعات والاقتراحات',
-    'Cooperative Training' => 'التدريب التعاوني',
-    'Recruitment' => 'تجنيد / توظيف',
-    'Facebook' => 'فيسبوك',
-    'LinkedIn' => 'لينكدان',
-    'Google' => 'جوجل',
-    'Friends' => 'أصدقاء',
-    'Others' => 'أخرى',
-    'Select Choice' => 'اختر',
-    'Name' => 'الاسم',
-    'Email' => 'الايميل',
-    'Phone' => 'رقم الهاتف',
-    'Target' => 'الهدف',
-    'How Did You Hear About Ingaz' => 'كيف سمعت عن انجاز',
+    'Cancel' => 'إلغاء',
+    'Delete' => 'حذف',
+
+    'Home' => 'الرئيسية',
+    'About Antadrak' => 'حول أنتظرك',
+    'Features' => 'المميزات',
+    'Download' => 'تحميل',
+    'Search engine Optimization &' => 'Search engine Optimization &',
+    'The 3 golden rules professional graphic designer don’t want you to know about.' => 'The 3 golden rules professional graphic designer don’t want you to know about.',
+    'More About' => 'المزيد عنا',
+    'Enjoy with more than' => 'تمتع مع ما يزيد عن',
+    'Resturant' => 'المطاعم',
+    'More about Antadrak' => 'المزيد حول أنتظرك',
+    'Order and receive within minutes' => 'أطلب واستلم خلال دقائق',
+    'Download the app' => 'حمل التطبيق',
+    'Ordered' => 'أطلب',
+    'Pay online' => 'إدفع أونلاين',
+    'Restaurants and cafes' => 'مطاعم و كافيهات',
+    'Product offers' => 'منتجات و عروض',
+    'Completed requests' => 'طلبات مكتملة',
+    'Active members' => 'أعضاء نشطين',
+    'Antadrak App' => 'تطبيق أنتظرك',
+    'This text is an example text' => 'هذا النص مثال لنص تجريبي يمكن وضعه هنا',
+    'call us' => 'اتصل بنا',
+    'Get alerts about your order' => 'احصل على تنبيهات حول طلبك',
+    'Get alerts on the status of your order' => 'احصل على تنبيهات حول حالة طلبك',
+    'Order, pay, receive' => 'اطلب ، ادفع ، استلم',
+    'Track your current order and review your previous orders' => 'تتبع طلبك الحالي وراجع طلباتك السابقة',
+    'What did they say about us' => 'ماذا قالوا عنا',
+    'Browse what our customers have said about Waiting For You' => 'تصفح ما قاله عملاؤنا عن انتظرك',
+    'join as restaurant' => 'انضم كمطعم',
+    'Terms & Conditions' => 'البنود و الظروف',
+    'Contact us' => 'اتصل بنا',
+    'Phone' => 'هاتف',
+    'Email' => 'البريد الإلكتروني',
+    'Address' => 'عنوان',
+    'Get In Touch' => 'ابقى على تواصل',
+    'Name' => 'اسم',
+    'Subject' => 'الرسالة',
+    'SEND' => 'إرسال',
+    'Download on the' => 'تنزيل من ملف',
+    'Start your business with us' => 'ابدأ عملك معنا',
+    'Fill the following form, and we will call you soon' => 'املأ النموذج التالي وسنتصل بك قريبًا',
+    'Full Name' => 'الاسم الكامل',
+    'Mr' => 'Mr',
+    'Ms' => 'Ms',
+    'Mobile Number' => 'رقم الهاتف المحمول',
+    'Merchant Name' => 'اسم المتجر',
+    'Send' => 'إرسال',
+    'Restaurants' => 'مطاعم',
+    'Mobile' => 'التليفون المحمول',
+    'Message Sent Successfully' => 'تم إرسال الرسالة بنجاح',
+    'Date Sent Successfully' => 'تم الإرسال بنجاح',
+    'facebook' => 'Facebook',
+    'IBAN (must be 21 digit )' => 'IBAN (يجب ان يكون 21 خانة)',
+    'pin your location on map' => 'قم بوضع مكانك على الخريطة',
+    'ID (must be 21 digit )' => 'ID (يجب ان يكون 21 خانة)',
+    'Upload Comm. Registration' => 'رفع السجل التجاري',
+    'Upload ID' => 'البطاقة الشخصية',
+    'ID (must be 10 digit )' => 'ID (يجب ان يكون 10 خانات)',
+    'Join us as Restaurant' => 'إنضم إلينا كمتجر',
+    'Anatdrak. All rights reserved' => 'أنتظرك. كل الحقوق محفوظة',
+    'Search' => 'بحث',
+    'Reset' => 'إلغاء',
+    'Confirm Activate Payments' => 'تأكيد تفعيل الدفع',
+    'Activate' => 'تفعيل',
+    'Change Status' => 'تغيير الحالة',
+    'Update' => 'تحديث',
+    'Swift Code' => 'Swift Code',
+    'IBAN (SAxxxxxxxxxxxxxxxxxxxxxx)' => 'IBAN (SAxxxxxxxxxxxxxxxxxxxxxx)',
+
+    'price' => 'الاسعار',
+    'Contact Info' => 'معلومات التواصل',
+    'instagram' => 'انستجرام',
+    'youtube' => 'يوتيوب',
+    'the new ordering app' => 'تطبيق الجديد للطلبات',
+    'Lorem ipsum dolor sit amet, consetetur' => 'Lorem ipsum dolor sit amet, consetetur',
+    'Why I say old chap that is spiffing off his nut arse pear shaped plastered Jeffrey bodge barney some dodgy.!!' => 'Why I say old chap that is spiffing off his nut arse pear shaped plastered Jeffrey bodge barney some dodgy.!!',
+    'Market leaders use software to nrich their brand & business.' => 'Market leaders use software to nrich their brand & business.',
+    'Reactive' => 'تجديد',
+    'Expire' => 'الغاء تفعيل',
+    'Confirm Reactive' => 'تأكيد التجديد',
+    'Confirm Expire' => 'تأكيد الغاء التفعيل',
+    'Active' => 'اعادة تنشيط',
+    'Confirm Active' => 'تأكيد اعادة التنشيط',
+    'Choose package that is right for you' => 'اختر الباقة المناسبة لك',
+    'All Packages you can get it from your account now ,' => 'جميع الباقات المتاحة للاستخدام ,',
+    'Download App' => 'تحميل التطبيق',
+    'Per Month' => 'في الشهر',
+    'orders' => '#طلبات',
+    'All orders inside the city' => 'جميع التوصيلات بداخل المدينة',
+    'Commercial Registration No.' => 'رقم السجل التجاري',
+    'Select Merchant Type' => 'حدد نوع التاجر',
+    'Select City' => 'حدد المدينة',
+    'Select Bank' => 'حدد البنك',
+    'join as merchant' => 'انضم الينا كمطعم',
+    'Free delivery for Merchant within 24 km' => 'توصيلة مجانية للتجار في حدود 24 كم',
+    'Download the application now and enjoy our services' => 'حمل التطبيق الان وتمتع بخدماتنا',
+    'Spreading fast' => 'نشرة سريعة',
+    'Merchant' => 'تجار',
+    'Order' => 'طلبات',
+    'Customers' => 'عملاء',
+    'Products' => 'منتجات',
+    'Our Features' => 'خدماتنا',
+    'Mobile no' => 'رقم الجوال',
+    'Title' => 'العنوان',
     'Message' => 'الرسالة',
-    'Message Sent Successfully' => 'تم ارسال الرسالة بنجاح',
-    'English' => 'انجليزية',
-    'Arabic' => 'العربية',
-    'Request Service' => 'أطلب خدمة',
-    'Free consultation' => 'استشارة مجانية',
-    'Top Services' => 'الميزات',
-    'Packages' => 'نظام الاشتراكات',
-    'FAQ' => 'الأسئلة الشائعة',
-    'Customer Reviews' => 'تقييمات العملاء',
-    'Blog' => 'المدونة',
-    'Blogs' => 'المدونة',
-    'User Login' => 'تسجيل الدخول',
-    'Login using an existing account or create a new account' => 'سجل دخولك عن طريق الايميل او انشأ حساب جديد من ',
-    'here' => 'هنا',
-    'Login with:' => 'سجل دخول عن طريق:',
-    'Privacy Policy' => 'سياسة الاستخدام والخصوصية',
-    'Conditions' => 'الشروط والأحكام',
-    'Join Us' => 'انضم لنا',
-    'Help in choosing the accounting program' => 'خدمة المساعدة في اختيار البرنامج المحاسبي',
-    'Project activity' => 'نشاط المشروع',
-    'The company offers' => 'الشركة تقدم',
-    'Service' => 'خدمة',
-    'Product' => 'منتج',
-    'Details' => 'وصف الشركة (نبذة مختصرة)',
-    'Profile' => 'هل يوجد لدى الشركة بروفايل يرجى ارفاقه (اختياري)',
-    'Catalog' => 'هل يوجد لدى الشركة كتالوج أصناف يرجى ارفاقه (اختياري)',
-    'Employee Number' => 'عدد الموظفين',
-    'The size of the estimated revenue of the project' => 'حجم الايرادات التقديرية للمشروع',
-    'The size of the estimated expenses of the project' => 'حجم المصاريف التقديرية للمشروع',
-    'The monthly budget allocated to the accounting program' => 'الميزانية الشهرية المخصصة للبرنامج المحاسبي',
-    'Project Language' => 'لغة البرنامج (العربية أو الانجليزية)',
-    'Select Language' => 'حدد اللغة',
-    'Other helpful attachments' => 'مرفقات مساعدة أخرى',
-    'Describe your need for the program' => 'وصف احتياجك من البرنامج',
-    'Submit' => 'أرسل',
-    'Service Form' => 'طلب خدمة',
-    'Advantages' => 'كيف يمكننا مساعدتك؟',
+    'Offers' => 'العروض',
+    'Gallery' => 'معرض',
+    'Download the app and get 30% off for a week' => 'حمل التطبيق وأحصل على :percent% خصم لمدة :day ايام ',
+    'LOAD MORE' => 'تحميل المزيد',
+    'filter' => 'فلتر',
+    'Categories' => 'التصنيفات',
+    'Limited Offers' => 'عروض محدودة',
+    'Best Offers' => 'عروض مميزة',
+    'Add to Cart' => 'أضف الى السلة',
+    'Details' => 'تفاصيل',
+    'Related Products' => 'منتجات شبيهة',
+    'Download The App to Purchase and preview thousands of hight quality Products, get it NOW!' => 'Download The App to Purchase and preview thousands of hight quality Products, get it NOW!',
+    'Latest Posts' => 'اخر المقالات',
+    'Price' => 'السعر',
+    'Privacy & policy' => 'شروط الاستخدام والخصوصية',
+    'Most Popular' => 'الأكثر مبيعاً',
+    'We have chosen for you our distinctive products that are most requested by our valued customers' => 'اخترنا لكم منتجاتنا المميزة والأكثر طلباً من عملائنا الكرام',
+    'Fast and accurate delivery' => 'توصيل سريع ودقيق',
+    'Our services are characterized by their speed and accuracy by adhering to the specified dates and quantities to be delivered,
+It is carried out by a group of our distinguished employees who are ready to reach you wherever you are and at any time,
+In addition to chatting with the driver or direct calling.' => 'تتميز خدماتنا بسرعتها ودقتها بالإلتزام في المواعيد المحددة والكميات المطلوب توصيلها,
+يقوم بها مجموعة من موظفينا المميزون والجاهزون للوصول اليكم اينما كنتم وفي أي وقت,
+بالإضافة الى خدمة الدردشة مع السائق أو الاتصال المباشر.',
+    'Special gifts and offers' => 'هدايا وعروض مميزة',
+    'Stay up-to-date with the latest news and offers in the "Macca Cafe" app.
+We have continuous offers and gifts (daily, weekly, and monthly),
+Do not forget to review the notifications and the offers page, as you may be the winner today 😊.' => 'ابقى على اطلاع دائم على آخر الأخبار والعروض في تطبيق " مكا كافيه – Macca Cafe " ,
+فلدينا عروض وهدايا مستمرة (يومية, اسبوعية, شهرية) ,
+فلا تنسى مراجعة الإشعارات وصفحة العروض فقد تكون انت الرابح اليوم 😊 .
+',
+    'Macca Pay Points' => 'نقاط Macca Pay',
+    'To all our distinguished customers (customers, shops, and dealers of the gymnasium). We have created these points specifically for you.
+When you first register in the application, share the application with friends and family and make successful purchases through the application,
+You will get Macca Pay points, which enable you to choose free special gifts from the "Macca Cafe" store.' => 'الى جميع عملائنا المميزين (زبائن, محلات تجارية, تجار الجملة) لقد أنشأنا هذه النقاط خصيصاً لكم,
+فعند أول تسجيل في التطبيق, ومشاركة التطبيق مع الأصدقاء والعائلة و اتمام عمليات شراء ناجحة من خلال التطبيق,
+ستحصلون على نقاط Macca Pay والتي تمكنكم من اختيار هدايا مميزة مجانية من متجر " مكا كافيه – Macca Cafe "
 
-    'Logout' => 'تسجيل خروج',
-    'Register' => 'تسجيل',
-    'Country' => 'الدولة',
-    'City' => 'المدينة',
-    'Client Type' => 'حدد نوع الحساب',
-    'Url' => 'رابط البروفايل',
-    'Username' => 'اسم المستخدم',
-    'Password' => 'كلمة المرور',
-    'All Faq' => 'الأسألة الشائعة',
-    'Buy' => 'شراء',
-    'Work activity' => 'النشاط العمل',
-    'Current accounting program' => 'البرنامج المحاسبي الحالي',
-    'Service description' => 'تفاصيل الخدمة',
-    'Other help attachments' => 'مرفقات مساعدة أخرى',
-    'Mechanism of Action' => 'الية العمل',
-    'TEAM VIEWER' => 'تيم فيور',
-    'SKAYPE' => 'سكايبي',
-    'GOOGLE MEET' => 'جوجل ميت',
-    'ZOOM' => 'زوم',
-    'Service price' => 'سعر الخدمة',
-    'Total' => 'الاجمالي',
-    'Commission' => 'الضريبة',
-    'Price After Commission' => 'سعر ما بعد الضريبة',
-    'Bought Successfully' => 'شكرا لك على طلبك لخدمة التدريب وسيقوم فريق انجاز بالتواصل معك خلال مدة لا تزيد عن ساعتين في أوقات العمل الرئيسية',
-    'Training Service' => 'خدمة التدريب',
-    'Training title' => 'عنوان التدريب',
-    'Training requirements' => 'المتطلبات التدريبية',
-    'Number people' => 'عدد الأشخاص',
-    'Number of hours required' => 'عدد الساعات المطلوبة',
-    'Can not Register more than once' => 'لا يمكنك التسجيل اكثر من مرة على نفس الخدمة',
-    'Request a special service' => 'طلب خدمة خاصة',
-    'Project Title' => 'عنوان المشروع',
-    'Service Type' => 'نوع الخدمة',
-    'Account management services' => 'خدمات إدارة الحساب',
-    'Financial analysis services' => 'خدمات التحليل المالي',
-    'Tax services' => 'الخدمات الضريبية',
-    'Feasibility study services and business plans' => 'خدمات دراسة الجدوى وخطط العمل',
-    'training services' => 'خدمات التدريب',
-    'Project Details' => 'وصف المشروع',
-    'Expected Budget' => 'الميزانية المتوقعة',
-    'Expected Delivery Time' => 'المدة المتوقعة بالتسليم',
-    'Thanks the specialist for contacting you for a period of no more than 24 hours.' => 'شكر لك, سيقوم المختص بالتواصل معك مدة لا تزيد عن 24 ساعة.',
-    'Send' => 'أرسل',
-    'Download Brochure' => 'تحميل البروشور',
-    'Your Message' => 'اكتب رسالتك هنا',
-    'Show More' => 'رؤية المزيد',
-    'Hour Price' => 'سعر الساعة',
-    'Browse' => 'تصفح',
-    'Select Employee Number' => 'حدد رقم الموظف',
-    '0 - 10' => '0 - 10',
-    '11 - 49' => '11 - 49',
-    '50 - 100' => '50 - 100',
-    'أكثر من مئة' => 'أكثر من مئة',
-    'Service Details' => 'تفاصيل الخدمة',
-    'Price:' => 'السعر:',
-    'Sign Up Now' => 'اشترك الان',
+',
+    'Safe requests' => 'طلبات آمنة',
+    'Our services are characterized by delivering orders to consumers anywhere,
+And by ensuring that the order arrives quickly, safely and correctly without errors in the quantity or type of product,
+You will be given sufficient time to inspect your application as soon as it reaches you.' => 'تتميز خدماتنا بتوصيل الطلبات الى المستهلكين في أي مكان ,
+وبضمان وصول الطلب بشكل سريع وآمن وصحيح دون أخطاء في الكمية أو نوع المنتج,
+وسيتم منحكم وقت كافٍ لتفقد طلبكم فور وصوله اليكم.
+',
+  'Support center' => 'مركز الدعم',
+  'Our support center awaits your messages at any time, anywhere and in any language,
+Whether your message is a request for a quote, an inquiry about a service, a feedback, or a complaint,
+We are at your service at any time, with complete transparency and confidentiality, as you will be answered by e-mail.' => 'مركز الدعم الخاص بنا بانتظار رسائلكم في أي وقت ومن أي مكان وبأي لغة,
+سواء كانت رسالتكم عبارة عن طلب عرض سعر أو استفسار عن خدمة أو تغذية راجعة أو شكوى,
+نحن بخدمتكم في أي وقت وبشفافية وسرية تامة, إذ أنه سيتم الرد عليكم من خلال البريد الالكتروني.
+',
+  'Free delivery service' => 'خدمة التوصيل المجاني',
+  'Do not be surprised !! .. Yes, we have a free delivery service under simple conditions.
+If you have requested your request and there is one of our representatives near you so that the distance does not exceed 3 km,
+Or if you have registered in the application as (commercial store, wholesaler), you will receive your request for free wherever you are.' => 'لا تستغرب !!.. أجل لدينا خدمة توصيل مجاني ضمن شروط بسيطة,
+اذا كنت قد طلبت طلبك وكان يوجد أحد مندوبينا بالقرب منك بحيث لا تتعدى المسافة 3 كم,
+أو اذا كنت قد سجلت في التطبيق كـ (محل تجاري, تاجر جملة) فيصلك طلبك اينما كنت مجاناً.
+',
+  'About Us' => 'من نحن',
+  'Invalid data' => 'يرجى التأكد من البيانات',
+  'We have special offers' => 'يوجد لدينا عروض مميزة',
+  'We have limited offers' => 'يوجد لدينا عروض محدودة',
+  'Take the opportunity !! An amazing offer that will not be repeated and for a limited time.' => 'اغتنم الفرصة !! عرض مذهل لن يتكرر ولفترة محدودة.',
+  'Order it now before stocks run out.' => 'اطلبه الآن قبل نفاذ الكمية.',
+  'For lovers of offers ... we have dedicated these special products to you.' => 'لمحبي العروض ... خصصنا لكم هذه المنتجات المميزة.',
+  'More featured products' => 'المزيد من المنتجات المميزة ',
+  'Our services are characterized by their speed and accuracy by adhering to the specified dates and quantities to be delivered,
+It is carried out by a group of our distinguished employees who are ready to reach you wherever you are and at any time,
+In addition to chatting with the driver or direct calling.' => 'Our services are characterized by their speed and accuracy by adhering to the specified dates and quantities to be delivered,
+It is carried out by a group of our distinguished employees who are ready to reach you wherever you are and at any time,
+In addition to chatting with the driver or direct calling.',
+  'Stay up-to-date with the latest news and offers in the "Macca Cafe" app.
+We have continuous offers and gifts (daily, weekly, and monthly),
+Do not forget to review the notifications and the offers page, as you may be the winner today 😊.' => 'Stay up-to-date with the latest news and offers in the "Macca Cafe" app.
+We have continuous offers and gifts (daily, weekly, and monthly),
+Do not forget to review the notifications and the offers page, as you may be the winner today 😊.',
+  'To all our distinguished customers (customers, shops, and dealers of the gymnasium). We have created these points specifically for you.
+When you first register in the application, share the application with friends and family and make successful purchases through the application,
+You will get Macca Pay points, which enable you to choose free special gifts from the "Macca Cafe" store.' => 'To all our distinguished customers (customers, shops, and dealers of the gymnasium). We have created these points specifically for you.
+When you first register in the application, share the application with friends and family and make successful purchases through the application,
+You will get Macca Pay points, which enable you to choose free special gifts from the "Macca Cafe" store.',
+  'Our services are characterized by delivering orders to consumers anywhere,
+And by ensuring that the order arrives quickly, safely and correctly without errors in the quantity or type of product,
+You will be given sufficient time to inspect your application as soon as it reaches you.' => 'Our services are characterized by delivering orders to consumers anywhere,
+And by ensuring that the order arrives quickly, safely and correctly without errors in the quantity or type of product,
+You will be given sufficient time to inspect your application as soon as it reaches you.',
+  'Our support center awaits your messages at any time, anywhere and in any language,
+Whether your message is a request for a quote, an inquiry about a service, a feedback, or a complaint,
+We are at your service at any time, with complete transparency and confidentiality, as you will be answered by e-mail.' => 'Our support center awaits your messages at any time, anywhere and in any language,
+Whether your message is a request for a quote, an inquiry about a service, a feedback, or a complaint,
+We are at your service at any time, with complete transparency and confidentiality, as you will be answered by e-mail.',
+  'Do not be surprised !! .. Yes, we have a free delivery service under simple conditions.
+If you have requested your request and there is one of our representatives near you so that the distance does not exceed 3 km,
+Or if you have registered in the application as (commercial store, wholesaler), you will receive your request for free wherever you are.' => 'Do not be surprised !! .. Yes, we have a free delivery service under simple conditions.
+If you have requested your request and there is one of our representatives near you so that the distance does not exceed 3 km,
+Or if you have registered in the application as (commercial store, wholesaler), you will receive your request for free wherever you are.',
 
-    'Order' => 'Order',
-    'Project Activity' => 'نشاط المشروع',
-    'Company Offers' => 'عروض الشركة',
-    'Training Requirements' => 'متطلبات التدريب',
-    'Back' => 'الرجوع',
-    'Profile Url' => 'رابط الملف الشخصي',
-    'Catalog Url' => 'رابط الكتالوج',
-    'User Profile' => 'البروفايل',
-    'Save' => 'Save',
-    'Profile Updated Successfully' => 'تم تحديث الملف الشخصي بنجاح',
-    'Pay for service' => 'دفع مقابل: خدمة الخدمة',
-    'Pay for service to the site Injaz' => 'دفع مقابل: خدمة موقع إنجاز',
-  'Pay for Package' => 'دفع ثمن الحزمة',
-  'Pay for package to the site Injaz' => 'دفع ثمن الطرد إلى موقع إنجاز',
-  'Expected Delivery Time In Days' => 'المدة المتوقعة للتسليم بالأيام',
-  'Help Center' => 'الدعم الفني',
-  'Service Name' => 'اسم الخدمة',
-  'Service Price' => 'سعر الخدمة',
-  'Commission Cost' => 'مبلغ الضريبة',
-  'Total Price' => 'سعر الكلي',
-  'Next' => 'التالي',
-  'Package Name' => 'اسم الباقة',
-  'Package Price' => 'سعر الباقة',
-
-  'Your Account' => 'الحساب الخاص بك',
-
-  'Account' => 'الحساب الشخصي',
-  'profile' => 'الصفحة الشخصية',
-
-  'Package Price USD' => 'سعر الباقة بالدولار',
-  'Total Price USD' => 'المجموع الكلي بالدولار',
-
-  'Id' => 'Id',
-  'User Id' => 'معرف المستخدم',
-  'User Name' => 'اسم المستخدم',
-  'User Phone' => 'رقم جوال',
-  'Other Help Attachments' => 'مرفقات مساعدة اخرى',
-  'Created At' => 'أنشأ منذ',
-    'Special Service' => 'الخدمات الخاصة',
+    'Special gifts and offers Details' => 'ابقى على اطلاع دائم على آخر الأخبار والعروض في تطبيق " مكا كافيه  Macca Café  –" فلدينا عروض وهدايا مستمرة ( يومية, اسبوعية, شهرية ) , فلا تنسى مراجعة الإشعارات وصفحة العروض فقد تكون انت الرابح اليوم .',
+  'Macca Pay Points Deatils' => 'الى جميع عملائنا المميزين عند أول تسجيل في التطبيق, ومشاركة التطبيق مع الأصدقاء والعائلة أو اتمام عمليات شراء ناجحة من خلال التطبيق, ستحصلون على نقاط Macca Pay والتي تمكنكم من اختيار هدايا مميزة مجانية من متجر " مكا كافيه  Macca Café  – "',
+  'Safe requests Deatils' => 'تتميز خدماتنا بتوصيل الطلبات الى المستهلكين في أي مكان ,
+وبضمان وصول الطلب بشكل سريع وآمن وصحيح دون أخطاء في الكمية أو نوع المنتج,
+وسيتم منحكم وقت كافٍ لتفقد طلبكم فور وصوله اليكم.
+',
+  'Support center Details' => 'هل تريد الأستفسار عن خدمة أو عرض أسعار؟ هل لديك تغذية راجعة أو شكوى أو طلب ؟                                                                                                                       مركز الدعم الخاص بنا بانتظار رسائلكم في من أي مكان وبأي لغة, نحن بخدمتكم في أي وقت وبشفافية وسرية تامة, وسيتم الرد عليكم من خلال البريد الالكتروني. ',
+  'Free delivery service Deatils' => 'لا تستغرب !!.. اذا كنت صاحب محل تجاري أو تاجر جملة فسيصلك طلبك مجاناً اينما كنت .                                                                                                                                                  لم ننسَ باقي العملاء ستحصل على طلبك مجانًا إذا طلبت وكان أحد مندوبينا يبعد عنك 3 كم أو أقل.',
+  'Fast and accurate delivery Details' => 'السرعة والدقة بالإلتزام في المواعيد  هو شعارنا, نضمن لكم وصول المنتجات دون أخطاء في الكمية أو نوع المنتج, يمكنكم فحص الطلب والتاكد منه فور وصوله وقبل استلامه.                                                                                       موظفونا المميزون جاهزون للوصول اليكم اينما كنتم وفي أي وقت, كما يكمنكم الدردشة مع السائق أو الاتصال المباشر به لاي استفسار عن الشحنة.',
 ];

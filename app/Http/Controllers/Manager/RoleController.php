@@ -12,7 +12,7 @@ class RoleController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:Roles', ['only' => ['index','create','edit', 'destroy']]);
+//        $this->middleware('permission:Roles', ['only' => ['index','create','edit', 'destroy']]);
     }
 
     public function index(Request $request)

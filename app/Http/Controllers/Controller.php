@@ -2,16 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\AgentTapFile;
-use App\Models\AgentTapFileJoin;
 use App\Models\Merchant;
-use App\Models\SmsCode;
-use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Http\Client\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -29,18 +24,18 @@ class Controller extends BaseController
 
     public function __construct()
     {
-        $this->perPage = (integer) request()->get('perPage',15);
+        $this->perPage = (integer)request()->get('perPage', 15);
     }
 
     public function lang($local)
     {
-        session(['lang'=>$local]);
-        if(Auth::guard('manager')->check()){
+        session(['lang' => $local]);
+        if (Auth::guard('manager')->check()) {
             $user = Auth::guard('manager')->user();
             $user->update([
                 'lang' => $local,
             ]);
-        }elseif(Auth::guard('web')->check()){
+        } elseif (Auth::guard('web')->check()) {
             $user = Auth::guard('web')->user();
             $user->update([
                 'lang' => $local,
@@ -50,11 +45,11 @@ class Controller extends BaseController
         return back();
     }
 
-    protected function sendResponse($result, $message = 'success',$code = 200)
+    protected function sendResponse($result, $message = 'success', $code = 200)
     {
         $response = [
             'success' => true,
-            'data'    => $result,
+            'data' => $result,
             'message' => $message,
             'status' => $code,
         ];
@@ -69,27 +64,28 @@ class Controller extends BaseController
             'status' => $code,
         ];
 
-        if(!empty($errorMessages)){
+        if (!empty($errorMessages)) {
             $response['data'] = $errorMessages;
         }
 
         return response()->json($response, $code);
     }
 
-    protected function uploadImage($file,$path = ''){
+    protected function uploadImage($file, $path = '')
+    {
         $fileName = $file->getClientOriginalName();
         $file_exe = $file->getClientOriginalExtension();
-        $new_name = uniqid().'.'.$file_exe;
-        $directory = 'uploads'.'/'.$path;//.'/'.date("Y").'/'.date("m").'/'.date("d");
+        $new_name = uniqid() . '.' . $file_exe;
+        $directory = 'uploads' . '/' . $path;//.'/'.date("Y").'/'.date("m").'/'.date("d");
         $destienation = public_path($directory);
-        $file->move($destienation , $new_name);
-        return $directory.'/'.$new_name;
+        $file->move($destienation, $new_name);
+        return $directory . '/' . $new_name;
     }
 
     protected function deleteImage($image)
     {
-        if(!is_null($image) && file_exists(public_path().$image)){
-            unlink(public_path().$image);
+        if (!is_null($image) && file_exists(public_path() . $image)) {
+            unlink(public_path() . $image);
             return true;
         }
         return false;
@@ -97,11 +93,11 @@ class Controller extends BaseController
 
     public function generation_code()
     {
-        $code = mt_rand(1000,9999);
-        $is_set = SmsCode::where('code',$code)->where('used', 0)->get();
-        while(count($is_set) > 0){
-            $code = mt_rand(1000,9999);
-            $is_set = SmsCode::where('code',$code)->where('used', 0)->get();
+        $code = mt_rand(1000, 9999);
+        $is_set = SmsCode::where('code', $code)->where('used', 0)->get();
+        while (count($is_set) > 0) {
+            $code = mt_rand(1000, 9999);
+            $is_set = SmsCode::where('code', $code)->where('used', 0)->get();
         }
         return $code;
     }
@@ -115,7 +111,7 @@ class Controller extends BaseController
             $username = "966535798692";
             $password = "Hus@159357564";
             $sender = "Antaderk";
-            $link = "https://www.hisms.ws/api.php?send_sms&username=".$username."&password=".$password."&numbers=".$number."&sender=".$sender."&message=".$message;
+            $link = "https://www.hisms.ws/api.php?send_sms&username=" . $username . "&password=" . $password . "&numbers=" . $number . "&sender=" . $sender . "&message=" . $message;
             $client = new Client();
             $res = $client->request('GET', $link, []);
             $log = self::saveLog($message, $number, $res);
@@ -152,20 +148,20 @@ class Controller extends BaseController
 
     public static function createAgentBusinessAccount($merchant, $identify_document, $cr_document)
     {
-        $user_mobile = str_replace("+966","", $merchant->user->mobile);
-        $data = array (
+        $user_mobile = str_replace("+966", "", $merchant->user->mobile);
+        $data = array(
             'name' =>
-                array (
-                    'en' => $merchant->translate('en')->name ? $merchant->translate('en')->name:$merchant->name,
-                    'ar' => $merchant->translate('ar')->name ? $merchant->translate('en')->name:$merchant->name,
+                array(
+                    'en' => $merchant->translate('en')->name ? $merchant->translate('en')->name : $merchant->name,
+                    'ar' => $merchant->translate('ar')->name ? $merchant->translate('en')->name : $merchant->name,
                 ),
             'type' => 'corp',
             'entity' =>
-                array (
+                array(
                     'legal_name' =>
-                        array (
-                            'en' => $merchant->translate('en')->name ? $merchant->translate('en')->name:$merchant->name,
-                            'ar' => $merchant->translate('ar')->name ? $merchant->translate('en')->name:$merchant->name,
+                        array(
+                            'en' => $merchant->translate('en')->name ? $merchant->translate('en')->name : $merchant->name,
+                            'ar' => $merchant->translate('ar')->name ? $merchant->translate('en')->name : $merchant->name,
                         ),
                     'is_licensed' => true,
                     'license_number' => '2134342SE',
@@ -173,53 +169,53 @@ class Controller extends BaseController
                     'country' => 'KW',
                     'settlement_by' => 'Acquirer',
                     'documents' =>
-                        array (
+                        array(
                             0 =>
-                                array (
+                                array(
                                     'type' => 'Commercial Registration',
                                     'number' => '1234567890',
                                     'issuing_country' => 'SA',
                                     'issuing_date' => '2019-07-09',
                                     'expiry_date' => '2024-07-09',
                                     'images' =>
-                                        array (
+                                        array(
                                             0 => $cr_document->tap_file_id,
                                         ),
                                 ),
                             1 =>
-                                array (
+                                array(
                                     'type' => 'Identity Document',
                                     'number' => '1234567890',
                                     'issuing_country' => 'SA',
                                     'issuing_date' => '2019-07-09',
                                     'expiry_date' => '2024-07-09',
                                     'images' =>
-                                        array (
+                                        array(
                                             0 => $identify_document->tap_file_id,
                                         ),
                                 ),
                         ),
                     'bank_account' =>
-                        array (
+                        array(
                             'iban' => $merchant->i_ban,
                         ),
                 ),
             'contact_person' =>
-                array (
+                array(
                     'name' =>
-                        array (
+                        array(
                             'title' => 'Mr',
                             'first' => $merchant->user->name,
                             'middle' => $merchant->user->name,
                             'last' => $merchant->user->name,
                         ),
                     'contact_info' =>
-                        array (
+                        array(
                             'primary' =>
-                                array (
+                                array(
                                     'email' => $merchant->user->email,
                                     'phone' =>
-                                        array (
+                                        array(
                                             'country_code' => '965',
                                             'number' => $user_mobile,
                                         ),
@@ -228,33 +224,33 @@ class Controller extends BaseController
                     'is_authorized' => true,
                 ),
             'brands' =>
-                array (
+                array(
                     0 =>
-                        array (
+                        array(
                             'name' =>
-                                array (
-                                    'en' => $merchant->translate('en')->name ? $merchant->translate('en')->name:$merchant->name,
-                                    'ar' => $merchant->translate('ar')->name ? $merchant->translate('en')->name:$merchant->name,
+                                array(
+                                    'en' => $merchant->translate('en')->name ? $merchant->translate('en')->name : $merchant->name,
+                                    'ar' => $merchant->translate('ar')->name ? $merchant->translate('en')->name : $merchant->name,
                                 ),
                             'sector' =>
-                                array (
+                                array(
                                     0 => 'Sec 1',
                                     1 => 'Sec 2',
                                 ),
                             'website' => 'https://antaderk.com/',
                             'social' =>
-                                array (
+                                array(
                                     0 => 'https://antaderk.com/',
                                     1 => 'https://antaderk.com/',
                                 ),
                         ),
                 ),
             'post' =>
-                array (
+                array(
                     'url' => 'https://antaderk.com/',
                 ),
             'metadata' =>
-                array (
+                array(
                     'mtd' => 'metadata',
                 ),
         );
@@ -287,7 +283,7 @@ class Controller extends BaseController
         }
 
         $res = json_decode($response);
-        if(isset($res->destination_id) && isset($res->id)){
+        if (isset($res->destination_id) && isset($res->id)) {
             $merchant->tap_activate = 1;
             $merchant->destination_id = $res->destination_id;
             $merchant->business_id = $res->id;
@@ -296,15 +292,15 @@ class Controller extends BaseController
         }
 
         Log::emergency($response);
-        return  $res;
+        return $res;
     }
 
-    public static function uploadAgentFileFromRequest($user, $identity_document , $type = "identity_document")
+    public static function uploadAgentFileFromRequest($user, $identity_document, $type = "identity_document")
     {
         $curl = curl_init();
-        if(function_exists('curl_file_create')){
+        if (function_exists('curl_file_create')) {
             $filePath = curl_file_create($identity_document);
-        } else{
+        } else {
             $filePath = '@' . realpath($identity_document);
         }
         curl_setopt_array($curl, array(
@@ -316,7 +312,7 @@ class Controller extends BaseController
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "POST",
-            CURLOPT_POSTFIELDS => array('purpose' => $type,'file_link_create' => 'true','file'=> $filePath),
+            CURLOPT_POSTFIELDS => array('purpose' => $type, 'file_link_create' => 'true', 'file' => $filePath),
             CURLOPT_HTTPHEADER => array(
                 "Authorization: Bearer sk_live_yeKxkRhGAuSBiE8CvdDZcOQY"
             ),
@@ -333,25 +329,23 @@ class Controller extends BaseController
         }
 
 
-        if ($user instanceof Merchant)
-        {
-                $agent_file = new AgentTapFile();
-                $agent_file->merchant_id = $user->id;
-                $agent_file->tap_file_id = $dataResponse['id'];
-                $agent_file->file_type = $type;
-                $agent_file->file_json = json_encode($dataResponse);
-                $agent_file->save();
-        }else{
-                $agent_file = new AgentTapFileJoin();
-                $agent_file->join_us_id = $user->id;
-                $agent_file->tap_file_id = $dataResponse['id'];
-                $agent_file->file_type = $type;
-                $agent_file->file_json = json_encode($dataResponse);
-                $agent_file->save();
+        if ($user instanceof Merchant) {
+            $agent_file = new AgentTapFile();
+            $agent_file->merchant_id = $user->id;
+            $agent_file->tap_file_id = $dataResponse['id'];
+            $agent_file->file_type = $type;
+            $agent_file->file_json = json_encode($dataResponse);
+            $agent_file->save();
+        } else {
+            $agent_file = new AgentTapFileJoin();
+            $agent_file->join_us_id = $user->id;
+            $agent_file->tap_file_id = $dataResponse['id'];
+            $agent_file->file_type = $type;
+            $agent_file->file_json = json_encode($dataResponse);
+            $agent_file->save();
         }
-        return  $dataResponse;
+        return $dataResponse;
     }
-
 
 
 }

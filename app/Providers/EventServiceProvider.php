@@ -9,6 +9,7 @@ use App\Events\CancelOrderEvent;
 use App\Events\CompleteOrderEvent;
 use App\Events\DriverAcceptOrderEvent;
 use App\Events\DriverCompletedOrderEvent;
+use App\Events\DriverOnWayDoneOrderEvent;
 use App\Events\DriverOnWayOrderEvent;
 use App\Events\NewBranchEvent;
 use App\Events\NewOrderEvent;
@@ -77,6 +78,9 @@ class EventServiceProvider extends ServiceProvider
             DriverOnWayOrderListener::class,
         ],
 
+        DriverOnWayDoneOrderEvent::class => [
+            DriverOnWayDoneOrderListener::class,
+        ],
         DriverCompletedOrderEvent::class => [
             DriverCompletedOrderListener::class,
         ],

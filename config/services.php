@@ -30,15 +30,4 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
-    'linkedin' => [
-        'client_id' => env('LINKEDIN_CLIENT_ID', '77lywgc9nmj4re'),
-        'client_secret' => env('LINKEDIN_CLIENT_SECRET', 'CmC4y4RT4ZQgGWjk'),
-        'redirect' => env('LINKEDIN_CALLBACK_URL', 'http://ingaz.test/linkedin/callback'),
-    ],
-    'google' => [
-        'client_id' => env('GOOGLE_CLIENT_ID','267887077730-3nhr70cu93db86t77o18iru54id632uh.apps.googleusercontent.com'),
-        'client_secret' => env('GOOGLE_CLIENT_SECRET','hw-IiCal66U7ZJ-ODuCUWJIE'),
-        'redirect' => env('GOOGLE_CALLBACK_URL', 'http://127.0.0.1:8000/login/google/callback'),
-    ],
-
 ];

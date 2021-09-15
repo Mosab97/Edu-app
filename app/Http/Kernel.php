@@ -2,10 +2,7 @@
 
 namespace App\Http;
 
-use App\Http\Middleware\AssignGuard;
 use App\Http\Middleware\BranchMiddleware;
-use App\Http\Middleware\CheckForAllScopes;
-use App\Http\Middleware\CheckIsAuth;
 use App\Http\Middleware\RestaurantMiddleware;
 use App\Http\Middleware\SetLocalLanguage;
 use App\Http\Middleware\SetLocalLanguageWeb;
@@ -13,13 +10,6 @@ use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
 {
-    /**
-     * The application's global HTTP middleware stack.
-     *
-     * These middleware are run during every request to your application.
-     *
-     * @var array
-     */
     protected $middleware = [
         // \App\Http\Middleware\TrustHosts::class,
         \App\Http\Middleware\TrustProxies::class,
@@ -29,12 +19,6 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
     ];
-
-    /**
-     * The application's route middleware groups.
-     *
-     * @var array
-     */
     protected $middlewareGroups = [
         'web' => [
             \App\Http\Middleware\EncryptCookies::class,
@@ -46,21 +30,13 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             SetLocalLanguage::class,
         ],
-
         'api' => [
             'throttle:60,1',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-//            SetLocalLanguage::class,
+            SetLocalLanguage::class,
         ],
     ];
 
-    /**
-     * The application's route middleware.
-     *
-     * These middleware may be assigned to groups or used individually.
-     *
-     * @var array
-     */
     protected $routeMiddleware = [
         'manager' => \App\Http\Middleware\RedirectIfNotManager::class,
         'manager.guest' => \App\Http\Middleware\RedirectIfManager::class,
@@ -76,19 +52,24 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'localWeb' => SetLocalLanguageWeb::class,
         'branch' => BranchMiddleware::class,
-        'CheckIsAuth' => CheckIsAuth::class,
+        'restaurant' => RestaurantMiddleware::class,
         'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
         'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
-//        'localization' => \App\Http\Middleware\localization::class,
-//        'scopes' => CheckForAllScopes::class,
-//        'scopes' => \Laravel\Passport\Http\Middleware\CheckScopes::class,
-//        'scope' => \Laravel\Passport\Http\Middleware\CheckForAnyScope::class,
-        'auth_guard' => AssignGuard::class,
+        'localization' => \App\Http\Middleware\localization::class,
+        'CheckIsClient' => \App\Http\Middleware\CheckIsClient::class,
+        'CheckIsDistributor' => \App\Http\Middleware\CheckIsDistributor::class,
+        'CheckIsNotBlocked' => \App\Http\Middleware\CheckIsNotBlocked::class,
+        'CheckIsActive' => \App\Http\Middleware\CheckIsActive::class,
+        'CheckIsVerified' => \App\Http\Middleware\CheckIsVerified::class,
+        'CheckHasCountry' => \App\Http\Middleware\CheckHasCountry::class,
+        'AppVersion' => \App\Http\Middleware\AppVersion::class,
+        'CheckAppIsStopped' => \App\Http\Middleware\CheckAppIsStopped::class,
+        'CheckOrderOwner' => \App\Http\Middleware\CheckOrderOwner::class,
+        'CheckTokenFromDashboard' => \App\Http\Middleware\CheckTokenFromDashboard::class,
+
     ];
-
-
-//    protected $middlewarePriority = [
-//        'localization' => \App\Http\Middleware\localization::class,
-//    ];
+    protected $middlewarePriority = [
+        'localization' => \App\Http\Middleware\localization::class,
+    ];
 
 }

@@ -1,6 +1,6 @@
 <?php
 /**
- * Dev Mosab Irwished
+ *Dev Mosab Irwished
 eng.mosabirwished@gmail.com
 WhatsApp +970592879186
  */
@@ -30,7 +30,7 @@ class GeneralException extends Exception
      * @param string $message
      * @param bool   $dontHide
      */
-    public function __construct($message, $dontHide = true)
+    public function __construct($message, $dontHide = false)
     {
         $this->message = $message;
         $this->dontHide = $dontHide;

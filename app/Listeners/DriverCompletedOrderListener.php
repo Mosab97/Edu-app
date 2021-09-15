@@ -10,7 +10,6 @@ use App\Events\DriverOnWayOrderEvent;
 use App\Models\Branch;
 use App\Models\Delivery;
 use App\Models\Order;
-use App\Models\OrderStatusTimeLine;
 use App\Models\User;
 use App\Notifications\AcceptOrderNotification;
 use App\Notifications\DriverAcceptOrderNotification;
@@ -33,20 +32,7 @@ class DriverCompletedOrderListener
             if ($user) Notification::send($user, new DriverCompletedOrderNotification($order));
             $order->update([
                 'status' => Order::COMPLETED,
-            ]);
-            $statusTimeLine = OrderStatusTimeLine::create([
-                'order_id' => $order->id,
-                'key' => Order::COMPLETED,
-                'key_name' => [
-                    'ar' => 'تم تسليم الطلب',
-                    'en' => '',
-                ],
-
-                'value' => Carbon::now(),
-                'details' =>  [
-                    'ar' => 'نتمنى لك تجربة سعيدة مع تطبيق الو',
-                    'en' => '',
-                ],
+                'status_time_line' => getNewEncodedArray(getAnonymousStatusObj(Order::COMPLETED, 'COMPLETED'), $order->status_time_line),
             ]);
 
         }

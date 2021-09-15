@@ -1,6 +1,5 @@
 <?php
-/*
-Dev Mosab Irwished
+/* Dev Mosab Irwished
 eng.mosabirwished@gmail.com
 WhatsApp +970592879186
 */

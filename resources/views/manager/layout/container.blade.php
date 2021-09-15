@@ -1,15 +1,15 @@
 @php
     $logo = Setting('logo');
-    $logo_min = Setting('logo_min');
-    $name = optional(Setting('name'))[lang()];
-@endphp
+    $logo = isset($logo)?$logo : dashboard_logo();
+    $logo_min =  $logo;
+      $name = optional(Setting('name'))[lang()];
 
+@endphp
     <!DOCTYPE html>
 <html lang="{{app()->getlocale()}}" dir="{{direction()}}">
 
 <!-- begin::Head -->
 <head>
-
     <meta charset="utf-8"/>
     <title>{{ isset($title) ? $title. " | ":''  }}{{ t('Dashboard') }}</title>
     <meta name="description" content="{{ t('Dashboard') }}">
@@ -29,18 +29,7 @@
     </script>
 
     <!--end::Fonts -->
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-V4WLKWZ68H"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
 
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-
-        gtag('js', new Date());
-        gtag('config', 'G-V4WLKWZ68H');
-    </script>
 
     <!--begin::Global Theme Styles(used by all pages) -->
     <link href="{{ asset('assets/css/demo6/style.bundle.'.direction('.').'css') }}" rel="stylesheet" type="text/css"/>
@@ -80,7 +69,7 @@
 @yield('style')
 <!--end::Layout Skins -->
     @if(isset($logo_min))
-        <link rel="shortcut icon" href="{{ url($logo_min) }}"/>
+        <link rel="shortcut icon" href="{{ asset($logo_min) }}"/>
     @endif
 </head>
 
@@ -96,11 +85,8 @@
 <div id="kt_header_mobile" class="kt-header-mobile  kt-header-mobile--fixed ">
     <div class="kt-header-mobile__logo">
         <a href="{{ url("/manager/home") }}">
-            @if(isset($logo))
-                <img alt="Logo" src="{{ url($logo) }}" style="width: 100%"/>
-            @else
-                <h4 class="text-center">Order</h4>
-            @endif
+            {{--            <img alt="Logo" src="{{ asset("assets/media/logos/logo.svg") }}" style="width: 6%"/>--}}
+            <h3>App Logo</h3>
         </a>
     </div>
     <div class="kt-header-mobile__toolbar">
@@ -128,46 +114,135 @@
                 <div id="kt_aside_menu" class="kt-aside-menu " data-ktmenu-vertical="1" data-ktmenu-scroll="1"
                      data-ktmenu-dropdown-timeout="500">
                     <ul class="kt-menu__nav ">
-                        <li class="kt-menu__item  @if(Request::is('manager/home*') ) kt-menu__item--active @endif"
-                            aria-haspopup="true">
-                            <a href="{{ route('manager.home') }}" class="kt-menu__link ">
-                                <i class="kt-menu__link-icon flaticon2-protection"></i>
-                                <span class="kt-menu__link-text">{{ t('Dashboard') }}</span>
-                            </a>
-                        </li>
-
-                        <li class="kt-menu__item  @if(Request::is('manager/levels*') ) kt-menu__item--active @endif"
-                            aria-haspopup="true">
-                            <a href="{{route('manager.'.\App\Models\Level::manager_route . '.index')}}"
-                               class="kt-menu__link ">
-                                <i class="kt-menu__link-icon flaticon2-email"></i>
-                                <span class="kt-menu__link-text">{{ t('Levels') }}</span>
-                            </a>
-                        </li>
-                        <li class="kt-menu__item  @if(Request::is('manager/ages*') ) kt-menu__item--active @endif"
-                            aria-haspopup="true">
-                            <a href="{{route('manager.'.\App\Models\Age::manager_route . '.index')}}"
-                               class="kt-menu__link ">
-                                <i class="kt-menu__link-icon flaticon2-email"></i>
-                                <span class="kt-menu__link-text">{{ t('Ages') }}</span>
-                            </a>
-                        </li>
-                        <li class="kt-menu__item  @if(Request::is('manager/courses*') ) kt-menu__item--active @endif"
-                            aria-haspopup="true">
-                            <a href="{{route('manager.'.\App\Models\Course::manager_route . '.index')}}"
-                               class="kt-menu__link ">
-                                <i class="kt-menu__link-icon flaticon2-email"></i>
-                                <span class="kt-menu__link-text">{{ t('Courses') }}</span>
-                            </a>
-                        </li>
-                        <li class="kt-menu__item  @if(Request::is('manager/payment*') ) kt-menu__item--active @endif"
-                            aria-haspopup="true">
-                            <a href="{{route('manager.'.\App\Models\Payment::manager_route . '.index')}}"
-                               class="kt-menu__link ">
-                                <i class="kt-menu__link-icon flaticon2-email"></i>
-                                <span class="kt-menu__link-text">{{ t('Payments') }}</span>
-                            </a>
-                        </li>
+                        @can('Dashboard')
+                            <li class="kt-menu__item  @if(Request::is('manager/home*') ) kt-menu__item--active @endif"
+                                aria-haspopup="true">
+                                <a href="{{ route('manager.home') }}" class="kt-menu__link ">
+                                    <i class="kt-menu__link-icon flaticon2-protection"></i>
+                                    <span class="kt-menu__link-text">{{ t('Dashboard') }}</span>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('map')
+                            <li class="kt-menu__item  @if(Request::is('manager/map*') ) kt-menu__item--active @endif"
+                                aria-haspopup="true">
+                                <a href="{{route('manager.map.index')}}" class="kt-menu__link ">
+                                    <i class="kt-menu__link-icon flaticon2-map"></i>
+                                    <span class="kt-menu__link-text">{{ t('Map') }}</span>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('financial_system')
+                            <li class="kt-menu__item  @if(Request::is('manager/financial_system*') ) kt-menu__item--active @endif"
+                                aria-haspopup="true">
+                                <a href="{{route('manager.financial_system.index')}}" class="kt-menu__link ">
+                                    <i class="kt-menu__link-icon fa fa-dollar-sign"></i>
+                                    <span class="kt-menu__link-text">{{ t('Financial system') }}</span>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('products')
+                            <li class="kt-menu__item  @if(Request::is('manager/product*') ) kt-menu__item--active @endif"
+                                aria-haspopup="true">
+                                <a href="{{route('manager.product.index')}}" class="kt-menu__link ">
+                                    <i class="kt-menu__link-icon flaticon2-cube-1"></i>
+                                    <span class="kt-menu__link-text">{{ t('Products') }}</span>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('Product Offers')
+                            <li class="kt-menu__item  @if(Request::is('manager/offer*') ) kt-menu__item--active @endif"
+                                aria-haspopup="true">
+                                <a href="{{route('manager.offer.index')}}" class="kt-menu__link ">
+                                    <i class="kt-menu__link-icon flaticon2-cube-1"></i>
+                                    <span class="kt-menu__link-text">{{ t('Offers') }}</span>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('Orders')
+                            <li class="kt-menu__item  @if(Request::is('manager/order*') ) kt-menu__item--active @endif"
+                                aria-haspopup="true">
+                                <a href="{{route('manager.order.index')}}" class="kt-menu__link ">
+                                    <i class="kt-menu__link-icon flaticon2-time"></i>
+                                    <span class="kt-menu__link-text">{{ t('Orders') }}</span>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('Categories')
+                            <li class="kt-menu__item  @if(Request::is('manager/category*') ) kt-menu__item--active @endif"
+                                aria-haspopup="true">
+                                <a href="{{route('manager.category.index')}}" class="kt-menu__link ">
+                                    <i class="kt-menu__link-icon flaticon2-cube-1"></i>
+                                    <span class="kt-menu__link-text">{{ t('Sections') }}</span>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('Users')
+                            <li class="kt-menu__item kt-menu__item--submenu   @if(Request::is('manager/user*') ) kt-menu__item--active @endif
+                            @if(Request::is('manager/merchant*') || Request::is('manager/distributor*') ) kt-menu__item--active @endif"
+                                aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
+                                <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
+                                    <span class="kt-menu__link-icon">
+                                        <i class="kt-menu__link-icon flaticon2-user-1"></i>
+                                    </span>
+                                    <span class="kt-menu__link-text">{{t('Users')}}</span>
+                                    <i class="kt-menu__ver-arrow la la-angle-right"></i>
+                                </a>
+                                <div class="kt-menu__submenu " kt-hidden-height="200"
+                                     style="display: none; overflow: hidden;"><span class="kt-menu__arrow"></span>
+                                    <ul class="kt-menu__subnav">
+                                        <li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true">
+                                        <span class="kt-menu__link">
+                                            <span class="kt-menu__link-text">{{t('Users')}}</span>
+                                        </span>
+                                        </li>
+{{--                                        @can('Customers')--}}
+                                            <li class="kt-menu__item " aria-haspopup="true">
+                                                <a
+                                                    href="{{route('manager.user.index')}}" class="kt-menu__link "><i
+                                                        class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span
+                                                        class="kt-menu__link-text">{{ t('Customers') }}</span></a>
+                                            </li>
+{{--                                        @endcan--}}
+{{--                                        @can('Merchant')--}}
+                                            <li class="kt-menu__item " aria-haspopup="true">
+                                                <a
+                                                    href="{{route('manager.merchant.index')}}" class="kt-menu__link "><i
+                                                        class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span
+                                                        class="kt-menu__link-text">{{ t('Merchants') }}</span></a>
+                                            </li>
+{{--                                        @endcan--}}
+{{--                                        @can('Distributor')--}}
+                                            <li class="kt-menu__item " aria-haspopup="true">
+                                                <a
+                                                    href="{{route('manager.distributor.index')}}"
+                                                    class="kt-menu__link "><i
+                                                        class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span
+                                                        class="kt-menu__link-text">{{ t('Distributor') }}</span></a>
+                                            </li>
+{{--                                        @endcan--}}
+                                    </ul>
+                                </div>
+                            </li>
+                        @endcan
+                        @can('Macca pay')
+                            <li class="kt-menu__item  @if(Request::is('manager/gift*') ) kt-menu__item--active @endif"
+                                aria-haspopup="true">
+                                <a href="{{route('manager.gift.index')}}" class="kt-menu__link ">
+                                    <i class="kt-menu__link-icon flaticon2-cube-1"></i>
+                                    <span class="kt-menu__link-text">{{ t('Macca pay') }}</span>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('Contact Us')
+                            <li class="kt-menu__item  @if(Request::is('manager/contact*') ) kt-menu__item--active @endif"
+                                aria-haspopup="true">
+                                <a href="{{route('manager.contact_us.index')}}" class="kt-menu__link ">
+                                    <i class="kt-menu__link-icon flaticon2-email"></i>
+                                    <span class="kt-menu__link-text">{{ t('Support Center') }}</span>
+                                </a>
+                            </li>
+                        @endcan
                     </ul>
                 </div>
             </div>
@@ -185,10 +260,10 @@
                 <div class="kt-header__brand kt-grid__item  " id="kt_header_brand">
                     <div class="kt-header__brand-logo">
                         <a href="{{ url("/manager/home") }}">
-                            @if(isset($logo))
-                                <img alt="Logo" src="{{ url($logo) }}" style="width: 100%"/>
+                            @if(isset($logo_min))
+                                <img alt="Logo" src="{{ asset($logo_min) }}" style="width: 90px"/>
                             @else
-                                <h4 class="text-center">ALOO</h4>
+                                <h4 class="text-center">Macca</h4>
                             @endif
                         </a>
                     </div>
@@ -199,8 +274,8 @@
                 <!-- begin:: Title -->
                 <div class="dd" style="margin-right: 20px;padding: 20px 0;">
                     <h3 class="kt-header_title kt-grid_item">{{ t('Management Control Panel') }}</h3>
-                    @if(isset($name))
-                        <p>{{ $name }}</p>
+                    @if(isset(cached()->name))
+                        <p>{{ cached()->name }}</p>
                     @endif
                 </div>
 
@@ -220,8 +295,18 @@
                                     <span class="kt-menu__link-text">{{ t('Preview') }}</span>
                                 </a>
                             </li>
-                            @canany(['General Settings', 'Managers', 'Roles'])
-                                <li class="kt-menu__item  kt-menu__item--submenu kt-menu__item--rel @if(Request::is('manager/settings*') || Request::is('manager/city*') || Request::is('manager/slider*') || Request::is('manager/testimonial*')) kt-menu__item--active @endif @if(Request::is('manager/roles*') ) kt-menu__item--active @endif @if(Request::is('manager/page*') ) kt-menu__item--active @endif"
+                            @can('Notification')
+                                <li class="kt-menu__item"
+                                    aria-haspopup="true">
+                                    <a data-toggle="modal" data-target="#sendNotification" class="kt-menu__link ">
+                                        <i class="kt-menu__link-icon flaticon2-notification"></i>
+                                        <span class="kt-menu__link-text">{{ t('Send Notification') }}</span>
+                                    </a>
+                                </li>
+                            @endcan
+                            @can('General Settings')
+{{--                            @canany(['General Settings', 'Managers', 'Roles', 'Ad Images','Countries','Currencies','Slider'])--}}
+                                <li class="kt-menu__item  kt-menu__item--submenu kt-menu__item--rel @if(Request::is('manager/settings*') || Request::is('manager/city*') || Request::is('manager/slider*')|| Request::is('manager/ad_images*') || Request::is('manager/testimonial*')) kt-menu__item--active @endif @if(Request::is('manager/roles*') ) kt-menu__item--active @endif @if(Request::is('manager/page*') ) kt-menu__item--active @endif"
                                     data-ktmenu-submenu-toggle="click" aria-haspopup="true">
                                     <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
                                         <span class="kt-menu__link-text">{{ t('Settings') }}</span>
@@ -230,7 +315,7 @@
                                     </a>
                                     <div class="kt-menu__submenu kt-menu__submenu--classic kt-menu__submenu--left">
                                         <ul class="kt-menu__subnav">
-                                            @can('General Settings')
+{{--                                            @can('General Settings')--}}
                                                 <li class="kt-menu__item" aria-haspopup="true">
                                                     <a href="{{route('manager.settings.general')}}"
                                                        class="kt-menu__link">
@@ -241,31 +326,119 @@
                                                             class="kt-menu__link-text">{{ t('General Settings') }}</span>
                                                     </a>
                                                 </li>
-                                            @endcan
+{{--                                            @endcan--}}
+{{--                                            @can('Countries')--}}
+                                                <li class="kt-menu__item" aria-haspopup="true">
+                                                    <a href="{{route('manager.country.index')}}" class="kt-menu__link">
+                                                        <i class="kt-menu__link-bullet kt-menu__link-bullet--dot">
+                                                            <span></span>
+                                                        </i>
+                                                        <span class="kt-menu__link-text">{{ t('Countries') }}</span>
+                                                    </a>
+                                                </li>
+{{--                                            @endcan--}}
+{{--                                            @can('Currencies')--}}
+                                                <li class="kt-menu__item" aria-haspopup="true">
+                                                    <a href="{{route('manager.currency.index')}}" class="kt-menu__link">
+                                                        <i class="kt-menu__link-bullet kt-menu__link-bullet--dot">
+                                                            <span></span>
+                                                        </i>
+                                                        <span class="kt-menu__link-text">{{ t('Currencies') }}</span>
+                                                    </a>
+                                                </li>
+{{--                                            @endcan--}}
+{{--                                            @can('Slider')--}}
+                                                <li class="kt-menu__item" aria-haspopup="true">
+                                                    <a href="{{route('manager.slider.index')}}" class="kt-menu__link">
+                                                        <i class="kt-menu__link-bullet kt-menu__link-bullet--dot">
+                                                            <span></span>
+                                                        </i>
+                                                        <span class="kt-menu__link-text">{{ t('Sliders') }}</span>
+                                                    </a>
+                                                </li>
+{{--                                            @endcan--}}
+{{--                                            @can('Ad Images')--}}
+                                                <li class="kt-menu__item" aria-haspopup="true">
+                                                    <a href="{{route('manager.ad_images.index')}}"
+                                                       class="kt-menu__link">
+                                                        <i class="kt-menu__link-bullet kt-menu__link-bullet--dot">
+                                                            <span></span>
+                                                        </i>
+                                                        <span class="kt-menu__link-text">{{ t('Ad Images') }}</span>
+                                                    </a>
+                                                </li>
+{{--                                            @endcan--}}
+{{--                                            @can('Post')--}}
+                                                <li class="kt-menu__item" aria-haspopup="true">
+                                                    <a href="{{route('manager.post.index')}}" class="kt-menu__link">
+                                                        <i class="kt-menu__link-bullet kt-menu__link-bullet--dot">
+                                                            <span></span>
+                                                        </i>
+                                                        <span class="kt-menu__link-text">{{ t('Posts') }}</span>
+                                                    </a>
+                                                </li>
+{{--                                            @endcan--}}
 {{--                                            @can('Managers')--}}
-{{--                                                <li class="kt-menu__item" aria-haspopup="true">--}}
-{{--                                                    <a href="{{route('manager.manager.index')}}" class="kt-menu__link">--}}
-{{--                                                        <i class="kt-menu__link-bullet kt-menu__link-bullet--dot">--}}
-{{--                                                            <span></span>--}}
-{{--                                                        </i>--}}
-{{--                                                        <span class="kt-menu__link-text">{{ t('Managers') }}</span>--}}
-{{--                                                    </a>--}}
-{{--                                                </li>--}}
+                                                <li class="kt-menu__item" aria-haspopup="true">
+                                                    <a href="{{route('manager.manager.index')}}" class="kt-menu__link">
+                                                        <i class="kt-menu__link-bullet kt-menu__link-bullet--dot">
+                                                            <span></span>
+                                                        </i>
+                                                        <span class="kt-menu__link-text">{{ t('Managers') }}</span>
+                                                    </a>
+                                                </li>
 {{--                                            @endcan--}}
 {{--                                            @can('Roles')--}}
-{{--                                                <li class="kt-menu__item" aria-haspopup="true">--}}
-{{--                                                    <a href="{{route('manager.manager_roles.index')}}"--}}
-{{--                                                       class="kt-menu__link">--}}
-{{--                                                        <i class="kt-menu__link-bullet kt-menu__link-bullet--dot">--}}
-{{--                                                            <span></span>--}}
-{{--                                                        </i>--}}
-{{--                                                        <span--}}
-{{--                                                            class="kt-menu__link-text">{{ t('Managers Roles') }}</span>--}}
-{{--                                                    </a>--}}
-{{--                                                </li>--}}
+                                                <li class="kt-menu__item" aria-haspopup="true">
+                                                    <a href="{{route('manager.manager_roles.index')}}"
+                                                       class="kt-menu__link">
+                                                        <i class="kt-menu__link-bullet kt-menu__link-bullet--dot">
+                                                            <span></span>
+                                                        </i>
+                                                        <span
+                                                            class="kt-menu__link-text">{{ t('Managers Roles') }}</span>
+                                                    </a>
+                                                </li>
 {{--                                            @endcan--}}
                                         </ul>
                                     </div>
+                                </li>
+                            @endcan
+{{--                            @endcanany--}}
+                            @canany(['Countries','Currencies'])
+                                <li class="kt-menu__item  kt-menu__item--submenu kt-menu__item--rel @if(Request::is('manager*')) kt-menu__item--active @endif"
+                                    data-ktmenu-submenu-toggle="click" aria-haspopup="true">
+                                    <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
+                                        <span
+                                            class="kt-menu__link-text">{{ optional(getCurrentCountry())->name }}</span>
+                                        <i class="kt-menu__hor-arrow la la-angle-down"></i>
+                                        <i class="kt-menu__ver-arrow la la-angle-right"></i>
+                                    </a>
+                                    @if(user()->id == 1||user()->id == 2 )
+                                        @can('Countries')
+                                            <div
+                                                class="kt-menu__submenu kt-menu__submenu--classic kt-menu__submenu--left">
+                                                <ul class="kt-menu__subnav">
+                                                    @foreach(\App\Models\Country::get() as $key=>$item)
+                                                        <li class="kt-menu__item {{$item->id == optional(getCurrentCountry())->id? 'kt-menu__item--active':''}}"
+                                                            aria-haspopup="true">
+                                                            <a href="{{route('manager.settings.changeCountry',['id'=>$item->id,'segments'=>sizeof(request()->segments())])}}"
+                                                               class="kt-menu__link">
+                                                                <i class="kt-menu__link-bullet kt-menu__link-bullet--dot">
+                                                                    <span></span>
+                                                                </i>
+                                                                <span
+                                                                    class="kt-menu__link-text">{{ $item->name }}</span>
+                                                            </a>
+                                                        </li>
+                                                    @endforeach
+
+
+                                                </ul>
+                                            </div>
+
+                                        @endcan
+                                    @endif
                                 </li>
                             @endcanany
                         </ul>
@@ -278,37 +451,37 @@
 
 
                     <!--begin: Language bar -->
-{{--                    <div class="kt-header__topbar-item kt-header__topbar-item--langs">--}}
-{{--                        <div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="10px,0px">--}}
-{{--									<span class="kt-header__topbar-icon kt-header__topbar-icon--brand">--}}
-{{--                                        @if(isRtl())--}}
-{{--                                            <img class="" src="{{ asset("assets/media/flags/008-saudi-arabia.svg") }}"--}}
-{{--                                                 alt=""/>--}}
-{{--                                        @else--}}
-{{--                                            <img class="" src="{{ asset("assets/media/flags/020-flag.svg") }}" alt=""/>--}}
-{{--                                        @endif--}}
-{{--									</span>--}}
-{{--                        </div>--}}
-{{--                        <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim">--}}
-{{--                            <ul class="kt-nav kt-margin-t-10 kt-margin-b-10">--}}
-{{--                                <li class="kt-nav__item kt-nav__item--active">--}}
-{{--                                    <a href="{{ route('manager.switch-language', 'en') }}" class="kt-nav__link">--}}
-{{--                                        <span class="kt-nav__link-icon"><img--}}
-{{--                                                src="{{ asset("assets/media/flags/020-flag.svg") }}" alt=""/></span>--}}
-{{--                                        <span class="kt-nav__link-text">English</span>--}}
-{{--                                    </a>--}}
-{{--                                </li>--}}
-{{--                                <li class="kt-nav__item">--}}
-{{--                                    <a href="{{ route('manager.switch-language', 'ar') }}" class="kt-nav__link">--}}
-{{--                                        <span class="kt-nav__link-icon"><img--}}
-{{--                                                src="{{ asset("assets/media/flags/008-saudi-arabia.svg") }}"--}}
-{{--                                                alt=""/></span>--}}
-{{--                                        <span class="kt-nav__link-text">العربية</span>--}}
-{{--                                    </a>--}}
-{{--                                </li>--}}
-{{--                            </ul>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
+                    <div class="kt-header__topbar-item kt-header__topbar-item--langs">
+                        <div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="10px,0px">
+									<span class="kt-header__topbar-icon kt-header__topbar-icon--brand">
+                                        @if(isRtl())
+                                            <img class="" src="{{ asset("assets/media/flags/008-saudi-arabia.svg") }}"
+                                                 alt=""/>
+                                        @else
+                                            <img class="" src="{{ asset("assets/media/flags/020-flag.svg") }}" alt=""/>
+                                        @endif
+									</span>
+                        </div>
+                        <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim">
+                            <ul class="kt-nav kt-margin-t-10 kt-margin-b-10">
+                                <li class="kt-nav__item kt-nav__item--active">
+                                    <a href="{{ route('manager.switch-language', 'en') }}" class="kt-nav__link">
+                                        <span class="kt-nav__link-icon"><img
+                                                src="{{ asset("assets/media/flags/020-flag.svg") }}" alt=""/></span>
+                                        <span class="kt-nav__link-text">English</span>
+                                    </a>
+                                </li>
+                                <li class="kt-nav__item">
+                                    <a href="{{ route('manager.switch-language', 'ar') }}" class="kt-nav__link">
+                                        <span class="kt-nav__link-icon"><img
+                                                src="{{ asset("assets/media/flags/008-saudi-arabia.svg") }}"
+                                                alt=""/></span>
+                                        <span class="kt-nav__link-text">العربية</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                     <!--end: Language bar -->
                     <!--begin: Notifications -->
                     @php
@@ -458,19 +631,19 @@
                         </div>
                     @endif
                 <!--Begin::Dashboard 6-->
-{{--                    --}}{{----}}
-{{--                    @if(Session::has('message'))--}}
-{{--                        <div class="alert alert-{{ Session::get('m-class') }} role="alert">--}}
-{{--                            <div class="alert-text">{{ Session::get('message') }}</div>--}}
-{{--                            <div class="alert-close">--}}
-{{--                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">--}}
-{{--                                    <span aria-hidden="true"><i class="la la-close"></i></span>--}}
-{{--                                </button>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    @endif--}}
+                    {{--
+                    @if(Session::has('message'))
+                        <div class="alert alert-{{ Session::get('m-class') }} role="alert">
+                            <div class="alert-text">{{ Session::get('message') }}</div>
+                            <div class="alert-close">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true"><i class="la la-close"></i></span>
+                                </button>
+                            </div>
+                        </div>
+                    @endif
 
-{{--                    --}}
+                    --}}
                     @if (count($errors) > 0)
                         <div class="alert alert-warning">
                             <ul style="width: 100%;">
@@ -519,7 +692,10 @@
                     <div class="form-group">
                         <label for="recipient-name" class="form-control-label">{{ t('Recipients') }}:</label>
                         <select name="recipients" class="form-control" id="notification_type">
-                            {{--                            <option value="{{ALL_USERS}}">{{ t('All Users') }}</option>--}}
+                            <option value="{{ALL_USERS}}">{{ t('All Users') }}</option>
+                            <option value="{{CUSTOMERS}}">{{ t('Clients') }}</option>
+                            <option value="{{MERCHANTS}}">{{ t('Merchants') }}</option>
+                            <option value="{{DISTRIBUTORS}}">{{ t('Distributors') }}</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -630,6 +806,84 @@
     @if(Session::has('message'))
     toastr.{{Session::get('m-class') ? Session::get('m-class'):'success'}}("{{Session::get('message')}}");
     @endif
+
+    function notifyMe(notify) {
+        // Let's check if the browser supports notifications
+        if (!("Notification" in window)) {
+            alert("This browser does not support desktop notification");
+        }
+
+        // Let's check if the user is okay to get some notification
+        else if (Notification.permission === "granted") {
+            // If it's okay let's create a notification
+            var notification = new Notification(notify.title, {
+                body: notify.body, // content for the alert
+                icon: "https://antaderk.com/web/img/logo/logo.png" // optional image url
+            });
+        }
+
+            // Otherwise, we need to ask the user for permission
+            // Note, Chrome does not implement the permission static property
+        // So we have to check for NOT 'denied' instead of 'default'
+        else if (Notification.permission !== 'denied') {
+            Notification.requestPermission(function (permission) {
+
+                // Whatever the user answers, we make sure we store the information
+                if (!('permission' in Notification)) {
+                    Notification.permission = permission;
+                }
+
+                // If the user is okay, let's create a notification
+                if (permission === "granted") {
+                    var notification = new Notification(notify.title, {
+                        body: notify.body, // content for the alert
+                        icon: "https://antaderk.com/web/img/logo/logo.png" // optional image url
+                    });
+                }
+            });
+        } else {
+            alert(`Permission is ${Notification.permission}`);
+            toastr.success(notify.title);
+        }
+        $('#notification_list').prepend(" <a href=\"/manager/notification/" + notify.id + "\"\n" +
+            "                                                   class=\"kt-notification__item\">\n" +
+            "                                                    <div class=\"kt-notification__item-icon\">\n" +
+            "                                                        <i class=\"flaticon2-notification kt-font-success\"></i>\n" +
+            "                                                    </div>\n" +
+            "                                                    <div class=\"kt-notification__item-details\">\n" +
+            "                                                        <div class=\"kt-notification__item-title\">\n" +
+            "                                                            " + notify.title + "\n" +
+            "                                                        </div>\n" +
+            "                                                        <div class=\"kt-notification__item-time\">\n" +
+            "                                                            " + "{{t('now')}}" + "\n" +
+            "                                                        </div>\n" +
+            "                                                    </div>\n" +
+            "                                                </a>");
+        if (notify.unread_notifications !== undefined) {
+            $('#notification_count').show().text(notify.unread_notifications);
+        }
+
+        // At last, if the user already denied any notification, and you
+        // want to be respectful there is no need to bother him any more.
+    }
+
+    //
+    // var pusher = new Pusher('8addaf29914d8862443f', {
+    //     cluster: 'mt1'
+    // });
+
+    // call_back = function (message) {
+    //     notifyMe(message)
+    //     console.log(message);
+    // };
+    //Also remember to change channel and event name if your's are different.
+    // var channel = pusher.subscribe('managers');
+    // channel.bind('manager-notification', call_back);
+
+    {{--var user_channel = pusher.subscribe('user_{{auth()->user()->id}}');--}}
+    {{--user_channel.bind('manager-notification', call_back);--}}
+
+
 </script>
 
 </body>

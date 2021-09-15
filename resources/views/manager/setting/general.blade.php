@@ -1,42 +1,42 @@
 @php
-    $logo = Setting('logo');
-    $logo_min = Setting('logo_min');
-    $logo_light = Setting('logo_light');
-    $about_us_image = Setting('about_us_image');
-    $name = Setting('name');
-    $address = Setting('address');
+    $logo = optional(getSettings('logo'))->value;
+    $logo_min = optional(getSettings('logo_min'))->value;
 
-    $email = Setting('email');
-    $commission = Setting('commission');
-    $commission_active = Setting('commission_active');
-    $mobile = Setting('mobile');
-    $whatsApp = Setting('whatsApp');
-    $facebook = Setting('facebook');
-    $twitter = Setting('twitter');
-    $linkedin = Setting('linkedin');
-    $currency = Setting('currency');
-    $calendly_url = Setting('calendly_url');
-    $join_us_url = Setting('join_us_url');
-    $youtube = Setting('youtube');
-    $about_us_details = Setting('about_us_details');
-    $about_us_title = Setting('about_us_title');
-    $special_service_details = Setting('special_service_details');
-    $services = Setting('services');
-    $conditions = Setting('conditions');
-    $conditions = Setting('conditions');
-    $showcase_title = Setting('showcase_title');
-    $showcase_details = Setting('showcase_details');
-    $showcase_background = Setting('showcase_background');
-    $showcase_background_front = Setting('showcase_background_front');
-    $brochure = Setting('brochure');
-    //dd(url($showcase_background_front),$showcase_background,$showcase_background_front);
-    $privacy_policy = Setting('privacy_policy');
-//dd($showcase_background,$showcase_details,$showcase_title)
+    $name = optional(getSettings('name'))->value;
+    $name = isset($name)?unserialize($name) : ['ar' => '', 'en' => ''];
+
+
+    $address = optional(getSettings('address'))->value;
+    $address = isset($address)?unserialize($address) : ['ar' => '', 'en' => ''];
+
+    $email = optional(getSettings('email'))->value;
+    $mobile = optional(getSettings('mobile'))->value;
+    $whatsApp = optional(getSettings('whatsApp'))->value;
+    $linkedin = optional(getSettings('linkedin'))->value;
+    $facebook = optional(getSettings('facebook'))->value;
+    $twitter = optional(getSettings('twitter'))->value;
+    $instagram = optional(getSettings('instagram'))->value;
+    $youtube = optional(getSettings('youtube'))->value;
+    $ios_url = optional(getSettings('ios_url'))->value;
+    $android_url = optional(getSettings('android_url'))->value;
+    $about_us = optional(getSettings('about_us'))->value;
+    $services = optional(getSettings('services'))->value;
+    $conditions = optional(getSettings('conditions'))->value;
+
+//orders
+    $tax = optional(getSettings('tax'))->value;
+    $commission = optional(getSettings('commission'))->value;
+    $merchants_range = optional(getSettings('merchants_range'))->value;
+    $commission_delivery = optional(getSettings('commission_delivery'))->value;
+    $commission_cancel_delivery = optional(getSettings('commission_cancel_delivery'))->value;
+    $kilo_cost = optional(getSettings('kilo_cost'))->value;
+
+
+    //$stop_app_for_current_country = optional(getSettings('stop_app_for_current_country'))->value;
+    $stop_app_all_countries = optional(getSettings('stop_app_all_countries'))->value;
 @endphp
+
 @extends('manager.layout.container')
-@section('style')
-    <link href="{{ asset('assets/vendors/general/summernote/dist/summernote.rtl.css') }}" rel="stylesheet"/>
-@endsection
 @section('content')
     @push('breadcrumb')
         <li class="breadcrumb-item">
@@ -59,7 +59,7 @@
                         <div class="kt-section kt-section--first">
                             <div class="kt-section__body">
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="col-xl-3 col-lg-3 col-form-label">{{ t('Logo') }}</label>
                                             <div class="col-lg-9 col-xl-6">
@@ -73,21 +73,111 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class=""
+                                                   style="background: #ccc">{{ setting('token_form_dashboard') }}</label>
+                                            <div class="col-lg-9 col-xl-6">
+                                                <div class="upload-btn-wrapper">
+                                                    <a href="{{route('manager.generate_admin_app_api_new_token')}}"
+                                                       class="btn btn-danger">{{t('Generate New Token')}}</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="exampleInputPassword1">{{ t('Facebook') }}</label>
+                                            <input type="text"
+                                                   value="{{ isset($facebook) ? $facebook:old('facebook') }}"
+                                                   name="facebook" class="form-control"
+                                                   placeholder="{{ t('Facebook') }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="exampleInputPassword1">{{ t('Twitter') }}</label>
+                                            <input type="text" value="{{ isset($twitter) ? $twitter:old('twitter') }}"
+                                                   name="twitter" class="form-control" placeholder="{{ t('Twitter') }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="exampleInputPassword1">{{ t('Instagram') }}</label>
+                                            <input type="text"
+                                                   value="{{ isset($instagram) ? $instagram:old('instagram') }}"
+                                                   name="instagram" class="form-control"
+                                                   placeholder="{{ t('Instagram') }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="exampleInputPassword1">{{ t('Linkedin') }}</label>
+                                            <input type="text"
+                                                   value="{{ isset($linkedin) ? $linkedin:old('linkedin') }}"
+                                                   name="linkedin" class="form-control"
+                                                   placeholder="{{ t('Linkedin') }}">
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="row">
                                     @foreach(config('translatable.locales') as $local)
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="exampleInputPassword1">{{ t('Name') }} <small>({{ $local }}
-                                                        )</small></label>
-
-                                                <input name="name[{{$local}}]" type="text"
-                                                       value="{{  isset($name) && is_array($name) && array_key_exists($local,$name)? $name[$local]:''}}"
-                                                       class="form-control" placeholder="">
+                                                <label for="exampleInputPassword1">{{ t('About Us') }}
+                                                    <small>({{ $local }})</small></label>
+                                                <textarea class="form-control" name="about_us[{{$local}}]" id="about_us"
+                                                          cols="30"
+                                                          rows="10">{{isset($about_us) && is_array($about_us) && array_key_exists($local,$about_us)? $about_us[$local]:'' }}</textarea>
                                             </div>
                                         </div>
                                     @endforeach
+                                    @foreach(config('translatable.locales') as $local)
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="exampleInputPassword1">{{ t('conditions') }}
+                                                    <small>({{ $local }})</small></label>
+                                                <textarea class="form-control" name="conditions[{{$local}}]"
+                                                          id="conditions" cols="30"
+                                                          rows="10">{{  isset($conditions) && is_array($conditions) && array_key_exists($local,$conditions)? $conditions[$local]:''  }}</textarea>
+                                            </div>
+                                        </div>
+                                    @endforeach
+
+
                                 </div>
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label
+                                            class="col-12 col-form-label font-weight-bold">{{t('Stop Mobile App For All Countries')}}</label>
+                                        <div class="col-3">
+                                        <span class="kt-switch">
+                                            <label>
+                                            <input type="checkbox" value="1"
+                                                   {{ isset($stop_app_all_countries) && $stop_app_all_countries == true ? 'checked' :'' }} name="stop_app_all_countries">
+                                            <span></span>
+                                            </label>
+                                        </span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label
+                                            class="col-12 col-form-label font-weight-bold">{{t('Stop Mobile App For Current Country')}}</label>
+                                        <div class="col-3">
+                                        <span class="kt-switch">
+                                            <label>
+                                            <input type="checkbox" value="1"
+                                                   {{   getCurrentCountry()->app_is_stopped == true ? 'checked' :'' }} name="stop_app_for_current_country">
+                                            <span></span>
+                                            </label>
+                                        </span>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -106,16 +196,6 @@
         </div>
     </div>
 @endsection
-
 @section('script')
-    <script src="{{ asset('assets/vendors/general/summernote/dist/summernote.min.js') }}"
-            type="text/javascript"></script>
-    <script>
-        $(document).ready(function () {
-            $('.summernote').summernote({
-                height: '300px',
-            });
-        });
-    </script>
-@endsection
 
+@endsection

@@ -33,7 +33,7 @@ class NewOrderNotification extends Notification
             ],
             'click_action' => "order_details_activity",
             'others' => [
-//                'type' => NEW_ORDER_NOTIFICATION,
+                'type' => NEW_ORDER_NOTIFICATION,
                 'date' => $date_formatted . ' | ' . $time_formatted,
                 "order_id" => $this->order->id,
             ],
@@ -42,7 +42,7 @@ class NewOrderNotification extends Notification
 
     public function via($notifiable)
     {
-        return ['database'];
+        return ['database', FcmChannel::class];
     }
 
 
@@ -51,4 +51,11 @@ class NewOrderNotification extends Notification
         return $this->message;
     }
 
+    public function toFcm($notifiable)
+    {
+        if ($notifiable instanceof User) {
+            $notifiable->setLanguage();
+            send_to_topic('user_' . $notifiable->id, $this->message);
+        }
+    }
 }

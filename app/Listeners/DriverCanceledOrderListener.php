@@ -7,7 +7,6 @@ use App\Events\CancelOrderEvent;
 use App\Events\DriverAcceptOrderEvent;
 use App\Events\DriverCanceledOrderEvent;
 use App\Events\DriverOnWayOrderEvent;
-use App\Events\ReadyOrderEvent;
 use App\Models\Branch;
 use App\Models\Delivery;
 use App\Models\Order;
@@ -29,19 +28,10 @@ class DriverCanceledOrderListener
         if ($order instanceof Order) {
             $branch = Branch::query()->where('id', $order->branch_id)->first();
             $user = User::query()->where('id', $order->user_id)->first();
-            $delivery_accept = $order->delivery_accept;
-            if (isset($delivery_accept)) {
-                \App\Models\Wallet::create([
-                    'user_id' => $delivery_accept->driver->id,
-                    't_type' => \App\Models\Wallet::CANCEL_ORDER,
-                    'note' => 'test',
-                    'amount' => Setting('commission_cancel_delivery'),
-                    'order_id' => $order->id,
-                ]);
-            }
             if ($branch) Notification::send($branch, new DriverCanceledOrderNotification($order));
             if ($user) Notification::send($user, new DriverCanceledOrderNotification($order));
-            event(new ReadyOrderEvent($order));
+
+
         }
     }
 }

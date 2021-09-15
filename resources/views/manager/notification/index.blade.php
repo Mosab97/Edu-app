@@ -1,7 +1,9 @@
 {{--Dev Mosab Irwished
-eng.mosabirwished@gmail.com
-WhatsApp +970592879186
---}}
+    eng.mosabirwished@gmail.com
+    WhatsApp =+970592879186
+    WhatsApp Link https://api.whatsapp.com/send/?phone=970592879186&text&app_absent=0
+    --}}
+
 @extends('manager.layout.container')
 @section('style')
     <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">

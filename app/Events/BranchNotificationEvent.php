@@ -2,7 +2,6 @@
 
 namespace App\Events;
 
-use App\Models\Branch;
 use App\Models\User;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -19,7 +18,7 @@ class BranchNotificationEvent
     public $user;
     public $title;
     public $body;
-    public function __construct(Branch $user, $title, $body)
+    public function __construct(User $user, $title, $body)
     {
         $this->user = $user;
         $this->title = $title;

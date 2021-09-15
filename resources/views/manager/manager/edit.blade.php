@@ -1,8 +1,9 @@
-{{--
-Dev Mosab Irwished
-eng.mosabirwished@gmail.com
-WhatsApp +970592879186
---}}
+{{--Dev Mosab Irwished
+    eng.mosabirwished@gmail.com
+    WhatsApp =+970592879186
+    WhatsApp Link https://api.whatsapp.com/send/?phone=970592879186&text&app_absent=0
+    --}}
+
 @extends('manager.layout.container')
 @section('style')
     <style>
@@ -12,9 +13,11 @@ WhatsApp +970592879186
             display: inline-block;
             cursor: pointer;
         }
-        .upload-btn-wrapper:hover{
+
+        .upload-btn-wrapper:hover {
             cursor: pointer;
         }
+
         .upload-btn-wrapper input[type=file] {
             font-size: 100px;
             position: absolute;
@@ -41,7 +44,9 @@ WhatsApp +970592879186
                         <h3 class="kt-portlet__head-title">{{ isset($manager) ? t('Edit Account') : t('Add Account') }}</h3>
                     </div>
                 </div>
-                <form enctype="multipart/form-data" id="form_information" class="kt-form kt-form--label-right" action="{{ isset($manager) ? route('manager.manager.update', $manager->id): route('manager.manager.store') }}" method="post">
+                <form enctype="multipart/form-data" id="form_information" class="kt-form kt-form--label-right"
+                      action="{{ isset($manager) ? route('manager.manager.update', $manager->id): route('manager.manager.store') }}"
+                      method="post">
                     {{ csrf_field() }}
                     @if(isset($manager))
                         <input type="hidden" name="_method" value="patch">
@@ -53,27 +58,42 @@ WhatsApp +970592879186
                                 <div class="form-group row">
                                     <label class="col-xl-3 col-lg-3 col-form-label">{{ t('Manager Name') }}</label>
                                     <div class="col-lg-9 col-xl-6">
-                                        <input class="form-control" name="name" type="text" value="{{ isset($manager->name) ? $manager->name : old('name') }}">
+                                        <input class="form-control" name="name" type="text"
+                                               value="{{ isset($manager->name) ? $manager->name : old('name') }}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-xl-3 col-lg-3 col-form-label">{{ t('Email') }}</label>
                                     <div class="col-lg-9 col-xl-6">
-                                        <input class="form-control" name="email" type="email" value="{{ isset($manager->email) ? $manager->email : old('email') }}">
+                                        <input class="form-control" name="email" type="email"
+                                               value="{{ isset($manager->email) ? $manager->email : old('email') }}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-xl-3 col-lg-3 col-form-label">{{ t('Password') }} </label>
                                     <div class="col-lg-9 col-xl-6">
-                                        <input class="form-control" name="password" type="password" >
+                                        <input class="form-control" name="password" type="password">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-xl-3 col-lg-3 col-form-label">{{ t('Country') }} </label>
+                                    <div class="col-lg-9 col-xl-6">
+                                        <select name="country_id" id="country" class="form-control">
+                                            <option value="">{{t('Select Country')}}</option>
+                                            @foreach($countries as $index=>$country)
+                                                <option
+                                                    value="{{$country->id}}" {{isset($manager) && $manager->country_id == $country->id? 'selected':''}}>{{$country->name}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-xl-3 col-lg-3 col-form-label">{{ t('Roles') }} </label>
                                     <div class="col-lg-9 col-xl-6">
-                                        <select multiple name="roles[]" class="form-control">
+                                        <select  name="roles[]" class="form-control">
                                             @foreach($roles as $role)
-                                                <option {{ in_array($role, $userRole) ? 'selected':'' }} value="{{ $role }}">{{ $role }}</option>
+                                                <option
+                                                    {{ isset($manager)&& in_array($role->id, $userRole) ? 'selected':'' }} value="{{ $role->id }}">{{ $role->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -86,7 +106,8 @@ WhatsApp +970592879186
                         <div class="kt-form__actions">
                             <div class="row">
                                 <div class="col-lg-12 text-right">
-                                    <button type="submit" class="btn btn-brand">{{ isset($manager) ? t('update'):t('Save') }}</button>&nbsp;
+                                    <button type="submit"
+                                            class="btn btn-brand">{{ isset($manager) ? t('update'):t('Save') }}</button>&nbsp;
                                 </div>
                             </div>
                         </div>

@@ -12,11 +12,15 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
+            $table->string('user_type')->nullable();
+            $table->string('major')->nullable();
+            $table->string('experience')->nullable();
+            $table->string('demonstration_video')->nullable();
             $table->string('email')->nullable();//->unique();
             $table->string('username')->nullable();
             $table->string('phone')->nullable();
             $table->string('whatsapp')->nullable();
-            $table->integer('gender')->nullable();
+            $table->integer('gender')->default(Gender['MALE']);
             $table->boolean('verified')->default(false);
             $table->string('generatedCode')->nullable();
             $table->float('lat', 8, 5)->nullable();
@@ -25,8 +29,9 @@ class CreateUsersTable extends Migration
             $table->enum('local', ['en', 'ar'])->default('ar');
             $table->date('dob')->nullable();
             $table->string('password')->nullable();
-            $table->string('provider');
-            $table->string('provider_id');
+            $table->string('provider')->nullable();
+            $table->string('access_token')->nullable();
+            $table->string('provider_id')->nullable();
             $table->string('google_provider_id')->nullable();
             $table->softDeletes();
             $table->rememberToken();
