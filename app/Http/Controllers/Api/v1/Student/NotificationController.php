@@ -3,15 +3,11 @@
 namespace App\Http\Controllers\Api\v1\Student;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Api\v1\User\NotificationResource;
-use App\Http\Resources\Api\v1\User\ProfileResource;
+use App\Http\Resources\Api\v1\General\NotificationReasource;
 use App\Models\Notification;
 use App\Models\Student;
-use App\Models\User;
 use App\Notifications\GeneralNotification;
-use App\Rules\EmailRule;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 
 class NotificationController extends Controller
 {
@@ -23,7 +19,7 @@ class NotificationController extends Controller
         $notifications = Notification::where('notifiable_id', $user->id)
             ->where('created_at', '>=', $user->created_at)->paginate($this->perPage);
         return apiSuccess([
-            'items' => NotificationResource::collection($notifications->items()),
+            'items' => NotificationReasource::collection($notifications->items()),
             'paginate' => paginate($notifications),
             'unread_notifications' => $user->unread_notifications,
         ]);
@@ -40,7 +36,7 @@ class NotificationController extends Controller
             ]);
         }
         return apiSuccess([
-            'item' => new NotificationResource($notification),
+            'item' => new NotificationReasource($notification),
             'unread_notifications' => $user->unread_notifications,
         ]);
     }

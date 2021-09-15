@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\v1\Student;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Api\v1\User\ProfileResource;
+use App\Http\Resources\Api\v1\Student\ProfileResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
