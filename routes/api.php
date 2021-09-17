@@ -13,6 +13,18 @@ Route::group(['prefix' => 'v1', 'namespace' => ROOT_NAMESPACE, "middleware" => [
             Route::get('profile', 'ProfileController@profile');
             Route::post('update_profile', 'ProfileController@updateProfile');
         });
+        Route::group(['prefix' => 'student', 'namespace' => 'Student', 'middleware' => ['auth_guard:' . \App\Models\User::user_type['STUDENT']]], function () {
+            Route::get('courses', 'CourseController@courses');
+            Route::get('questions/{course_id}', 'CourseController@questions');
+            Route::get('groups/{course_id}', 'CourseController@groups');
+            Route::get('group/{group_id}', 'CourseController@group');
+            Route::get('my_groups', 'CourseController@my_groups');
+            Route::get('notifications', 'NotificationController@notifications');
+            Route::get('notification/{id}', 'NotificationController@notification');
+            Route::post('sendNotificationForAllStudents', 'NotificationController@sendNotificationForAllStudents');
+            Route::get('profile', 'ProfileController@profile');
+            Route::post('update_profile', 'ProfileController@updateProfile');
+        });
 
         Route::group(['prefix' => 'teacher', 'namespace' => 'Teacher', 'middleware' => ["auth_guard:" . \App\Models\User::user_type['TEACHER']]], function () {
             Route::get('profile', 'ProfileController@profile');
@@ -30,18 +42,6 @@ Route::group(['prefix' => 'v1', 'namespace' => ROOT_NAMESPACE, "middleware" => [
             Route::post('sendNotificationForAllStudents', 'NotificationController@sendNotificationForAllStudents');
 
 
-        });
-        Route::group(['prefix' => 'student', 'namespace' => 'Student', 'middleware' => ['auth_guard:' . \App\Models\User::user_type['STUDENT']]], function () {
-            Route::get('courses', 'CourseController@courses');
-            Route::get('questions/{course_id}', 'CourseController@questions');
-            Route::get('groups/{course_id}', 'CourseController@groups');
-            Route::get('group/{group_id}', 'CourseController@group');
-            Route::get('my_groups', 'CourseController@my_groups');
-            Route::get('notifications', 'NotificationController@notifications');
-            Route::get('notification/{id}', 'NotificationController@notification');
-            Route::post('sendNotificationForAllStudents', 'NotificationController@sendNotificationForAllStudents');
-            Route::get('profile', 'ProfileController@profile');
-            Route::post('update_profile', 'ProfileController@updateProfile');
         });
     });
     Route::group(['namespace' => 'notifications', 'prefix' => 'notifications'], function () {
