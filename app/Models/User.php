@@ -71,7 +71,12 @@ class User extends Authenticatable
 
     public function student_groups()
     {
-        return $this->hasMany(StudentGroups::class);
+        return $this->hasMany(StudentGroups::class, 'student_id');
+    }
+
+    public function teacher_groups()
+    {
+        return $this->hasMany(Group::class, 'teacher_id');
     }
 
 
@@ -85,18 +90,12 @@ class User extends Authenticatable
         return is_null($value) ? defaultUserImage() : asset($value);
     }
 
-    public function teacher_groups()
-    {
-        return $this->hasMany(Group::class);
-    }
-
 
 //    attributes
     public function getStatusNameAttribute()
     {
         return ($this->verified) ? api('Active') : api('Not Active');
     }
-
 
 
     public function getActiveNameAttribute()

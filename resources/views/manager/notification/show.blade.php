@@ -1,9 +1,3 @@
-{{--Dev Mosab Irwished
-    eng.mosabirwished@gmail.com
-    WhatsApp =+970592879186
-    WhatsApp Link https://api.whatsapp.com/send/?phone=970592879186&text&app_absent=0
-    --}}
-
 @extends('manager.layout.container')
 
 @section('content')
@@ -27,7 +21,7 @@
                     <div class="kt-section kt-section--first">
                         <div class="kt-section__body">
                             <div class="kt-portlet__body">
-                                <p class="kt-font-brand">{{  $notification->content }}</p>
+                                <p class="kt-font-brand">{{  $notification->body }}</p>
                             </div>
                         </div>
                     </div>

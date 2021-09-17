@@ -16,7 +16,7 @@ class ContactUsController extends Controller
     {
         parent::__construct();
         $this->_model = $contactUs;
-//        $this->middleware('permission:Contact Us', ['only' => ['index', 'create', 'edit']]);
+        $this->middleware('permission:Contact Us', ['only' => ['index', 'create', 'edit']]);
     }
 
     public function index()
@@ -39,10 +39,13 @@ class ContactUsController extends Controller
                 })
                 ->addColumn('name', function ($contact) {
 //                    if (isset($contact->user_id)) dd( $contact->user_id);
-                    return '<a href="' . (isset($contact->user_id) ? route_manager('user.show', $contact->user_id) : 'javascript:;') . '">' . $contact->name . '</a>';
-               /*
-                    <a href="#">{{ $contact->name }}
-               */
+                    return '<a href="javascript:;">' . $contact->name . '</a>';
+                })
+                ->addColumn('target', function ($contact) {
+                    return $contact->target_name;
+                })
+                ->addColumn('how_did_you_hear_about_ingaz', function ($contact) {
+                    return $contact->how_did_you_hear_about_ingaz_name;
                 })
                 ->addColumn('status', function ($contact) {
                     return $contact->seen ? t('Seen') : t('Unseen');

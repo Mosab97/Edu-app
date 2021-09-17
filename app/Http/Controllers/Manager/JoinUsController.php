@@ -26,12 +26,12 @@ class JoinUsController extends Controller
 
     public function __construct()
     {
-//        $this->middleware('permission:Join Us', ['only' => ['index', 'create', 'edit']]);
+        $this->middleware('permission:Join Us', ['only' => ['index', 'create', 'edit']]);
         foreach (config('translatable.locales') as $local) {
             $this->validationRules["merchant_name.$local"] = 'required';
         }
-        $this->validationRules["phone"] = ['required', 'min:13', 'max:13', new StartWith('+966'), new IntroMobile(), 'unique:merchants,phone,{$id},id,NULL'];
-        $this->validationRules["email"] = ['required', 'unique:merchants,email,{$id},id,NULL', new EmailRule()];
+        $this->validationRules["phone"] = ['required', 'min:13', 'max:13', new StartWith('+966'), new IntroMobile(), 'unique:merchants,phone,{$id},id,deleted_at,NULL'];
+        $this->validationRules["email"] = ['required', 'unique:merchants,email,{$id},id,deleted_at,NULL', new EmailRule()];
         $this->validationRules["merchant_type_id"] = 'required|exists:merchant_types,id';
         $this->validationRules["image"] = 'nullable|image';
         $this->validationRules["lat"] = 'nullable';

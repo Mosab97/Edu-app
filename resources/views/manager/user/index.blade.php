@@ -19,17 +19,17 @@
                             {{t('Clients')}}
                         </h3>
                     </div>
-                    {{--                    <div class="kt-portlet__head-toolbar">--}}
-                    {{--                        <div class="kt-portlet__head-wrapper">--}}
-                    {{--                            <div class="kt-portlet__head-actions">--}}
-                    {{--                                <a href="{{ route('manager.user.create') }}"--}}
-                    {{--                                   class="btn btn-danger btn-elevate btn-icon-sm">--}}
-                    {{--                                    <i class="la la-plus"></i>--}}
-                    {{--                                    {{t('Add Client')}}--}}
-                    {{--                                </a>--}}
-                    {{--                            </div>--}}
-                    {{--                        </div>--}}
-                    {{--                    </div>--}}
+                    <div class="kt-portlet__head-toolbar">
+                        <div class="kt-portlet__head-wrapper">
+                            <div class="kt-portlet__head-actions">
+                                <a href="{{ route('manager.user.create') }}"
+                                   class="btn btn-danger btn-elevate btn-icon-sm">
+                                    <i class="la la-plus"></i>
+                                    {{t('Add Client')}}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="kt-portlet__body">
                     <form class="kt-form kt-form--fit kt-margin-b-20">
@@ -39,30 +39,16 @@
                                 <input type="text" name="name" id="name" class="form-control kt-input"
                                        placeholder="{{t('Client Name')}}">
                             </div>
-                            <div class="col-lg-2 kt-margin-b-10-tablet-and-mobile">
-                                <label>{{ t('Client Mobile') }}:</label>
-                                <input type="text" name="mobile" id="mobile" class="form-control kt-input"
-                                       placeholder="{{t('Client Mobile')}}">
-                            </div>
 
                             <div class="col-lg-2 kt-margin-b-10-tablet-and-mobile">
-                                <label>{{ t('Status') }}:</label>
-                                <select class="form-control" name="status" id="status">
-                                    <option selected value="">{{t('Select Status')}}</option>
-                                    <option value="{{NO}}">{{t('Active')}}</option>
-                                    <option value="{{YES}}">{{t('Not Active')}}</option>
+                                <label>{{ t('Source') }}:</label>
+                                <select class="form-control" name="source" id="source">
+                                    <option selected value="">{{t('Select Source')}}</option>
+                                    <option value="{{\App\Models\User::ANDROID}}">{{t('Android')}}</option>
+                                    <option value="{{\App\Models\User::WEB}}">{{t('Web')}}</option>
+                                    <option value="{{\App\Models\User::DASHBOARD}}">{{t('Dashboard')}}</option>
                                 </select>
                             </div>
-
-                            {{--                            <div class="col-lg-2 kt-margin-b-10-tablet-and-mobile">--}}
-                            {{--                                <label>{{ t('Source') }}:</label>--}}
-                            {{--                                <select class="form-control" name="source" id="source">--}}
-                            {{--                                    <option selected value="">{{t('Select Source')}}</option>--}}
-                            {{--                                    <option value="{{\App\Models\User::ANDROID}}">{{t('Android')}}</option>--}}
-                            {{--                                    <option value="{{\App\Models\User::WEB}}">{{t('Web')}}</option>--}}
-                            {{--                                    <option value="{{\App\Models\User::DASHBOARD}}">{{t('Dashboard')}}</option>--}}
-                            {{--                                </select>--}}
-                            {{--                            </div>--}}
                             <div class="col-lg-2 kt-margin-b-10-tablet-and-mobile">
                                 <label>{{ t('Action') }}:</label>
                                 <br/>
@@ -76,9 +62,10 @@
                     </form>
                     <table class="table text-center" id="users-table">
                         <thead>
+                        <th>{{t('Id')}}</th>
                         <th>{{t('Name')}}</th>
                         <th>{{t('Mobile')}}</th>
-                        <th>{{t('email')}}</th>
+                        <th>{{t('Source')}}</th>
                         <th>{{t('Status')}}</th>
                         <th>{{t('Actions')}}</th>
                         </thead>
@@ -116,12 +103,7 @@
     <!-- DataTables -->
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.flash.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
-
+    <!-- Bootstrap JavaScript -->
     <script>
         $(document).ready(function () {
             $(document).on('click', '.deleteRecord', (function () {
@@ -134,29 +116,21 @@
                 $('#users-table').DataTable({
                     processing: true,
                     serverSide: true,
-                    ordering: true,
+                    ordering: false,
                     searching: false,
-                    dom: 'lBfrtip',
-                    buttons: [
-                        'excel', 'print'
-                    ],
-                    @if(app()->getLocale() == 'ar')
-                    language: {
-                        url: "http://cdn.datatables.net/plug-ins/1.10.21/i18n/Arabic.json"
-                    },
-                    @endif
                     ajax: {
                         url: '{{ route('manager.user.index') }}',
                         data: function (d) {
                             d.name = $("#name").val();
                             d.status = $("#status").val();
-                            d.mobile = $("#mobile").val();
+                            d.source = $("#source").val();
                         }
                     },
                     columns: [
+                        {data: 'id', name: 'id'},
                         {data: 'name', name: 'name'},
                         {data: 'mobile', name: 'mobile'},
-                        {data: 'email', name: 'email'},
+                        {data: 'source_name', name: 'source_name'},
                         {data: 'status_name', name: 'status_name'},
                         {data: 'actions', name: 'actions'}
                     ],

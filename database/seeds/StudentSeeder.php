@@ -35,14 +35,14 @@ class StudentSeeder extends Seeder
                 'password' => \Illuminate\Support\Facades\Hash::make(PASSWORD),
             ]);
         }
-//        foreach (\App\Models\User::student()->get() as $index => $item) {
-//            $course = \App\Models\Course::query()->inRandomOrder()->first();
-//            $group = $course->groups()->inRandomOrder()->first();
-//            $item->student_groups()->create([
-//                'course_id' => $course->id,
-//                'group_id' => $group->id,
-//            ]);
-//        }
+        foreach (\App\Models\User::student()->get() as $index => $item) {
+            $course = \App\Models\Course::query()->inRandomOrder()->first();
+            $group = $course->groups()->inRandomOrder()->first();
+            $item->student_groups()->create([
+                'course_id' => $course->id,
+                'group_id' => $group->id,
+            ]);
+        }
     }
 
 }

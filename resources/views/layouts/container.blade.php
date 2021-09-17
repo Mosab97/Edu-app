@@ -1,297 +1,378 @@
-{{--Dev Mosab Irwished
-    eng.mosabirwished@gmail.com
-    WhatsApp =+970592879186
-    WhatsApp Link https://api.whatsapp.com/send/?phone=970592879186&text&app_absent=0
-    --}}
-
-@php
-    $logo = Setting('logo');
-    $logo = isset($logo)?$logo : dashboard_logo();
-    $logo_min =  $logo;
-      $name = optional(Setting('name'))[lang()];
-
-@endphp
-
-    <!DOCTYPE html>
-<html>
-
+<!DOCTYPE html>
+<html lang="{{lang()}}">
 <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-    <title>{{'مكا كافيه MaccaCafe'}}</title>
-    <meta property="og:type" content=""/>
-    <meta property="og:title" content=""/>
-    <meta property="og:description" content=" "/>
-    <meta property="og:image" content=""/>
-    <meta property="og:image:width" content=""/>
-    <meta property="og:image:height" content=""/>
-    <meta property="og:url" content=""/>
-    <meta property="og:site_name" content=" "/>
-    <meta property="og:ttl" content=""/>
-    <meta name="twitter:card" content=""/>
-    <meta name="twitter:domain" content=""/>
-    <meta name="twitter:site" content=""/>
-    <meta name="twitter:creator" content=""/>
-    <meta name="twitter:image:src" content=""/>
-    <meta name="twitter:description" content=""/>
-    <meta name="twitter:title" content=" "/>
-    <meta name="twitter:url" content=""/>
-    <meta name="description" content="  "/>
-    <meta name="keywords" content=""/>
-    <meta name="author" content=""/>
-    <meta name="copyright" content=" "/>
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta charset="utf-8"/>
+    <title>Injaz-إنجاز</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta content="Elaxo App and Software Template" name="description"/>
+    <meta content="" name="keywords"/>
+    <meta content="" name="author"/>
 
-    @if(lang() == 'ar')
-        <link rel="stylesheet" href="{{asset_site('assest/css/bootstrap-rtl.css')}}">
-    @else
-        <link rel="stylesheet" href="{{asset_site('assest/css/bootstrap.min.css')}}">
-    @endif
-    <link rel="stylesheet" href="{{asset_site('assest/css/all.min.css')}}">
-    <link rel="stylesheet" href="{{asset_site('assest/css/fontawesome.min.css')}}">
-    {{--    <link rel="stylesheet" href="{{asset_site('assest/css/style'.(sizeof(request()->segments()) == 0? '-home':'' ).'.css')}}">--}}
+<!--[if lt IE 9]>
+    <script src="{{asset_site('js/html5shiv.js')}}"></script>
+    <![endif]-->
 
-    <link rel="stylesheet" href="{{asset_site('assest/css/style.css')}}">
-    @if(lang() == 'ar')
-        <link rel="stylesheet" href="{{asset_site('assest/css/style-rtl.css')}}">@endif
-    <link rel="stylesheet" href="{{asset_site('assest/css/owl.carousel.min.css')}}">
-    <link rel="stylesheet" href="{{asset_site('assest/css/owl.theme.default.min.css')}}">
-    <link rel="stylesheet" href="{{asset_site('assest/css/animate.css')}}">
-    <style>
-        .nav li:hover a {
-            color: #fff !important;
-        }
+    <!-- CSS Files
+================================================== -->
+    <link id="bootstrap" href="{{asset_site('css/bootstrap.min.css')}}" rel="stylesheet" type="text/css"/>
+    <link id="bootstrap-grid" href="{{asset_site('css/bootstrap-grid.min.css')}}" rel="stylesheet" type="text/css"/>
+    <link id="bootstrap-reboot" href="{{asset_site('css/bootstrap-reboot.min.css')}}" rel="stylesheet" type="text/css"/>
+    <link href="{{asset_site('css/animate.css')}}" rel="stylesheet" type="text/css"/>
+    <link href="{{asset_site('css/owl.carousel.css')}}" rel="stylesheet" type="text/css"/>
+    <link href="{{asset_site('css/owl.theme.css')}}" rel="stylesheet" type="text/css"/>
+    <link href="{{asset_site('css/owl.transitions.css')}}" rel="stylesheet" type="text/css"/>
+    <link href="{{asset_site('css/magnific-popup.css')}}" rel="stylesheet" type="text/css"/>
+    <link href="{{asset_site('css/jquery.countdown.css')}}" rel="stylesheet" type="text/css"/>
+    <link href="{{asset_site('css/style.css')}}" rel="stylesheet" type="text/css"/>
 
-        #hover_nav li:hover a {
-            color: #000 !important;
-        }
+    <!-- color scheme -->
+    <link id="colors" href="{{asset_site('css/colors/scheme-01.css')}}" rel="stylesheet" type="text/css"/>
+    <link href="{{asset_site('css/coloring.css')}}" rel="stylesheet" type="text/css"/>
 
-        .main-header .menu-container .main-menu .menu_item:hover .menu__submenu {
-            opacity: 1;
-            visibility: visible;
-            top: 140%;
-            background: #ca2028;
-            min-width: 120px;
-        }
-        .Drop {
-            box-shadow: -2px 2px 3px rgb(0,0,0,0.2);
-            border: 2px solid #fff !important;
-        }
 
-        .owlNavs .owl-nav {
-            margin: 0px 10px;
-            border-radius: 50px;
-            outline: 0;
-            width: 50px;
-            text-align: center;
-            line-height: 50px;
-            color: #B5151B;
-            height: 50px;
-            background: #ffffff !important;
-            filter: drop-shadow(0px 3px 12px rgba(0, 0, 0, 0.16));
-            box-shadow: -2px 2px 3px rgb(0,0,0,0.2);
-        }
-
-        .testimonials {
-            float: left;
-            max-width: 450px;
-        }
-
-        .owlNavs {
-            position: relative;
-            z-index: 5;
-            display: flex;
-            align-items: center;
-            margin-top: 40% !important;
-            margin-right: 85% !important;
-        }
-
-        .menu_item {
-            /* overflow: hidden; */
-            padding: 0px 10px;
-            border-radius: 50px;
-            -webkit-transition: all 0.2s ease-in-out;
-            -moz-transition: all 0.2s ease-in-out;
-            -o-transition: all 0.2s ease-in-out;
-            -ms-transition: all 0.2s ease-in-out;
-            transition: all 0.2s ease-in-out;
-            border: 2px solid white;
-            background-color: #fff;
-            box-shadow: -2px 2px 3px rgb(0,0,0,0.2);
-        }
-
-        .box-shadow {
-            box-shadow: none !important;
-        }
-    </style>
-    @yield('style')
-
-    @if(isset($logo_min))
-        <link rel="shortcut icon" href="{{ asset($logo_min) }}"/>
-    @endif
+    <link href="{{ asset('assets/vendors/general/toastr/build/toastr.'.direction('.').'css') }}" rel="stylesheet"
+          type="text/css"/>
 
 </head>
 
 <body>
 
-{{--<div class="loader-page"><span></span><span></span></div>--}}
-<div class="mobile-menu-overlay"></div>
-<!-- begin:: Header -->
-<header class="main-header container {{sizeof(request()->segments()) == 0? 'mainPageHead':'' }}">
-    <div class="container-fluid">
-        <div class="d-flex align-items-center">
-            <div class="logo">
-                <a href="{{route('home')}}"><img src="{{asset_site('assest/images/logo.png')}}" alt=""/></a>
-            </div>
-            <div class="menu--mobile mx-lg-auto">
-                <div class="menu-container d-lg-none">
-                    <div class="btn-close-header-mobile justify-content-end">
-                        <i class="fas fa-times"></i>
-                    </div>
-                </div>
-                <div class="menu-container w-100 d-lg-flex align-items-center justify-content-between">
-                    <ul  class="main-menu ml-auto list-main-menu d-lg-flex justify-content-center nav">
-                        <li class="menu_item mr-4 menu_bxHid">
-                            <a class="menu_link menu_bx box-shadow" href="{{route('home')}}">{{w('Home')}}</a>
-                        </li>
-                        <li class="menu_item mr-4 menu_bxHid">
-                            <a class="menu_link menu_bx box-shadow" href="{{route('products')}}">{{w('Products')}}</a>
-                        </li>
-                        <li class="menu_item mr-4 menu_bxHid">
-                            <a class="menu_link menu_bx box-shadow" href="{{route('offers')}}">{{w('Offers')}}</a>
-                        </li>
-                        <li class="menu_item mr-4 menu_bxHid">
-                            <a class="menu_link menu_bx box-shadow" href="{{route('gallery')}}">{{w('Gallery')}}</a>
-                        </li>
-                    </ul>
+<div id="wrapper">
+{{--    <div id="topbar" class="text-white bg-color">--}}
+{{--        <div class="container">--}}
+{{--            <div class="topbar-left sm-hide">--}}
+{{--                        <span class="topbar-widget tb-social">--}}
+{{--                            <a href="{{setting('facebook')}}"><i class="fa fa-facebook"></i></a>--}}
+{{--                            <a href="#"><i class="fa fa-twitter"></i></a>--}}
+{{--                            <a href="#"><i class="fa fa-instagram"></i></a>--}}
+{{--                        </span>--}}
+{{--            </div>--}}
 
+{{--            <div class="topbar-right">--}}
+{{--                <span class="topbar-widget sm-hide"><a href="download.html">Latest Version Available!</a></span>--}}
+{{--                <span class="topbar-widget"><a href="pricing.html">Today's Deal: Get 50% Discount!</a></span>--}}
+{{--            </div>--}}
+{{--            <div class="clearfix"></div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
 
-                    <div class="menu-container d-lg-flex align-items-center ml-auto">
-                        <form class="search mr-4" action="{{route('search')}}" method="post">
-                            @csrf
-                            <input class="search__toggle" id="toggleSearch" type="checkbox" hidden=""/>
-                            <div class="search__field">
-                                <input class="search__input" type="text" name="search" value="{{request()->search}}"
-                                       placeholder="ابحث هنا"/>
-                                <label class="search__label" for="toggleSearch">
-                                    <div class="search__button">
-                                        <div class="search__icon search__button--toggle"><i class="fas fa-search"></i>
-                                        </div>
-                                    </div>
-                                    <div class="search__button search__button--submit"><i class="fas fa-times"></i>
-                                    </div>
-                                </label>
+<!-- header begin -->
+    <header class="transparent scroll-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="de-flex sm-pt10">
+                        <div class="de-flex-col">
+                            <!-- logo begin -->
+                            <div id="logo">
+                                <a href="{{route('home')}}">
+                                    <img alt="" class="logo" src="{{asset_public(setting('logo_light'))}} "
+                                         style="width: 70px;height: 21px"/>
+                                    <img alt="" class="logo-2" src="{{asset_public(setting('logo'))}}"
+                                         style="width: 70px;height: 21px"/>
+                                </a>
                             </div>
-                        </form>
-                        <ul class="main-menu d-flex align-items-center mr-lg-4 nav">
-                            <li class="menu_item Drop">
-                                <a class="menu_link">{{optional(getCurrentCountry())->name}}<i
-                                        class="fas fa-chevron-down fa-xs ml-2"></i></a>
-                                <ul class="menu__submenu box_shadow" id="hover_nav">
-                                    @foreach($countries as $index=>$country)
-                                        <li class="item-submenu">
-                                            <a class="link-submenu"
-                                               href="{{route('change-country',$country->id)}}"> {{optional($country)->name}}</a>
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            </li>
-                        </ul>
-                        <ul class="main-menu d-flex align-items-center">
-                            <li class="menu_item Drop py-1">
-                                <a class="menu_link"><img
-                                        @php
-                                            $image = lang() == 'ar'?'saudi-arabia.png':'american.png';
-                                        @endphp
-                                        src="{{asset_site('assest/images/'.$image)}}"
-                                        style="width: 32px;height: 32px"
-                                        alt=""/><i
-                                        class="fas fa-chevron-down fa-xs ml-2"></i></a>
-                                <ul class="menu__submenu box_shadow">
+                            <!-- logo close -->
+                        </div>
+                        <div class="de-flex-col header-col-mid">
+                            <!-- mainmenu begin -->
+                            <ul id="mainmenu" style="display: inline-block; font-size:15px;" >
+                                <li><a href="{{route('home')}}">{{w('Home')}}<span></span></a></li>
+                                <li><a href="{{route('about_us')}}">{{w('About Us')}}<span></span></a></li>
+                                <li>
+                                    <a href="javascript:;">{{w('Services')}}<span></span></a>
+                                    <ul>
+{{--                                        @foreach($services as $index=>$service)--}}
+{{--                                            <li>--}}
+{{--                                                <a href="{{route('view_service_details',$service->id)}}">{{$service->name}}</a>--}}
+{{--                                            </li>--}}
+{{--                                        @endforeach--}}
+                                    </ul>
+                                </li>
+                                <li><a href="{{route('view_special_service_form')}}">{{w('Request Service')}}
+                                        <span></span></a></li>
+                                <li><a href="{{route('view_contactUs')}}">{{w('Contact Us')}}<span></span></a></li>
+                                <li><a href="{{route('blogs')}}">{{w('Blog')}}<span></span></a></li>
+                                <li>
                                     @if(lang() == 'ar')
-                                        <li class="item-submenu">
-                                            <a class="link-submenu" href="{{route('switch-language', 'en')}}">
-                                                <img
-                                                    style="width: 32px;height: 32px"
-                                                    src="{{asset_site('assest/images/american.png')}}"
-                                                    alt=""/></a>
-                                        </li>
+                                        <a href="{{route('switch-language', 'en')}}">{{ w('English')  }}
+                                            <span></span></a>
                                     @else
-                                        <li class="item-submenu">
-                                            <a class="link-submenu" href="{{route('switch-language', 'ar')}}"><img
-                                                    src="{{asset_site('assest/images/saudi-arabia.png')}}" alt=""/></a>
-                                        </li>
+                                        <a href="{{route('switch-language', 'ar')}}">{{ w('Arabic')  }}<span></span></a>
                                     @endif
+                                </li>
+                            </ul>
+                        </div>
+
+
+
+                        <div class="de-flex-col">
+                        @if(auth()->check())
+                        <ul id="mainmenu" style="display: inline-block; font-size:15px;">
+                            <li>
+                                <a href="javascript:;"><b>{{w('Account')}}</b><span></span></a>
+                                <ul>
+                                    <li>
+                                        <form id="logout-form" action="{{ url("/logout") }}" method="POST"
+                                            style="display: none;">
+                                            {{ csrf_field() }}
+                                        </form>
+                                        <a class="btnC_info" style="border-radius:0px" href="javascript:;" onclick="event.preventDefault();
+                                                        document.getElementById('logout-form').submit();"><i
+                                                class="fa fa-arrow-down"></i> {{w('Logout')}}</a>
+                                    </li>
+                                    <li>
+                                        <a class="btnC_info" style="border-radius:0px" href="{{route('profile')}}"><i
+                                                class="fa fa-user"></i> {{w('profile')}}</a>
+                                    </li>
                                 </ul>
                             </li>
                         </ul>
+                        @else
+                         <a class="btnC_info" href="{{route('login')}}"><i
+                                        class="fa fa-arrow-down"></i><b> {{w('Login')}}</b></a>
+                        @endif
+                            <span id="menu-btn"></span>
+                        </div>
+
+
+
                     </div>
                 </div>
             </div>
+        </div>
+    </header>
+    <!-- header close -->
+    <!-- content begin -->
+    <div class="no-bottom no-top" id="content">
+        <div id="top"></div>
 
-            <div class="header-mobile__toolbar ml-3 d-lg-none fa-lg">
-                <i class="fa fa-bars"></i>
+        @if(isset($breadcrumb) && $breadcrumb== true)
+            {{--            @php--}}
+            {{--                $showcase = Setting('showcase_background');--}}
+            {{--                    $bre = isset($showcase)?asset_public(Setting('showcase_background')):asset_site('images/background/1.jpg');--}}
+            {{--            @endphp--}}
+            <section id="subheader" class="text-light"
+                     data-bgimage="url('{{asset_public(optional(Setting('showcase_background'))[lang()])}}') bottom"
+            >
+
+                <div class="center-y relative text-center">
+                    <div class="container">
+                        <div class="row">
+
+                            <div class="col-md-12 text-center">
+                                <h1>{{$title}}</h1>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        @endif
+
+        @yield('content')
+    </div>
+    <!-- content close -->
+
+    <a href="#" id="back-to-top"></a>
+
+    <!-- footer begin -->
+    <footer class="footer-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-2">
+                    <div class="widget">
+                        <a href="{{route('home')}}"><img style="width: 70px;height: 21px" alt="logo" class="logo"
+                                                         src="{{asset_public(setting('logo'))}}"></a>
+                    </div>
+                </div>
+
+                <div class="col-lg-3">
+                    <div class="widget">
+                        <h5>Company</h5>
+                        <ul>
+                            <li><a class="a-underline" href="{{route('privacy_policy')}}">{{w('Privacy Policy')}}
+                                    <span></span></a></li>
+                            <li><a class="a-underline" href="{{route('all_faq')}}">{{w('FAQ')}}<span></span></a></li>
+                            <li><a class="a-underline" href="{{route('conditions')}}">{{w('Conditions')}}
+                                    <span></span></a></li>
+                            <li><a class="a-underline" href="{{asset(setting('brochure'))}}">{{w('Download Brochure')}}
+                                    <span></span></a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="widget">
+                        <h5>Product</h5>
+                        <ul>
+{{--                            @foreach($services as $index=>$item)--}}
+{{--                                <li><a class="a-underline"--}}
+{{--                                       href="{{route('view_service_details',$item->id)}}">{{$item->name}}--}}
+{{--                                        <span></span></a>--}}
+{{--                                </li>--}}
+{{--                            @endforeach--}}
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-3">
+                    <div class="widget">
+                        <h5>Resources</h5>
+                        <ul>
+                            <li><a class="a-underline" href="https://injaz.tawk.help/">{{w('Help Center')}}<span></span></a>
+                            </li>
+                            <li><a class="a-underline" href="{{route('blogs')}}">{{w('Blog')}}<span></span></a></li>
+                            <li><a class="a-underline" href="{{route('contact_us')}}">{{w('Contact Us')}}
+                                    <span></span></a></li>
+                            <li><a class="a-underline" target="_blank"
+                                   href="{{setting('join_us_url')}}">{{w('Join Us')}}
+                                    <span></span></a></li>
+                        </ul>
+                    </div>
+                </div>
+
             </div>
         </div>
-    </div>
-</header>
 
-@yield('content')
+        <div class="subfooter">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="de-flex">
+                            <div class="de-flex-col">
+                                © Copyright 2021 - Injaz Developers Team
+                            </div>
 
-<footer>
-    <div class="container">
-        <div class="lastFooter d-flex align-items-center justify-content-between flex-wrap">
-
-            <div class="privace mb-3 width-100">
-                <ul class="list-unstyled d-flex align-items-center justify-content-between  ">
-                    <li class="mr-3"><a href="{{route('privacy_policy')}}">{{w('Privacy & policy')}}</a></li>
-                    <li class="mr-3"><a href="{{route('about_us')}}">{{w('About Us')}}</a></li>
-                </ul>
-
-            </div>
-            <div
-                class="copy text-center mb-3 d-flex align-items-center justify-content-between flex-wrap width-100 ">
-                <p>{{'Copyrights' . date('Y')}}</p>
-
-                <a class="hidePs" href="javascript:;">
-                    @if(lang() == 'ar')
-                        مدعوم من قبل مؤسسة وليد الطاهر/ م.بهاء
-                    @else
-                        Powered by Waleed Al Taher Est/ Eng.Bahaa
-                    @endif
-                </a>
-            </div>
-            <div class="social mb-3 width-100 d-flex align-items-center justify-content-between ">
-                <ul class="list-unstyled d-flex align-items-center width-100 justify-content-center">
-                    <li class="mr-3 d-n"><a href="javascript:;">  @if(lang() == 'ar')
-                                مدعوم من قبل مؤسسة وليد الطاهر/ م.بهاء
-                            @else
-                                Powered by Waleed Al Taher Est/ Eng.Bahaa
-                            @endif</a></li>
-                    <li class="mr-3"><a href="{{setting('facebook')}}"><i class="fab fa-facebook-f"></i></a></li>
-                    <li class="mr-3"><a href="{{setting('instagram')}}"><i class="fab fa-instagram"></i></a></li>
-                    <li class="mr-3"><a href="{{setting('twitter')}}"><i class="fab fa-twitter"></i></a></li>
-                    <li class="mr-3"><a href="{{setting('linkedin')}}"><i style="color: black"
-                                                                          class="fab fa-linkedin-in"></i></a></li>
-                </ul>
+                            <div class="de-flex-col">
+                                <div class="social-icons">
+                                    <a href="{{setting('facebook')}}" target="_blank"><i
+                                            class="fa fa-facebook fa-lg"></i></a>
+                                    <a href="{{setting('twitter')}}" target="_blank"><i class="fa fa-twitter fa-lg"></i></a>
+                                    <a href="{{setting('linkedin')}}" target="_blank"><i
+                                            class="fa fa-linkedin fa-lg"></i></a>
+                                    <a href="{{setting('whatsApp')}}" target="_blank"><i
+                                            class="fa fa-whatsapp  fa-lg"></i></a>
+                                    {{--                                    <a href="#"><i class="fa fa-rss fa-lg"></i></a>--}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+
+    </footer>
+    <!-- footer close -->
+
+    <div id="preloader">
+        <div class="spinner">
+            <div class="bounce1"></div>
+            <div class="bounce2"></div>
+            <div class="bounce3"></div>
+        </div>
     </div>
-</footer>
-<!-- end:: section -->
-<script src="{{asset_site('assest/js/jQuery.js')}}"></script>
-<script src="{{asset_site('assest/js/bootstrap.bundle.js')}}"></script>
-<script src="{{asset_site('assest/js/owl.carousel.min.js')}}"></script>
-@if(lang() =='ar')
-    <script src="{{asset_site('assest/js/owlRtl.js')}}"></script>
-@endif
-<script src="{{asset_site('assest/js/owl-Function.js')}}"></script>
-<script src="{{asset_site('assest/js/function.js')}}"></script>
-<script src="{{asset_site('assest/js/wow.min.js')}}"></script>
+</div>
 
-@yield('js')
 
+<!-- Javascript Files
+================================================== -->
+<script src="{{asset_site('js/jquery.min.js')}}"></script>
+<script src="{{asset_site('js/bootstrap.min.js')}}"></script>
+<script src="{{asset_site('js/wow.min.js')}}"></script>
+<script src="{{asset_site('js/jquery.isotope.min.js')}}"></script>
+<script src="{{asset_site('js/easing.js')}}"></script>
+<script src="{{asset_site('js/owl.carousel.js')}}"></script>
+<script src="{{asset_site('js/validation.js')}}"></script>
+<script src="{{asset_site('js/jquery.magnific-popup.min.js')}}"></script>
+<script src="{{asset_site('js/enquire.min.js')}}"></script>
+<script src="{{asset_site('js/jquery.stellar.min.js')}}"></script>
+<script src="{{asset_site('js/jquery.plugin.js')}}"></script>
+<script src="{{asset_site('js/typed.js')}}"></script>
+<script src="{{asset_site('js/jquery.countTo.js')}}"></script>
+<script src="{{asset_site('js/jquery.countdown.js')}}"></script>
+<script src="{{asset_site('js/typed.js')}}"></script>
+<script src="{{ asset("assets/vendors/general/toastr/build/toastr-home.min.js") }}" type="text/javascript"></script>
+
+<script type="text/javascript">
+    toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": true,
+        "positionClass": "toast-top-right",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "100",
+        "hideDuration": "2000",
+        "timeOut": "10000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    };
+    @if(Session::has('message'))
+    toastr.{{Session::get('m-class') ? Session::get('m-class'):'success'}}("{{Session::get('message')}}");
+    @endif
+</script>
+
+<script>
+    var isRTL = "{{lang() == 'ar'?'on':'off'}}";
+    var baseURL = "{{asset_site('/')}}/";
+</script>
+<script src="{{asset_site('js/designesia.js')}}"></script>
+
+<script>
+    $(function () {
+        // jquery typed plugin
+        $(".typed").typed({
+            stringsElement: $('.typed-strings'),
+            typeSpeed: 100,
+            backDelay: 1500,
+            loop: true,
+            contentType: 'html', // or text
+            // defaults to false for infinite loop
+            loopCount: false,
+            callback: function () {
+                null;
+            },
+            resetCallback: function () {
+                newTyped();
+            }
+        });
+    });
+</script>
+
+<script src="{{ asset('assets/vendors/general/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js') }}"
+        type="text/javascript"></script>
+<script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
+
+@yield('script')
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+    var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+    (function () {
+        var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+        s1.async = true;
+        s1.src = 'https://embed.tawk.to/60b7e50a6699c7280daa6234/1f775dcrj';
+        s1.charset = 'UTF-8';
+        s1.setAttribute('crossorigin', '*');
+        s0.parentNode.insertBefore(s1, s0);
+    })();
+</script>
+<!--End of Tawk.to Script-->
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-V4WLKWZ68H"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+    gtag('config', 'G-V4WLKWZ68H');
+</script>
 </body>
-
 </html>

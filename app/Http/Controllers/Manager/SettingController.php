@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Manager;
 
 use App\Http\Controllers\Controller;
-use App\Models\Country;
-use App\Models\Order;
-use App\Models\Product;
-use App\Models\ProductPrices;
-use App\Models\Setting;
+use App\Models\Advantage;
+use App\Models\Blog;
+use App\Models\ContactUs;
+use App\Models\CustomerReviews;
+use App\Models\Faq;
+use App\Models\Package;
+use App\Models\Service;
+use App\Models\Statistic;
 use App\Models\User;
 use App\Rules\EmailRule;
 use Illuminate\Http\Request;
@@ -18,40 +21,23 @@ class SettingController extends Controller
 {
     public function __construct()
     {
-        parent::__construct();
-//        $this->middleware('permission:General Settings', ['only' => ['settings', 'updateSettings']]);
-//        $this->middleware('permission:Dashboard', ['only' => ['home']]);
-    }
-
-    public function generate_admin_app_api_new_token(Request $request)
-    {
-        setting(['token_form_dashboard' => generateRandomString()])->save();
-        return redirect()->back()->with('m-class', 'success')->with('message', t('Token Generated Successfully'));
-
+        $this->middleware('permission:General Settings', ['only' => ['settings', 'updateSettings']]);
     }
 
     public function home()
     {
-        $country = getCurrentCountry();
-        $total_earning = Order::completedOrder()->sum('total_cost');
-        $today_earning = Order::completedOrder()->whereDay('created_at', date('d'))->sum('total_cost');
-        $total_active_users = User::count();
-        $total_orders = Order::count();
-        $total_products = ProductPrices::currentCountry(getCurrentCountry()->id)->count();
-//        $total_opened_tickets = Order::whereHas('chatMessages')->count();
-        $total_opened_tickets = Order::where('has_chat', true)->count();
-        return view('manager.home', compact('total_earning', 'today_earning', 'total_active_users', 'total_orders', 'total_products', 'total_opened_tickets'));
+        $users =0;// User::count();
+        $packages =0;// Package::count();
+        $services = 0;//Service::count();
+        $blogs = 0;//Blog::count();
+        $advantages =0;// Advantage::count();
+        $statistics = 0;//Statistic::count();
+        $customerReviews = 0;//CustomerReviews::count();
+        $fAQs = 0;//Faq::count();
+        $contactUsMessages = 0;//ContactUs::count();
 
-    }
 
-    public function changeCountry(Request $request, int $id,$segments = 0)
-    {
-        $user = user();
-        $user->country_id = $id;
-        $user->save();
-//        $user->update(['country_id', $id]);
-        $request->session()->put('country', Country::findOrFail($id));
-        return $segments == 4 ? redirect()->back() : redirect()->route('manager.home');
+        return view('manager.home', compact('users', 'packages', 'services', 'blogs', 'advantages', 'statistics', 'customerReviews', 'fAQs', 'contactUsMessages'));
     }
 
     public function settings()
@@ -60,45 +46,54 @@ class SettingController extends Controller
         return view('manager.setting.general', compact('title'));
     }
 
-
     public function updateSettings(Request $request)
     {
-//        dd(checkRequestIsWorkingOrNot());
-        $data = $request->except(['_token', 'logo', 'logo_min']);
-        if ($request->hasFile('logo')) {
-            if ($request->file('logo')->isValid()) {
-                setting(['logo' => $this->uploadImage($request->file('logo'), 'logos')])->save();
-            }
+    //    dd(checkRequestIsWorkingOrNot());
+        $data = $request->except(['_token', 'commission_active', 'logo', 'logo_min', 'showcase_background', 'showcase_background_front', 'brochure', 'logo_light', 'about_us_image']);
+        setting(['commission_active' => $request->get('commission_active', false)])->save();
+        if ($request->hasFile('logo_light')) if ($request->file('logo_light')->isValid()) setting(['logo_light' => $this->uploadImage($request->file('logo_light'), 'logo_light')])->save();
+        if ($request->hasFile('about_us_image')) if ($request->file('about_us_image')->isValid()) setting(['about_us_image' => $this->uploadImage($request->file('about_us_image'), 'about_us_image')])->save();
+        if ($request->hasFile('logo')) if ($request->file('logo')->isValid()) {
+            $logo = $this->uploadImage($request->file('logo'), 'logos');
+            setting(['logo' => $logo])->save();
+            setting(['logo_min' => $logo])->save();
         }
-        if ($request->hasFile('logo_min')) {
-            if ($request->file('logo_min')->isValid())
-                setting(['logo_min' => $this->uploadImage($request->file('logo_min'), 'logo_min')])->save();
+        if (isset($request->showcase_background) && is_array($request->showcase_background) && sizeof($request->showcase_background) > 0) {
+            $imgArr = [
+                'ar' => optional(setting('showcase_background'))['ar'],
+                'en' => optional(setting('showcase_background'))['en'],
+            ];
+            foreach ($request->showcase_background as $index => $item)
+                if ($item->isValid()) $imgArr[$index] = $this->uploadImage($item, 'showcase_background_' . $index);
+//                dd($imgArr);
+            setting(['showcase_background' => $imgArr])->save();
         }
-        foreach ($data as $index => $datum) {
-            if (is_array($datum) && sizeof($datum) > 0) {
-                foreach ($datum as $index2 => $item) {
-                    if (is_null($item)) {
-                        $datum[$index2] = '';
-                    }
-                }
-            }
-            if (is_null($datum)) $datum = '';
-            else setting([$index => $datum])->save();
-        }
-        setting(['stop_app_all_countries' => $request->get('stop_app_all_countries', 0)])->save();
-        optional(getCurrentCountry())->update(['app_is_stopped' => $request->get('stop_app_for_current_country', 0)]);
-        Artisan::call('cache:clear');
-        return redirect()->back()->with('message', t('Successfully Updated'))->with('m-class', 'success');
+//        if ($request->hasFile('showcase_background')) if ($request->file('showcase_background')->isValid()) setting(['showcase_background' => $this->uploadImage($request->file('showcase_background'), 'showcase_background')])->save();
+        if ($request->hasFile('showcase_background_front'))
+            if ($request->file('showcase_background_front')->isValid())
+                setting(['showcase_background_front' =>
+                    $this->uploadImage($request->file('showcase_background_front'), 'showcase_background_front')])->save();
 
-        $data = $request->all();
-        $setting = Setting::query()->findOrNew('1');
-        if ($request->hasFile('logo')) {
-            $data['logo'] = $this->uploadImage($request->file('logo'), 'logos');
+        if ($request->hasFile('brochure'))
+            if ($request->file('brochure')->isValid())
+                setting(['brochure' =>
+                    $this->uploadImage($request->file('brochure'), 'brochure')])->save();
+//        if (isset($request->showcase_background) && is_array($request->showcase_background) && sizeof($request->showcase_background) > 0) {
+//            $imgArr = [
+//                'ar' => optional(setting('showcase_background'))['ar'],
+//                'en' => optional(setting('showcase_background'))['en'],
+//            ];
+//            foreach ($request->showcase_background as $index => $item)
+//                if ($item->isValid()) $imgArr[$index] = $this->uploadImage($item, 'showcase_background_' . $index);
+////                dd($imgArr);
+//            setting(['showcase_background' => $imgArr])->save();
+//        }
+
+        foreach ($data as $index => $datum) {
+            if (is_array($datum) && sizeof($datum) > 0) foreach ($datum as $index2 => $item) if (is_null($item)) $datum[$index2] = '';
+            if (is_null($datum)) $datum = '';
+            setting([$index => $datum])->save();
         }
-        if ($request->hasFile('logo_min')) {
-            $data['logo_min'] = $this->uploadImage($request->file('logo_min'), 'logos');
-        }
-        $setting->update($data);
         Artisan::call('cache:clear');
         return redirect()->back()->with('message', t('Successfully Updated'))->with('m-class', 'success');
     }

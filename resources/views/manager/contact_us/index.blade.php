@@ -59,13 +59,12 @@ WhatsApp +970592879186
                 <div class="kt-portlet__body">
                     <table class="table text-center" id="users-table">
                         <thead>
-                        <th>{{ t('Full Name') }}</th>
-                        <th>{{ t('Title') }}</th>
-                        <th>{{ t('Mobile No') }}</th>
+                        <th>{{ t('Name') }}</th>
                         <th>{{ t('Email') }}</th>
-                        <th>{{ t('Description') }}</th>
-                        <th>{{ t('Status') }}</th>
-                        <th>{{ t('Date') }}</th>
+                        <th>{{ t('Mobile') }}</th>
+                        <th>{{ t('target') }}</th>
+                        <th>{{ t('How Did You Hear About Ingaz') }}</th>
+                        <th>{{ t('Received At') }}</th>
                         <th>{{ t('Actions') }}</th>
                         </thead>
                     </table>
@@ -125,11 +124,10 @@ WhatsApp +970592879186
                     },
                     columns: [
                         {data: 'name', name: 'name'},
-                        {data: 'title', name: 'title'},
-                        {data: 'mobile', name: 'mobile'},
                         {data: 'email', name: 'email'},
-                        {data: 'message', name: 'message'},
-                        {data: 'status', name: 'status'},
+                        {data: 'mobile', name: 'mobile'},
+                        {data: 'target', name: 'target'},
+                        {data: 'how_did_you_hear_about_ingaz', name: 'how_did_you_hear_about_ingaz'},
                         {data: 'created_at', name: 'created_at'},
                         {data: 'actions', name: 'actions'}
                     ],

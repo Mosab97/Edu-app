@@ -3,47 +3,59 @@
 namespace App\Http\Controllers\ManagerAuth;
 
 use App\Http\Controllers\Controller;
-use App\Models\Country;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Hesto\MultiAuth\Traits\LogsoutGuard;
 
 class LoginController extends Controller
 {
-    use AuthenticatesUsers;
+    /*
+    |--------------------------------------------------------------------------
+    | Login Controller
+    |--------------------------------------------------------------------------
+    |
+    | This controller handles authenticating users for the application and
+    | redirecting them to your home screen. The controller uses a trait
+    | to conveniently provide its functionality to your applications.
+    |
+    */
 
+    use AuthenticatesUsers, LogsoutGuard {
+        LogsoutGuard::logout insteadof AuthenticatesUsers;
+    }
 
-
+    /**
+     * Where to redirect users after login / registration.
+     *
+     * @var string
+     */
     public $redirectTo = '/manager/home';
 
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
     public function __construct()
     {
         $this->middleware('manager.guest', ['except' => 'logout']);
     }
 
-
+    /**
+     * Show the application's login form.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function showLoginForm()
     {
         return view('manager.auth.login');
     }
 
-    public function username()
-    {
-        return 'email';
-    }
-
-    protected function authenticated(Request $request, $user)
-    {
-        session(['lang' => $user->local]);
-        app()->setLocale($user->local);
-        $country = $user->country;
-        // Via a request instance... ... ..
-        $request->session()->put('country', isset($country) ? $country : Country::first());
-        //Or Via the global "session" helper...
-//        session(['country' => $user->country_id]);
-    }
-
+    /**
+     * Get the guard to be used during authentication.
+     *
+     * @return \Illuminate\Contracts\Auth\StatefulGuard
+     */
     protected function guard()
     {
         return Auth::guard('manager');

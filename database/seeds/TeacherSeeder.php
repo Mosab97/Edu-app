@@ -1,11 +1,6 @@
 <?php
 
-use App\Http\Resources\Api\v1\General\AgeResource;
-use App\Http\Resources\Api\v1\General\LevelResource;
-use App\Http\Resources\Api\v1\Teacher\CourseResource;
-use App\Http\Resources\Api\v1\Teacher\ProfileResource;
 use Illuminate\Database\Seeder;
-use \App\Models\Student;
 
 
 class TeacherSeeder extends Seeder
@@ -28,6 +23,7 @@ class TeacherSeeder extends Seeder
         for ($item = 1; $item <= 3; $item++) {
             \App\Models\User::create([
                 'name' => 'teacher' . $item,
+                'major' => 'teacher' . $item,
                 'user_type' => \App\Models\User::user_type['TEACHER'],
                 'username' => generateRandomString(7),
                 'email' => 'teacher' . $item . '@teacher.com',
@@ -41,22 +37,22 @@ class TeacherSeeder extends Seeder
         }
 
 
-//        foreach (\App\Models\User::teacher()->get() as $index => $item) {
-//            for ($group = 1; $group <= 3; $group++)
-//                $item->teacher_groups()->create([
-//                    'name' => 'group ' . $group,
-//                    'price' => $group,
-//                    'students_number_max' => $group,
-//                    'number_of_live_lessons' => $group,
-//                    'number_of_exercises_and_games' => $group,
-//                    'course_date_and_time' => \Carbon\Carbon::now(),
-//                    'what_will_i_learn' => 'what_will_i_learn',
-//                    'course_id' => \App\Models\Course::get()->pluck('id')->random(),
-//                    'level_id' => \App\Models\Level::get()->pluck('id')->random(),
-//                    'age_id' => \App\Models\Age::get()->pluck('id')->random(),
-//                    'gender' => collect(Gender)->random(),
-//                ]);
-//        }
+        foreach (\App\Models\User::teacher()->get() as $index => $item) {
+            for ($group = 1; $group <= 3; $group++)
+                $item->teacher_groups()->create([
+                    'name' => 'group ' . $group,
+                    'price' => $group,
+                    'students_number_max' => $group,
+                    'number_of_live_lessons' => $group,
+                    'number_of_exercises_and_games' => $group,
+                    'course_date_and_time' => \Carbon\Carbon::now(),
+                    'what_will_i_learn' => 'what_will_i_learn',
+                    'course_id' => \App\Models\Course::get()->pluck('id')->random(),
+                    'level_id' => \App\Models\Level::get()->pluck('id')->random(),
+                    'age_id' => \App\Models\Age::get()->pluck('id')->random(),
+                    'gender' => collect(Gender)->random(),
+                ]);
+        }
 
     }
 
