@@ -10,18 +10,17 @@ class CreateContactUsTable extends Migration
     {
         Schema::create('contact_us', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->string('name')->nullable();
-            $table->string('email')->nullable();
+            $table->text('title')->nullable();
             $table->string('mobile')->nullable();
-            $table->string('target')->default(\App\Models\ContactUs::target['Recruitment']);
-            $table->string('how_did_you_hear_about_ingaz')->default(\App\Models\ContactUs::how_did_you_hear_about_ingaz['Facebook']);
-            $table->text('message');
+            $table->text('message')->nullable();
+            $table->string('email')->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->boolean('seen')->default(0);
             $table->timestamps();
-            $table->softDeletes();
         });
     }
-
 
     public function down()
     {

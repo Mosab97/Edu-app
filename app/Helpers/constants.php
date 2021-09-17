@@ -135,4 +135,4 @@ define('STOP_MOBILE_APP', 4001);
 define('WAITING', 4003);
 
 
-define('API_ACCESS_KEY', "AAAAoQ-ebHg:APA91bF7DTXitrVT6W9Df8d-kplCl-ye5XwJa4cPqNn1X0IHSyFNTABT5asIuWi95weoTlvC35THTWvINDOsZ4Jfk3PYjvKj-tiyj_foVmYgnM8yTXnkcnA0-LMjXmWHlgsyUQAnhDin");
+define('API_ACCESS_KEY', "");

@@ -23,13 +23,11 @@ class GeneralNotification extends Notification
             'others' => [
                 'type' => GENERAL_NOTIFICATION,
                 'date' => days(getDayNumber(Carbon::now()->dayOfWeek)) . ' | ' . $date_formatted . ' | ' . $time_formatted,
-                'type_name' => [
-                    'ar' => getNotificationTypeName(GENERAL_NOTIFICATION, 'ar'),
-                    'en' => getNotificationTypeName(GENERAL_NOTIFICATION, 'en'),
-                ],
+//                'type_name' => getNotificationTypeName(GENERAL_NOTIFICATION, 'ar'),
                 'time' => $date->format(TIME_FORMAT_WITHOUT_SECONDS),
             ],
         ];
+
     }
 
     public function via($notifiable)
@@ -46,7 +44,7 @@ class GeneralNotification extends Notification
     {
 //        dd($notifiable->id);
         if (isset($notifiable) && $notifiable instanceof User) {
-            $notifiable->setLanguage();
+//            $notifiable->setLanguage();
             send_to_topic('user_' . $notifiable->id, $this->message);
         }
     }

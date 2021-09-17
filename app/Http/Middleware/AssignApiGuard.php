@@ -11,6 +11,7 @@ class AssignApiGuard
      *
      * @param \Illuminate\Http\Request $request
      * @param \Closure $next
+     * @param int $guard
      * @return mixed
      */
     public function handle($request, Closure $next, int $guard)

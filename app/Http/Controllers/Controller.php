@@ -73,6 +73,7 @@ class Controller extends BaseController
 
     protected function uploadImage($file, $path = '')
     {
+
         $fileName = $file->getClientOriginalName();
         $file_exe = $file->getClientOriginalExtension();
         $new_name = uniqid() . '.' . $file_exe;

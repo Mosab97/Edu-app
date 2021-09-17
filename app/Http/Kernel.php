@@ -58,7 +58,6 @@ class Kernel extends HttpKernel
         'localization' => \App\Http\Middleware\localization::class,
         'CheckIsClient' => \App\Http\Middleware\CheckIsStudent::class,
         'CheckIsDistributor' => \App\Http\Middleware\CheckIsTeacher::class,
-        'CheckIsNotBlocked' => \App\Http\Middleware\CheckIsNotBlocked::class,
         'CheckIsActive' => \App\Http\Middleware\CheckIsActive::class,
         'CheckIsVerified' => \App\Http\Middleware\CheckIsVerified::class,
         'auth_guard' => AssignApiGuard::class,

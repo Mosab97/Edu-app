@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Api\v1\Student;
+namespace App\Http\Controllers\Api\v1\User;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Api\v1\Student\ProfileResource;
+use App\Http\Resources\Api\v1\General\ProfileResource;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -12,23 +13,30 @@ class ProfileController extends Controller
 
     public function profile()
     {
-        $user = user('student');
-        return apiSuccess(new ProfileResource($user));
+        return apiSuccess(new ProfileResource(apiUser()));
     }
 
     public function updateProfile(Request $request)
     {
-        $user = user('student');
+        $user = apiUser();
         $request->validate([
             'name' => 'required|min:3|max:100',
-            'phone' => ['required', 'numeric', 'unique:students,phone,' . $user->id . ',id,deleted_at,NULL'],
+            'phone' => ['required', 'numeric', 'unique:users,phone,' . $user->id . ',id,deleted_at,NULL'],
             'image' => 'sometimes|image',
+            'demonstration_video' => 'sometimes|mimes:mp4,mov,ogg,qt | max:20000',
+
         ]);
-        $user->name = $request->name;
-        $user->phone = $request->phone;
-        if ($request->hasFile('image')) $user->image = $this->uploadImage($request->file('image'), 'students');
-        $user->save();
-//        $user['access_token'] = Str::substr(request()->header('Authorization'), 7);
+        $data = $request->except(['image', 'demonstration_video','major','experience']);
+        if (isset($request->image)&&$request->hasFile('image')) $data['image'] = $this->uploadImage($request->file('image'), 'users');
+        $user->update($data);
+        if ($user->user_type == User::user_type['TEACHER']) {
+            $data = [];
+            if (isset($request->demonstration_video)&&$request->hasFile('demonstration_video')) $data['demonstration_video'] = $this->uploadImage($request->file('demonstration_video'), 'users');
+            $data['major'] = $request->major;
+            $data['experience'] = $request->experience;
+            $user->teacher_details()->create($data);
+        }
+        $user['access_token'] = Str::substr(request()->header('Authorization'), 7);
         return apiSuccess(new ProfileResource($user), api('Profile Updated Successfully'));
     }
 

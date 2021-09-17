@@ -11,7 +11,7 @@ class StudentSeeder extends Seeder
             'user_type' => \App\Models\User::user_type['STUDENT'],
         ])->each(function ($student) {
             $teachersCount = \App\Models\User::query()->where('user_type', \App\Models\User::user_type['TEACHER'])->count();
-            if ($student->id == ($teachersCount + 1)) $student->update(['phone' => STUDENT_DEFAULT_PHONE, 'status' => \App\Models\User::user_status['Accepted'],
+            if ($student->id == ($teachersCount + 1)) $student->update(['phone' => STUDENT_DEFAULT_PHONE,'verified' => true, 'status' => \App\Models\User::user_status['Accepted'],
             ]);
             $course = factory(\App\Models\Course::class)->create();
             $group = factory(\App\Models\Group::class)->create();
