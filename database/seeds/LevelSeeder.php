@@ -8,9 +8,9 @@ class LevelSeeder extends Seeder
 {
     public function run()
     {
-        for ($item = 1; $item <= 3; $item++) \App\Models\Level::create([
-            'name' => 'level ' . $item
-        ]);
+        factory(\App\Models\Level::class,3)->create()->each(function ($level){
+            if ($level->id == 1) $level->update(['points'  => 1]);
+        });
     }
 
 }

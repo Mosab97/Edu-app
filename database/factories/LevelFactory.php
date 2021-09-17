@@ -19,5 +19,6 @@ use Illuminate\Support\Str;
 $factory->define(\App\Models\Level::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
+        'points' => $faker->numberBetween(2,3),
     ];
 });

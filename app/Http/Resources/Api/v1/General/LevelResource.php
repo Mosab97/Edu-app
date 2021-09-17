@@ -13,6 +13,7 @@ class LevelResource extends JsonResource
         $response = [
             'id' => $this->id,
             'name' => $this->name,
+            'points' => $this->points,
         ];
         return $response;
     }

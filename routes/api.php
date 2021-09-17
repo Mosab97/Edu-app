@@ -1,10 +1,15 @@
 <?php
 Route::group(['prefix' => 'v1', 'namespace' => ROOT_NAMESPACE, "middleware" => ['localization']], function () {
+    Route::group(['prefix' => 'guest', 'namespace' => 'Guest'], function () {
+        Route::get('groups/{course_id?}', 'GroupController@groups');
+        Route::get('group/{group_id}', 'CourseController@group');
+    });
+
     Route::group(["middleware" => ["auth:api", "CheckIsVerified", "CheckIsActive"]], function () {
         Route::post('contact_us', 'HomeController@contactUs');
         Route::get('system_constants', 'SystemConstantsController@system_constants');
         Route::get('settings', 'HomeController@settings');
-        Route::group(['prefix' => 'user','namespace' => 'User'], function () {
+        Route::group(['prefix' => 'user', 'namespace' => 'User'], function () {
             Route::get('notifications', 'NotificationController@notifications');
             Route::get('notification/{id}', 'NotificationController@notification');
             Route::post('sendNotificationForAllUsers', 'NotificationController@sendNotificationForAllUsers');
@@ -15,13 +20,19 @@ Route::group(['prefix' => 'v1', 'namespace' => ROOT_NAMESPACE, "middleware" => [
         });
         Route::group(['prefix' => 'student', 'namespace' => 'Student', 'middleware' => ['auth_guard:' . \App\Models\User::user_type['STUDENT']]], function () {
             Route::get('courses', 'CourseController@courses');
-            Route::get('questions/{course_id}', 'CourseController@questions');
-            Route::get('groups/{course_id}', 'CourseController@groups');
-            Route::get('group/{group_id}', 'CourseController@group');
-            Route::get('my_groups', 'CourseController@my_groups');
+
+            Route::get('questions/{course_id}', 'QuestionController@questions');
+            Route::post('check_level', 'QuestionController@check_level');
+
+            Route::get('groups/{course_id}', 'GroupController@groupsByCourse');
+            Route::get('groups/{course_id}/{level_id}', 'GroupController@groupsByLevel');
+            Route::get('group/{group_id}', 'GroupController@group');
+            Route::get('my_groups', 'GroupController@my_groups');
+
             Route::get('notifications', 'NotificationController@notifications');
             Route::get('notification/{id}', 'NotificationController@notification');
             Route::post('sendNotificationForAllStudents', 'NotificationController@sendNotificationForAllStudents');
+
             Route::get('profile', 'ProfileController@profile');
             Route::post('update_profile', 'ProfileController@updateProfile');
         });
@@ -43,9 +54,6 @@ Route::group(['prefix' => 'v1', 'namespace' => ROOT_NAMESPACE, "middleware" => [
 
 
         });
-    });
-    Route::group(['namespace' => 'notifications', 'prefix' => 'notifications'], function () {
-        Route::post('sendNotificationForAllUsers', 'NotificationsController@sendNotificationForAllUsers');
     });
     Route::group(['namespace' => 'Auth'], function () {
         Route::post('login', 'AuthController@login');
