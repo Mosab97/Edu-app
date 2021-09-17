@@ -1623,9 +1623,9 @@ if (!function_exists('logoutAllAuthUsers')) {
     {
         foreach (\App\Models\User::get() as $index => $item) {
             $item->tokens()->delete();
-            $item->update([
-                'fcm_token' => null
-            ]);
+//            $item->update([
+//                'fcm_token' => null
+//            ]);
         }
         return apiTrans('All_logged_out_successfully');
 

@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Resources\Api\v1\Student;
+namespace App\Http\Resources\Api\v1\General;
 
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -14,22 +15,22 @@ class ProfileResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'user_type' => $this->user_type,
-            'major' => $this->major,
-            'experience' => $this->experience,
-            'demonstration_video' => $this->demonstration_video,
             'image' => $this->image,
             'phone' => $this->phone,
-//            'email' => $this->email,
             'verified' => (bool)$this->verified,
-//            'gender' => $this->gender,
             'gender' => gender($this->gender),
             'code' => $this->generatedCode,
             'created_at' => Carbon::parse($this->created_at)->format(DATE_FORMAT_DOTTED),
-            'notification' => (bool)$this->notification,
-            'unread_notifications' => (int)$this->unread_notifications,
             'access_token' => $this->access_token,
-//            'expires_in' => auth('student')->factory()->getTTL() * 60
         ];
+        if ($this->user_type == User::user_type['TEACHER']) {
+            $teacher_details = $this->teacher_details;
+            return array_merge( $response,[
+                'major' => optional($teacher_details)->major,
+                'experience' => optional($teacher_details)->experience,
+                'demonstration_video' => optional($teacher_details)->demonstration_video,
+            ]);
+        }
         return $response;
     }
 }

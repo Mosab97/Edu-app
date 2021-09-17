@@ -18,6 +18,7 @@ use Illuminate\Support\Str;
 
 $factory->define(\App\Models\User::class, function (Faker $faker) {
     return [
+
         'name' => $faker->name,
         'phone' => $faker->e164PhoneNumber,
         'password' => \Illuminate\Support\Facades\Hash::make(PASSWORD)

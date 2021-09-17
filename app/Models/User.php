@@ -15,7 +15,6 @@ use Spatie\Translatable\HasTranslations;
 class User extends Authenticatable
 {
     use Notifiable, SoftDeletes, HasApiTokens;
-    use HasTranslations;
 
     public $translatable = ['name'];
 
@@ -53,12 +52,12 @@ class User extends Authenticatable
         return $query->where('phone', $param);
     }
 
-    public function scopeTeacher($query)
+    public function scopeTeacherType($query)
     {
         return $query->where('user_type', self::user_type['TEACHER']);
     }
 
-    public function scopeStudent($query)
+    public function scopeStudentType($query)
     {
         return $query->where('user_type', self::user_type['STUDENT']);
     }
@@ -74,16 +73,18 @@ class User extends Authenticatable
         return $this->hasMany(StudentGroups::class, 'student_id');
     }
 
+
+    public function teacher_details()
+    {
+        return $this->hasOne(Teacher::class, 'teacher_id');
+    }
+
     public function teacher_groups()
     {
         return $this->hasMany(Group::class, 'teacher_id');
     }
 
 
-    public function getDemonstrationVideoAttribute($value)
-    {
-        return is_null($value) ? defaultUserVideo() : asset($value);
-    }
 
     public function getImageAttribute($value)
     {
@@ -153,9 +154,7 @@ class User extends Authenticatable
         'updated_at' => 'datetime',
         'lat' => 'double',
         'lng' => 'double',
-        'type' => 'integer',
-        'is_registered' => 'boolean',
-        'show_phone_number' => 'boolean',
+        'user_type' => 'integer',
     ];
 
 }

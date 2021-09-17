@@ -19,6 +19,14 @@ use Illuminate\Support\Str;
 $factory->define(\App\Models\Group::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
+        'price' => $faker->numberBetween(100, 1000),
+        'students_number_max' => $faker->numberBetween(5, 30),
+        'number_of_live_lessons' => $faker->numberBetween(5, 30),
+        'number_of_exercises_and_games' => $faker->numberBetween(5, 30),
+        'course_date_and_time' => $faker->dateTime,
+//        \Carbon\Carbon::now()
+        'what_will_i_learn' => $faker->sentence,
+        'gender' => collect(Gender)->random(),
         'teacher_id' => function () {
             return factory(\App\Models\User::class)->create()->id;
         },

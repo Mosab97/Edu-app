@@ -13,9 +13,7 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('name')->nullable();
             $table->string('user_type')->nullable();
-            $table->string('major')->nullable();
-            $table->string('experience')->nullable();
-            $table->string('demonstration_video')->nullable();
+
             $table->string('email')->nullable();//->unique();
             $table->string('username')->nullable();
             $table->string('phone')->nullable();
@@ -26,16 +24,18 @@ class CreateUsersTable extends Migration
             $table->float('lat', 8, 5)->nullable();
             $table->float('lng', 8, 5)->nullable();
             $table->string('image')->nullable();
-            $table->enum('local', ['en', 'ar'])->default('ar');
-            $table->date('dob')->nullable();
+
+
+//            $table->enum('local', ['en', 'ar'])->default('ar');
+//            $table->date('dob')->nullable();
+
             $table->string('password')->nullable();
             $table->string('provider')->nullable();
-            $table->string('access_token')->nullable();
             $table->string('provider_id')->nullable();
             $table->string('google_provider_id')->nullable();
-            $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
             $table->unique(['phone', 'deleted_at']);
         });
     }

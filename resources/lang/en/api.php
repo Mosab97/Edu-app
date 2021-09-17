@@ -160,5 +160,6 @@ return [
   'Wrong User Password' => 'Wrong User Password',  
   'Wrong mobile Number' => 'Wrong mobile Number',  
   'We sent to your SMS verification code, please check your phone' => 'We sent to your SMS verification code, please check your phone',  
-  'Wrong phone' => 'Wrong phone',
+  'Wrong phone' => 'Wrong phone',  
+  'Successfully Logedin' => 'Successfully Logedin',
 ];

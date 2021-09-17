@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\v1\Auth;
 
 use App\Http\Controllers\Api\v1\Controller;
 
-use App\Http\Resources\Api\v1\Student\ProfileResource;
+use App\Http\Resources\Api\v1\General\ProfileResource;
 use App\Models\User;
 use App\Rules\EmailRule;
 use Illuminate\Http\Request;
@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Hash;
 class AuthController extends Controller
 {
     private $model;
+
     public function __construct(User $user)
     {
         $this->model = $user;
@@ -30,9 +31,8 @@ class AuthController extends Controller
         if (!isset($user)) return apiError(api('Wrong mobile Number'));
         if (!Hash::check($request->password, $user->password)) return apiError(api('Wrong User Password'));
         $user['access_token'] = $user->createToken(API_ACCESS_TOKEN_NAME)->accessToken;
-        return apiSuccess(new ProfileResource($user), apiTrans('Successfully Logedin'));
+        return apiSuccess(new ProfileResource($user), api('Successfully Logedin'));
     }
-
 
 
     public function change_password(Request $request)
@@ -77,69 +77,21 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-
         $request->validate([
-            'first_name' => 'required|min:3|max:100',
-            'last_name' => 'required|min:3|max:100',
-            'country_id' => 'required|exists:countries,id',
-            'mobile' => ['required', 'numeric', 'unique:users,mobile'],
-            "email" => ['required', 'unique:users,email', new EmailRule()],
-            'password' => password_rules(true, 6),
-            'user_type' => 'required|in:' . User::CUSTOMER . ',' . User::MERCHANT . ',' . User::DISTRIBUTOR,
-            'merchant_type' => 'requiredIf:user_type,' . User::MERCHANT . '|in:' . Merchant::MERCHANT_TYPES['RETAILER'] . ',' . Merchant::MERCHANT_TYPES['WHOLESALER'],
-            'store_name' => 'requiredIf:user_type,' . User::MERCHANT,
-            'lat' => 'requiredIf:user_type,' . User::MERCHANT,
-            'lng' => 'requiredIf:user_type,' . User::MERCHANT,
-            'office_mobile' => ['requiredIf:user_type,' . User::MERCHANT,/* 'numeric', 'unique:users,office_mobile,{$id},id,deleted_at,NULL'*/],
-            'retailer_merchant_type' => 'requiredIf:merchant_type,' . Merchant::MERCHANT_TYPES['RETAILER'] . '|in:' . Merchant::RETAILER_MERCHANT_TYPES['CAFETERIA']
-                . ',' . Merchant::RETAILER_MERCHANT_TYPES['MINIMARKET'] . ',' . Merchant::RETAILER_MERCHANT_TYPES['SUPERMARKET'],
+            'name' => 'required|min:3|max:100',
+            'phone' => ['required', 'unique:users,phone'],
+            'password' => password_rules(true, 6, true),
+            'type' => 'required|in:' . implode(',', LOGIN_INFO_TYPES),
         ]);
+        $data = $request->except(['password', 'password_confirmation', 'type']);
+        $data['password'] = Hash::make($request->password);
+        $data['user_type'] = $request->type;
+        $data['verified'] = false;
+        $data['generatedCode'] = generateCode();
+        $student = User::create($data);
+        $student['access_token'] = $student->createToken(API_ACCESS_TOKEN_NAME)->accessToken;
 
-        $user = new User();
-        $user->country_id = $request->country_id;
-        $user->user_type = $request->user_type;
-        $user->first_name = [
-            'ar' => $request->first_name,
-            'en' => $request->first_name,
-        ];
-        $user->last_name = [
-            'ar' => $request->last_name,
-            'en' => $request->last_name,
-        ];
-        $user->mobile = $request->mobile;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->password);
-        $user->lat = $request->lat;
-        $user->lng = $request->lng;
-        $user->local = 'ar';
-        $user->verified = false;
-        $user->isBlocked = false;
-        $country = Country::findOrFail($request->country_id);
-        $user->points = $request->user_type == User::CUSTOMER ? $country->customer_points : $country->merchant_points;
-        $user->active = $request->user_type == User::MERCHANT ? false : true;
-
-        $user->generatedCode = generateCode();
-        $user->save();
-
-
-        $shareApp = ShareApp::whereNull("new_registered_user_id")->where('mobile', $request->mobile)->first();
-        if (isset($shareApp)) $shareApp->update([
-            'new_registered_user_id' => $user->id
-        ]);
-
-        if ($request->user_type == User::MERCHANT) $user->merchant()->create([
-            'office_mobile' => $request->office_mobile,
-            'merchant_type' => $request->merchant_type,
-            'store_name' => $request->store_name,
-            'retailer_merchant_type' => $request->retailer_merchant_type,
-        ]);
-        if ($request->user_type == User::DISTRIBUTOR) $user->distributor()->create([
-            'receive_orders' => true,
-        ]);
-
-        if ($request->hasFile('image')) $user->image = uploadImage($request->file('image'), User::DIR_IMAGE_UPLOADS);
-        $user['access_token'] = $user->createToken(API_ACCESS_TOKEN_NAME)->accessToken;
-        return apiSuccess(new ProfileResource($user));
+        return apiSuccess(new ProfileResource($student), api('Successfully Registered'));
     }
 
     public function verified_code(Request $request)

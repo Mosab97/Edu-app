@@ -16,12 +16,8 @@ use Illuminate\Support\Str;
 |
 */
 
-$factory->define(\App\Models\Teacher::class, function (Faker $faker) {
+$factory->define(\App\Models\Answer::class, function (Faker $faker) {
     return [
-        'teacher_id' => function () {
-            return factory(\App\Models\User::class)->create()->id;
-        },
-        'major' => $faker->name,
-        'experience' => $faker->name,
+        'name' => $faker->name,
     ];
 });

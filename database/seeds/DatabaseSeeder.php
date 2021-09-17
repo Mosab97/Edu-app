@@ -8,7 +8,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(ManagerTableSeeder::class);
-        $this->call(LevelSeeder::class);
+//        $this->call(LevelSeeder::class);
         $this->call(AgeSeeder::class);
         $this->call(CourseSeeder::class);
         $this->call(TeacherSeeder::class);
