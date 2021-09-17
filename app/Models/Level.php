@@ -30,4 +30,7 @@ class Level extends Model
         }
     }
 
+    protected $casts = [
+        'points' => 'integer'
+    ];
 }
