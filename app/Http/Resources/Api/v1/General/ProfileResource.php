@@ -15,6 +15,7 @@ class ProfileResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'user_type' => $this->user_type,
+            'status' => api($this->status),
             'image' => $this->image,
             'phone' => $this->phone,
             'verified' => (bool)$this->verified,

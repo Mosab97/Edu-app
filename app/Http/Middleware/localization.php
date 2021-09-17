@@ -9,7 +9,7 @@ class localization
 
     public function handle($request, Closure $next)
     {
-        $local = ($request->hasHeader('Content-Language')) ? $request->header('Content-Language') : 'en';
+        $local = 'ar';//($request->hasHeader('Content-Language')) ? $request->header('Content-Language') : 'en';
         app()->setLocale($local);
         return $next($request);
     }

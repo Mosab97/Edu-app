@@ -37,7 +37,7 @@ class AuthController extends Controller
 
     public function change_password(Request $request)
     {
-        $request->validate(['password' => password_rules(true, 6),]);
+        $request->validate(['password' => password_rules(true, 6, true)]);
         $user = apiUser();
         apiUser()->update(['password' => Hash::make($request->password)]);
         $user['access_token'] = $user->createToken(API_ACCESS_TOKEN_NAME)->accessToken;
@@ -56,22 +56,14 @@ class AuthController extends Controller
     public function forget_password(Request $request)
     {
         //        validations
-        $request->validate(['email' => 'required|email|exists:users,email']);
-        $user = User::where('email', $request->email)->first();
-        if (!isset($user)) return apiError(api('Wrong Email Address'));
+        $request->validate(['phone' => 'required|exists:users,phone']);
+        $user = User::where('phone', $request->phone)->first();
+        if (!isset($user)) return apiError(api('Wrong Phone Number'));
         //        Generate code
-        $sms_code = generateCode(0, 9, 6);
-//        $sms_code = CODE_FIXED;
+//        $sms_code = generateCode(0, 9, 6);
+        $sms_code = CODE_FIXED;
         $user->update(['generatedCode' => $sms_code]);
-
-        Mail::send('/emails/forget_password', ['user' => $user], function ($m) use ($user) {
-            $m->to($user->email)->subject(trans('Verification Code'))->getSwiftMessage()
-                ->getHeaders()
-                ->addTextHeader('x-mailgun-native-send', 'true');
-        });
-
-//        \Illuminate\Support\Facades\Mail::to($user->email)->send(new \App\Mail\ForgetPasswordEmail($user));
-        return apiSuccess(null, api('We sent to your email verification code, please check your email'));
+        return apiSuccess(null, api('We sent Phone Number verification code, please check your phone'));
     }
 
 
@@ -87,6 +79,7 @@ class AuthController extends Controller
         $data['password'] = Hash::make($request->password);
         $data['user_type'] = $request->type;
         $data['verified'] = false;
+        $data['status'] = User::user_status['Accepted'];
         $data['generatedCode'] = generateCode();
         $student = User::create($data);
         $student['access_token'] = $student->createToken(API_ACCESS_TOKEN_NAME)->accessToken;
@@ -97,10 +90,10 @@ class AuthController extends Controller
     public function verified_code(Request $request)
     {
         $request->validate([
-            'email' => 'required|email|exists:users,email',
+            'phone' => 'required|exists:users,phone',
             'code' => 'required|min:4|max:4',
         ]);
-        $user = $this->model->where('email', $request->get('email'))->first();
+        $user = $this->model->where('phone', $request->get('phone'))->first();
         if ($user->generatedCode != $request->get('code')) return apiError(apiTrans('You cannot login verified code invalid'));
         $user->update([
             'generatedCode' => null,
@@ -108,6 +101,21 @@ class AuthController extends Controller
         ]);
         $user['access_token'] = $user->createToken(API_ACCESS_TOKEN_NAME)->accessToken;
         return apiSuccess(new ProfileResource($user), apiTrans('Successfully verified'));
+    }
+
+    public function resend_code(Request $request)
+    {
+        $request->validate([
+            'phone' => 'required|exists:users,phone',
+        ]);
+        $user = $this->model->where('phone', $request->get('phone'))->first();
+        $user->update([
+            'generatedCode' => CODE_FIXED,
+            'verified' => false,
+        ]);
+        return apiSuccess( [
+            'code' => CODE_FIXED
+        ], api('We sent Phone Number verification code, please check your phone'));
     }
 
     public function logoutAllAuthUsers()

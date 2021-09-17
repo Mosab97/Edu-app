@@ -13,6 +13,7 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('name')->nullable();
             $table->string('user_type')->nullable();
+            $table->string('status')->default(\App\Models\User::user_status['Pending']);
 
             $table->string('email')->nullable();//->unique();
             $table->string('username')->nullable();

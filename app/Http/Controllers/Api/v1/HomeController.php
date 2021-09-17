@@ -17,7 +17,7 @@ class HomeController extends Controller
     public function settings()
     {
         return apiSuccess([
-            'token_from_dashboard' => 'dfgfg',
+            'test' => 'dfgfg',
         ]);
     }
     public function contactUs(Request $request)

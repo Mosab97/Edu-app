@@ -18,10 +18,16 @@ class User extends Authenticatable
 
     public $translatable = ['name'];
 
-    public const DIR_IMAGE_UPLOADS = 'users';
+    public const manager_route = 'users';
     public const user_type = [
         'STUDENT' => 1,
         'TEACHER' => 2,
+    ];
+    public const user_status = [
+        'Pending' => 'Pending',
+        'Accepted' => 'Accepted',
+        'Rejected' => 'Rejected',
+        'Blocked' => 'Blocked',
     ];
 
     protected $guarded = [];
@@ -83,7 +89,6 @@ class User extends Authenticatable
     {
         return $this->hasMany(Group::class, 'teacher_id');
     }
-
 
 
     public function getImageAttribute($value)

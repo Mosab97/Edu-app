@@ -11,7 +11,7 @@ class CheckIsActive
     public function handle($request, Closure $next)
     {
         $user = apiUser();
-        if (!$user->active) return apiError(api('The account is not activated'), WAITING);
+        if ($user->status != User::user_status['Accepted']) return apiError(api("The Account Status is {$user->status}"), 401);
         return $next($request);
     }
 }

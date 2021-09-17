@@ -27,7 +27,7 @@ return [
   'Order Rated Successfully' => 'تم تقييم الطلب بنجاح',
   'pending' => 'قيد الانتظار',
   'completed' => 'مكتمل',
-  'accepted' => 'مقبول',
+  'Accepted' => 'مقبول',
   'ready' => 'جاهز',
   'visa' => 'فيزا',
   'canceled' => 'ملغي',
@@ -139,4 +139,9 @@ return [
   'We sent to your SMS verification code, please check your phone' => 'We sent to your SMS verification code, please check your phone',
   'Wrong phone' => 'Wrong phone',
   'Successfully Logedin' => 'تم تسجيل الدخول بنجاح',
+  'We sent Phone Number verification code, please check your phone' => 'تم ارسال رمز التحقق الى رقم جوالك',
+  'Account vitrified successfully' => 'تم التاكدك من الحساب',
+  'Pending' => 'معلق',
+  'Blocked' => 'محظور',
+  'The Account Status is Pending' => 'يرجى انتظار الموافقة على حسابك',
 ];
