@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Teacher extends Model
 {
     protected $guarded = [];
+protected $table = 'teachers';
     public function getDemonstrationVideoAttribute($value)
     {
         return is_null($value) ? defaultUserVideo() : asset($value);

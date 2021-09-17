@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Api\v1\Student;
 
+use App\Http\Resources\Api\v1\General\LevelResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class QuestionResource extends JsonResource
@@ -13,7 +14,7 @@ class QuestionResource extends JsonResource
         $response = [
             'id' => $this->id,
             'name' => $this->name,
-            'answers' => LevelResource::collection($this->answers),
+            'answers' => AnswerResource::collection($this->answers),
         ];
         return $response;
     }

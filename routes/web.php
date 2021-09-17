@@ -95,3 +95,34 @@ Route::get('page/{key}', function ($key) {
 
 
 
+
+
+
+// clear route cache
+Route::get('/clear-route-cache', function () {
+    Artisan::call('route:cache');
+    return 'Routes cache has clear successfully !';
+});
+
+//clear config cache
+Route::get('/clear-config-cache', function () {
+    Artisan::call('config:cache');
+    return 'Config cache has clear successfully !';
+});
+
+// clear application cache
+Route::get('/clear-app-cache', function () {
+    Artisan::call('cache:clear');
+    return 'Application cache has clear successfully!';
+});
+
+// clear view cache
+Route::get('/clear-view-cache', function () {
+    Artisan::call('view:clear');
+    return 'View cache has clear successfully!';
+});
+
+
+
+
+

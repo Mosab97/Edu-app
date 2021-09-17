@@ -27,17 +27,18 @@ $factory->define(\App\Models\Group::class, function (Faker $faker) {
 //        \Carbon\Carbon::now()
         'what_will_i_learn' => $faker->sentence,
         'gender' => collect(Gender)->random(),
-        'teacher_id' => function () {
-            return factory(\App\Models\User::class)->create()->id;
-        },
-        'course_id' => function () {
-            return factory(\App\Models\Course::class)->create()->id;
-        },
-        'level_id' => function () {
-            return factory(\App\Models\Level::class)->create()->id;
-        },
-        'age_id' => function () {
-            return factory(\App\Models\Age::class)->create()->id;
-        },
+        'teacher_id' =>\App\Models\User::teacherType()->inRandomOrder()->first()->id,
+        'course_id' =>\App\Models\Course::inRandomOrder()->first()->id,
+//    function () {
+//            return factory(\App\Models\Course::class)->create()->id;
+//        },
+        'level_id' =>\App\Models\Level::inRandomOrder()->first()->id,
+//        'level_id' => function () {
+//            return factory(\App\Models\Level::class)->create()->id;
+//        },
+        'age_id' =>\App\Models\Age::inRandomOrder()->first()->id,
+//        'age_id' => function () {
+//            return factory(\App\Models\Age::class)->create()->id;
+//        },
     ];
 });
