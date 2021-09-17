@@ -57,11 +57,6 @@ define('Gender', [
 ]);
 
 
-//LOGIN_INFO_TYPES
-define('LOGIN_INFO_TYPES', [
-    'STUDENT' => 1,
-    'TEACHER' => 2,
-]);
 
 
 /***

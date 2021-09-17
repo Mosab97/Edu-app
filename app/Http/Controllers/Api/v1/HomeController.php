@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\v1;
 use App\Http\Controllers\Controller;
 use App\Models\ContactUs;
 use App\Models\Manager;
+use App\Models\User;
 use App\Notifications\ContactUsNotification;
 use App\Rules\EmailRule;
 use App\Rules\StartWith;
@@ -17,7 +18,7 @@ class HomeController extends Controller
     public function settings()
     {
         return apiSuccess([
-            'test' => 'dfgfg',
+            'test' => 'sdfdsf'
         ]);
     }
     public function contactUs(Request $request)
@@ -42,9 +43,5 @@ class HomeController extends Controller
         Notification::send(Manager::query()->get(), new ContactUsNotification($contact));
         return apiSuccess(null, api('Message Sent Successfully'));
     }
-
-
-
-
 
 }

@@ -169,5 +169,6 @@ return [
   'Blocked' => 'Blocked',  
   '' => '',  
   'The account Status is Pending' => 'The account Status is Pending',  
-  'The Account Status is Pending' => 'The Account Status is Pending',
+  'The Account Status is Pending' => 'The Account Status is Pending',  
+  'Please send your country' => 'Please send your country',
 ];

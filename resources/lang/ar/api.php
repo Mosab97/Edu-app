@@ -143,5 +143,6 @@ return [
   'Account vitrified successfully' => 'تم التاكدك من الحساب',
   'Pending' => 'معلق',
   'Blocked' => 'محظور',
-  'The Account Status is Pending' => 'يرجى انتظار الموافقة على حسابك',
+  'The Account Status is Pending' => 'يرجى انتظار الموافقة على حسابك',  
+  'Please send your country' => 'Please send your country',
 ];

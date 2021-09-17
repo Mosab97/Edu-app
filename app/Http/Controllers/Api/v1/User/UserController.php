@@ -2,31 +2,28 @@
 
 namespace App\Http\Controllers\Api\v1\User;
 
-use App\Events\SendSMSEvent;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Api\v1\User\NotificationReasource;
+use App\Http\Resources\Api\v1\User\NotificationResource;
 use App\Http\Resources\Api\v1\User\ProfileResource;
-use App\Http\Resources\Api\v1\User\UserResource;
 use App\Models\Notification;
-use App\Models\User;
-use App\Notifications\BranchNotification;
-use App\Notifications\RestaurantNotification;
 use App\Rules\EmailRule;
-use App\Rules\IntroMobile;
-use App\Rules\StartWith;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
-
-    public function notifications()
+    public function __construct()
     {
-        $user = apiUser();
-        $notifications = Notification::where('notifiable_id', $user->id)->where('created_at', '>=', $user->created_at)->paginate($this->perPage);
+//        dd(\auth()->user());
+    }
+
+    public function notifications(Request $request)
+    {
+        $user = user('student');
+        $notifications = Notification::where('notifiable_id', $user->id)
+            ->where('created_at', '>=', $user->created_at)->paginate($this->perPage);
         return apiSuccess([
-            'items' => NotificationReasource::collection($notifications->items()),
+            'items' => NotificationResource::collection($notifications->items()),
             'paginate' => paginate($notifications),
             'unread_notifications' => $user->unread_notifications,
         ]);

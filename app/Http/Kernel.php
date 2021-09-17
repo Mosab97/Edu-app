@@ -2,6 +2,8 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\AssignApiGuard;
+use App\Http\Middleware\AssignGuard;
 use App\Http\Middleware\BranchMiddleware;
 use App\Http\Middleware\RestaurantMiddleware;
 use App\Http\Middleware\SetLocalLanguage;
@@ -51,21 +53,15 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'localWeb' => SetLocalLanguageWeb::class,
-        'branch' => BranchMiddleware::class,
-        'restaurant' => RestaurantMiddleware::class,
         'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
         'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
         'localization' => \App\Http\Middleware\localization::class,
-        'CheckIsClient' => \App\Http\Middleware\CheckIsClient::class,
-        'CheckIsDistributor' => \App\Http\Middleware\CheckIsDistributor::class,
+        'CheckIsClient' => \App\Http\Middleware\CheckIsStudent::class,
+        'CheckIsDistributor' => \App\Http\Middleware\CheckIsTeacher::class,
         'CheckIsNotBlocked' => \App\Http\Middleware\CheckIsNotBlocked::class,
         'CheckIsActive' => \App\Http\Middleware\CheckIsActive::class,
         'CheckIsVerified' => \App\Http\Middleware\CheckIsVerified::class,
-        'CheckHasCountry' => \App\Http\Middleware\CheckHasCountry::class,
-        'AppVersion' => \App\Http\Middleware\AppVersion::class,
-        'CheckAppIsStopped' => \App\Http\Middleware\CheckAppIsStopped::class,
-        'CheckOrderOwner' => \App\Http\Middleware\CheckOrderOwner::class,
-        'CheckTokenFromDashboard' => \App\Http\Middleware\CheckTokenFromDashboard::class,
+        'auth_guard' => AssignApiGuard::class,
 
     ];
     protected $middlewarePriority = [
