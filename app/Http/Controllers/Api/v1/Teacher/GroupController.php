@@ -22,9 +22,10 @@ class GroupController extends Controller
 
     public function my_groups(Request $request)
     {
-        $teacher = user('teacher');
+
+        $teacher = apiUser();
         if (!isset($teacher)) return apiError('Wrong Teacher');
-        return apiSuccess(GroupResource::collection($teacher->groups()->with('course')->get()));
+        return apiSuccess(GroupResource::collection($teacher->teacher_groups()->with('course')->get()));
     }
 
     public function group(Request $request, $group_id)

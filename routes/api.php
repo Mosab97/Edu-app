@@ -38,6 +38,7 @@ Route::group(['prefix' => 'v1', 'namespace' => ROOT_NAMESPACE, "middleware" => [
         });
 
         Route::group(['prefix' => 'teacher', 'namespace' => 'Teacher', 'middleware' => ["auth_guard:" . \App\Models\User::user_type['TEACHER']]], function () {
+            Route::get('my_groups', 'GroupController@my_groups');
             Route::get('profile', 'ProfileController@profile');
             Route::post('update_profile', 'ProfileController@updateProfile');
 
@@ -45,7 +46,6 @@ Route::group(['prefix' => 'v1', 'namespace' => ROOT_NAMESPACE, "middleware" => [
             Route::get('questions/{course_id}', 'CourseController@questions');
             Route::get('groups_course_id/{course_id}', 'GroupController@groups_course_id');
             Route::get('group/{group_id}', 'GroupController@group');
-            Route::get('my_groups', 'GroupController@my_groups');
             Route::post('add_group', 'GroupController@add_group');
             Route::put('update_group/{group_id}', 'GroupController@update_group');
             Route::get('notifications', 'NotificationController@notifications');

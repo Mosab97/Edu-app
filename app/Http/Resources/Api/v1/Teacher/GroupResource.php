@@ -11,7 +11,6 @@ class GroupResource extends JsonResource
     public function toArray($request)
     {
         $except_arr_resource = $request['except_arr_resource'];
-
         $response = [
             'id' => $this->id,
             'name' => $this->name,
@@ -30,6 +29,7 @@ class GroupResource extends JsonResource
             'age' => new AgeResource($this->age),
             'gender' => gender($this->gender),
         ];
+
         return $response;
     }
 }

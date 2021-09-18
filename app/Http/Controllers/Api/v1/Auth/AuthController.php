@@ -73,7 +73,7 @@ class AuthController extends Controller
             'name' => 'required|min:3|max:100',
             'phone' => ['required', 'unique:users,phone'],
             'password' => password_rules(true, 6, true),
-            'type' => 'required|in:' . implode(',', LOGIN_INFO_TYPES),
+            'type' => 'required|in:' . implode(',', User::user_type),
         ]);
         $data = $request->except(['password', 'password_confirmation', 'type']);
         $data['password'] = Hash::make($request->password);
@@ -113,7 +113,7 @@ class AuthController extends Controller
             'generatedCode' => CODE_FIXED,
             'verified' => false,
         ]);
-        return apiSuccess( [
+        return apiSuccess([
             'code' => CODE_FIXED
         ], api('We sent Phone Number verification code, please check your phone'));
     }
