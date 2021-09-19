@@ -39,5 +39,6 @@ return
   'Driver rated you on order' => 'تم تقييمك من قبل المندوب على الطلبية :uuid',
   'Client rated you on Ad' => 'Client rated you on Ad',
   
-  'You have New order' => 'You have New order',
+  'You have New order' => 'You have New order',  
+  'New Message from' => 'New Message from',
 ];

@@ -146,5 +146,6 @@ return [
   'The Account Status is Pending' => 'يرجى انتظار الموافقة على حسابك',
   'Please send your country' => 'Please send your country',
 
-  'you got' => 'تم تقييمك بالمستوى :level',
+  'you got' => 'تم تقييمك بالمستوى :level',  
+  'Message Send Successfully' => 'Message Send Successfully',
 ];

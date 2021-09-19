@@ -29,6 +29,13 @@ protected $guarded = [];
         return $this->hasMany(StudentGroups::class);
     }
 
+
+
+    public function chatMessages()
+    {
+        return $this->hasMany(ChatMessage::class);
+    }
+
     public function course()
     {
         return $this->belongsTo(Course::class);

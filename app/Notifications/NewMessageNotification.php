@@ -4,6 +4,7 @@ namespace App\Notifications;
 
 use App\Channels\FcmChannel;
 use App\Models\ChatMessage;
+use App\Models\Group;
 use App\Models\Order;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
@@ -16,7 +17,7 @@ class NewMessageNotification extends Notification
     public $order;
     private $message;
 
-    public function __construct(Order $order, ChatMessage $chatMessage = null)
+    public function __construct(Group $order, ChatMessage $chatMessage = null)
     {
         $this->order = $order;
         $date = Carbon::now();
@@ -52,7 +53,7 @@ class NewMessageNotification extends Notification
 
     public function toFcm($notifiable)
     {
-        $notifiable->setLanguage();
+//        $notifiable->setLanguage();
         send_to_topic('user_' . $notifiable->id, $this->message, 'chat');
 
     }

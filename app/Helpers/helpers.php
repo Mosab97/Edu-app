@@ -847,7 +847,7 @@ function send_push_to_pusher($topic, $event, $message)
 function send_to_topic($topic_name, $payload_data, $notifiable = null)
 {
 
-    $local = isset($notifiable) ? $notifiable->local : lang();
+    $local =lang();// isset($notifiable) ? $notifiable->local : lang();
     $payload_data['title'] = $payload_data['title'];//[$local];
     $payload_data['body'] = $payload_data['body'];//[$local];
     $data = json_encode([

@@ -172,5 +172,6 @@ return [
   'The Account Status is Pending' => 'The Account Status is Pending',  
   'Please send your country' => 'Please send your country',
   
-  'you got' => 'you got',
+  'you got' => 'you got',  
+  'Message Send Successfully' => 'Message Send Successfully',
 ];
