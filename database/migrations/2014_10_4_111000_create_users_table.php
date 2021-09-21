@@ -24,7 +24,6 @@ class CreateUsersTable extends Migration
             $table->string('generatedCode')->nullable();
             $table->float('lat', 8, 5)->nullable();
             $table->float('lng', 8, 5)->nullable();
-            $table->string('image')->nullable();
 
 
 //            $table->enum('local', ['en', 'ar'])->default('ar');

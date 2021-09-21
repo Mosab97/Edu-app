@@ -3,15 +3,25 @@
 namespace App\Http\Controllers\Api\v1\Teacher;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Api\v1\General\ProfileResource;
 use App\Http\Resources\Api\v1\Teacher\CourseResource;
 use App\Http\Resources\Api\v1\Teacher\GroupResource;
+use App\Http\Resources\Api\v1\Teacher\GroupStudentResource;
 use App\Models\Course;
 use App\Models\Group;
 use Illuminate\Http\Request;
 
 class GroupController extends Controller
 {
-
+    public function group_students(Request $request, $group_id)
+    {
+        $group = Group::findOrFail($group_id);
+        $students = $group->students->pluck('student')->map(function ($item) use ($group) {
+            $item['group_name'] = $group->name;
+            return $item;
+        });
+        return apiSuccess(GroupStudentResource::collection($students));
+    }
 
     public function groups_course_id(Request $request, $course_id)
     {
@@ -84,7 +94,7 @@ class GroupController extends Controller
         if ($request->hasFile('image')) $data['image'] = $this->uploadImage($request->file('image'), 'groups');
         if ($request->hasFile('video')) $data['video'] = $this->uploadImage($request->file('video'), 'groups');
         $data['teacher_id'] = user('teacher')->id;
-         $group->update($data);
+        $group->update($data);
         return apiSuccess(new GroupResource($group));
     }
 }

@@ -7,10 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class Teacher extends Model
 {
     protected $guarded = [];
-protected $table = 'teachers';
-    public function getDemonstrationVideoAttribute($value)
+    protected $table = 'teachers';
+
+
+    public function getDemonstrationVideo()
     {
-        return is_null($value) ? defaultUserVideo() : asset($value);
+        $file = File::where(['target_id' => $this->id, 'target_type' => Teacher::class])->first();
+        return !isset($file) ? defaultUserVideo() : $file->path;
     }
 
 }

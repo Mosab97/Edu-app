@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api\v1\User;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Api\v1\General\ProfileResource;
+use App\Models\File;
+use App\Models\Teacher;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -27,18 +29,33 @@ class ProfileController extends Controller
 
         ]);
         $data = $request->except(['image', 'demonstration_video', 'major', 'experience']);
-        if (isset($request->image) && $request->hasFile('image')) $data['image'] = $this->uploadImage($request->file('image'), 'users');
+        if (isset($request->image) && $request->hasFile('image')) {
+            $image_path = $this->uploadImage($request->file('image'), 'users');
+            if (File::where(['target_id' => $user->id, 'target_type' => User::class])->count() > 0) {
+                File::where(['target_id' => $user->id, 'target_type' => User::class])->update(['path' => $image_path, 'target_type' => User::class]);
+            } else {
+                File::create(['path' => $image_path, 'target_id' => $user->id, 'target_type' => User::class]);
+            }
+        }
         $user->update($data);
         if ($user->user_type == User::user_type['TEACHER']) {
             $data = [];
-//            dd($request->hasFile('demonstration_video'));
-            if (isset($request->demonstration_video) && $request->hasFile('demonstration_video')) $data['demonstration_video'] = $this->uploadImage($request->file('demonstration_video'), 'users');
+
             $data['major'] = $request->major;
             $data['experience'] = $request->experience;
-//            $data['teacher_id'] = $user->id;
             $teacher_details = $user->teacher_details;
             if (isset($teacher_details)) $teacher_details->update($data);
             else $user->teacher_details()->create($data);
+
+            if (isset($teacher_details) && isset($request->demonstration_video) && $request->hasFile('demonstration_video')) {
+                $file_path = $this->uploadImage($request->file('demonstration_video'), 'teachers');
+                if (File::where(['target_id' => $teacher_details->id, 'target_type' => Teacher::class])->count() > 0) {
+                    File::where(['target_id' => $teacher_details->id, 'target_type' => Teacher::class])->update(['path' => $file_path, 'target_type' => Teacher::class]);
+                } else {
+                    File::create(['path' => $file_path, 'target_id' => $teacher_details->id, 'target_type' => Teacher::class]);
+                }
+            }
+
         }
         $user['access_token'] = Str::substr(request()->header('Authorization'), 7);
         return apiSuccess(new ProfileResource($user), api('Profile Updated Successfully'));

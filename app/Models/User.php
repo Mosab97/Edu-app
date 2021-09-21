@@ -91,9 +91,10 @@ class User extends Authenticatable
     }
 
 
-    public function getImageAttribute($value)
+    public function getImage()
     {
-        return is_null($value) ? defaultUserImage() : asset($value);
+        $image = File::where(['target_id' => $this->id,'target_type' => User::class])->first();
+        return !isset($image) ? defaultUserImage() : $image->path;
     }
 
 

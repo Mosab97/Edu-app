@@ -46,6 +46,7 @@ Route::group(['prefix' => 'v1', 'namespace' => ROOT_NAMESPACE, "middleware" => [
             Route::get('questions/{course_id}', 'CourseController@questions');
             Route::get('groups_course_id/{course_id}', 'GroupController@groups_course_id');
             Route::get('group/{group_id}', 'GroupController@group');
+            Route::get('group_students/{group_id}', 'GroupController@group_students');
             Route::post('add_group', 'GroupController@add_group');
             Route::put('update_group/{group_id}', 'GroupController@update_group');
             Route::get('notifications', 'NotificationController@notifications');
