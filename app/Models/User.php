@@ -79,6 +79,11 @@ class User extends Authenticatable
         return $this->hasMany(StudentGroups::class, 'student_id');
     }
 
+    public function student_details()
+    {
+        return $this->hasOne(StudentDetails::class, 'student_id');
+    }
+
 
     public function teacher_details()
     {
@@ -93,7 +98,7 @@ class User extends Authenticatable
 
     public function getImage()
     {
-        $image = File::where(['target_id' => $this->id,'target_type' => User::class])->first();
+        $image = File::where(['target_id' => $this->id, 'target_type' => User::class])->first();
         return !isset($image) ? defaultUserImage() : $image->path;
     }
 

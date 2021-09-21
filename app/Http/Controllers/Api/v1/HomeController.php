@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Api\v1\General\AgeResource;
+use App\Models\Age;
 use App\Models\ContactUs;
 use App\Models\Manager;
 use App\Models\User;
@@ -21,6 +23,12 @@ class HomeController extends Controller
             'test' => 'sdfdsf'
         ]);
     }
+
+    public function ages()
+    {
+        return apiSuccess(AgeResource::collection(Age::get()));
+    }
+
     public function contactUs(Request $request)
     {
         $request->validate([

@@ -9,6 +9,7 @@ Route::group(['prefix' => 'v1', 'namespace' => ROOT_NAMESPACE, "middleware" => [
         Route::post('contact_us', 'HomeController@contactUs');
         Route::get('system_constants', 'SystemConstantsController@system_constants');
         Route::get('settings', 'HomeController@settings');
+        Route::get('ages', 'HomeController@ages');
         Route::group(['prefix' => 'user', 'namespace' => 'User'], function () {
             Route::get('notifications', 'NotificationController@notifications');
             Route::get('notification/{id}', 'NotificationController@notification');

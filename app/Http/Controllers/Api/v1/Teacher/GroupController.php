@@ -64,11 +64,10 @@ class GroupController extends Controller
             'gender' => 'sometimes|in:' . implode(',', Gender),
         ]);
         $data = $request->except(['image', 'video']);
-        if ($request->hasFile('image')) $data['image'] = $this->uploadImage($request->file('image'), 'groups');
-        if ($request->hasFile('video')) $data['video'] = $this->uploadImage($request->file('video'), 'groups');
-
-        $data['teacher_id'] = user('teacher')->id;
+        $data['teacher_id'] = apiUser()->id;
+        /** @var Group $group */
         $group = Group::create($data);
+        $group->updateMedia($request,$group);
         return apiSuccess(new GroupResource($group));
     }
 
@@ -93,7 +92,7 @@ class GroupController extends Controller
         $data = $request->except(['image', 'video']);
         if ($request->hasFile('image')) $data['image'] = $this->uploadImage($request->file('image'), 'groups');
         if ($request->hasFile('video')) $data['video'] = $this->uploadImage($request->file('video'), 'groups');
-        $data['teacher_id'] = user('teacher')->id;
+        $data['teacher_id'] = apiUser()->id;
         $group->update($data);
         return apiSuccess(new GroupResource($group));
     }

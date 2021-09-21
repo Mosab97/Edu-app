@@ -72,16 +72,19 @@ class AuthController extends Controller
         $request->validate([
             'name' => 'required|min:3|max:100',
             'phone' => ['required', 'unique:users,phone'],
+            'age_id' => ['sometimes', 'exists:ages,id'],
             'password' => password_rules(true, 6, true),
             'type' => 'required|in:' . implode(',', User::user_type),
         ]);
-        $data = $request->except(['password', 'password_confirmation', 'type']);
+        $data = $request->except(['password', 'password_confirmation', 'type', 'age_id']);
         $data['password'] = Hash::make($request->password);
         $data['user_type'] = $request->type;
         $data['verified'] = false;
         $data['status'] = User::user_status['Accepted'];
         $data['generatedCode'] = generateCode();
         $student = User::create($data);
+        if (isset($request->age_id)) $student->student_details()->updateOrCreate(['age_id' => $request->age_id]);
+
         $student['access_token'] = $student->createToken(API_ACCESS_TOKEN_NAME)->accessToken;
 
         return apiSuccess(new ProfileResource($student), api('Successfully Registered'));

@@ -17,8 +17,8 @@ class CreateGroupsTable extends Migration
             $table->id();
             $table->string('name')->nullable();
             $table->unsignedBigInteger('teacher_id');
-            $table->string('video')->nullable();
-            $table->string('image')->nullable();
+            $table->unsignedBigInteger('video_id')->nullable();
+            $table->unsignedBigInteger('image_id')->nullable();
             $table->double('price')->nullable();
             $table->double('students_number_max')->nullable();
             $table->double('number_of_live_lessons')->nullable();
@@ -30,6 +30,8 @@ class CreateGroupsTable extends Migration
             $table->unsignedBigInteger('level_id');
             $table->unsignedBigInteger('age_id');
             $table->timestamps();
+            $table->foreign('video_id')->on('files')->references('id')->cascadeOnDelete();
+            $table->foreign('image_id')->on('files')->references('id')->cascadeOnDelete();
             $table->foreign('course_id')->on('courses')->references('id')->cascadeOnDelete();
             $table->foreign('teacher_id')->on('users')->references('id')->cascadeOnDelete();
             $table->foreign('level_id')->on('levels')->references('id')->cascadeOnDelete();

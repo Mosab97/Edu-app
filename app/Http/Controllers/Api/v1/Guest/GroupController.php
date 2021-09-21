@@ -27,7 +27,7 @@ class GroupController extends Controller
 
     public function my_groups(Request $request)
     {
-        $student = user('student');
+        $student = apiUser();
         if (!isset($student)) return apiError('Wrong Student');
 //        return apiSuccess(GroupResource::collection($student->groups()->whereHas('group')->with(['group'])->withCount('group.students')->get()));
         return apiSuccess(GroupResource::collection($student->groups()->with(['group'])->get()->pluck('group')));

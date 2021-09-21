@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Api\v1\General;
 
+use App\Models\StudentDetails;
 use App\Models\Teacher;
 use App\Models\User;
 use Carbon\Carbon;
@@ -35,6 +36,13 @@ class ProfileResource extends JsonResource
                 'major' => optional($teacher_details)->major,
                 'experience' => optional($teacher_details)->experience,
                 'demonstration_video' => optional($teacher_details)->getDemonstrationVideo(),
+            ]);
+        }
+        if ($this->user_type == User::user_type['STUDENT']) {
+            /** @var StudentDetails $student_details */
+            $student_details = $this->student_details;
+            return array_merge($response, [
+                'age' => new AgeResource(optional($student_details)->age),
             ]);
         }
         return $response;

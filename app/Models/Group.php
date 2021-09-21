@@ -2,31 +2,47 @@
 
 namespace App\Models;
 
+use App\Traits\UploadMedia;
 use Illuminate\Database\Eloquent\Model;
 
 class Group extends Model
 {
+    use UploadMedia;
+
 //    public const levels = [
 //        'level One' => 1,
 //        'level Two' => 2,
 //        'level Three' => 3,
 //    ];
     protected $guarded = [];
+    public const manager_route = 'groups';
 
     public function getImageAttribute($value)
     {
-        return is_null($value) ? defaultUserImage() : asset($value);
+        $image = $this->image_target;
+        return is_null($image) ? defaultUserImage() : $image->path;
     }
 
     public function getVideoAttribute($value)
     {
-        return is_null($value) ? defaultUserVideo() : asset($value);
+        $video = $this->video_target;
+        return is_null($video) ? defaultUserVideo() : $video->path;
     }
 
 
     public function students()
     {
         return $this->hasMany(StudentGroups::class);
+    }
+
+    public function video_target()
+    {
+        return $this->belongsTo(File::class, 'video_id');
+    }
+
+    public function image_target()
+    {
+        return $this->belongsTo(File::class, 'image_id');
     }
 
     public function files()
@@ -63,6 +79,63 @@ class Group extends Model
     protected $casts = [
         'gender' => 'integer'
     ];
+
+    public function addImageMedia($image)
+    {
+        $file = $this->uploadImage($image, self::manager_route);
+        $file_target = $this->image_target;
+        if (isset($file_target)) {
+            $file_target->update([
+                'name' => $file['name'],
+                'extension' => $file['extension'],
+                'path' => $file['path'],
+                'target_id' => $this->id,
+                'target_type' => Group::class,
+            ]);
+        } else {
+            $file_target = $this->image_target()->create([
+                'name' => $file['name'],
+                'extension' => $file['extension'],
+                'path' => $file['path'],
+                'target_id' => $this->id,
+                'target_type' => Group::class,
+            ]);
+        }
+        return $file_target;
+    }
+
+    public function addVideoMedia($video)
+    {
+        $file = $this->uploadImage($video, self::manager_route);
+        $file_target = $this->video_target;
+        if (isset($file_target)) {
+            $file_target->update([
+                'name' => $file['name'],
+                'extension' => $file['extension'],
+                'path' => $file['path'],
+                'target_id' => $this->id,
+                'target_type' => Group::class,
+            ]);
+        } else {
+            $file_target = $this->video_target()->create([
+                'name' => $file['name'],
+                'extension' => $file['extension'],
+                'path' => $file['path'],
+                'target_id' => $this->id,
+                'target_type' => Group::class,
+            ]);
+        }
+        return $file_target;
+    }
+
+    public function updateMedia(\Illuminate\Http\Request $request,$group)
+    {
+        $files = [];
+        if ($request->hasFile('image')) $files['image_id'] = $this->addImageMedia($request->image)->id;
+        if ($request->hasFile('video')) $files['video_id'] = $this->addVideoMedia($request->video)->id;
+        $group = Group::find($this->id);
+        if (sizeof($files) > 0) $group->update(['image_id' => $files['image_id']]);
+    }
 
 
 }
