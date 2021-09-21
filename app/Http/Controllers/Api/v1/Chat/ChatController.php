@@ -25,11 +25,13 @@ class ChatController extends Controller
 
     public function group_media(Request $request, $group_id)
     {
-        $files = File::where(['target_id'=> $group_id,'target_type'=> Group::class,])->paginate($this->perPage);
+        $files = File::where(['target_id' => $group_id, 'target_type' => Group::class,])->paginate($this->perPage);
         return apiSuccess([
             'items' => FileResource::collection($files->items()),
             'paginate' => paginate($files),
-        ]);    }
+        ]);
+    }
+
     public function chatMessages(Request $request, $id)
     {
         $messages = ChatMessage::where('group_id', $id)->paginate($this->perPage);
@@ -52,7 +54,7 @@ class ChatController extends Controller
             'message' => $request->message,
         ]);
 
-                $file=  $this->uploadImage($request->file('image'), 'chat'),
+        $file = $this->uploadImage($request->file('image'), 'chat');
         if ($request->hasFile('image')) {
             $file = File::create([
                 'target_id' => $group->id,
