@@ -26,15 +26,19 @@ class ProfileController extends Controller
             'demonstration_video' => 'sometimes|mimes:mp4,mov,ogg,qt | max:20000',
 
         ]);
-        $data = $request->except(['image', 'demonstration_video','major','experience']);
-        if (isset($request->image)&&$request->hasFile('image')) $data['image'] = $this->uploadImage($request->file('image'), 'users');
+        $data = $request->except(['image', 'demonstration_video', 'major', 'experience']);
+        if (isset($request->image) && $request->hasFile('image')) $data['image'] = $this->uploadImage($request->file('image'), 'users');
         $user->update($data);
         if ($user->user_type == User::user_type['TEACHER']) {
             $data = [];
-            if (isset($request->demonstration_video)&&$request->hasFile('demonstration_video')) $data['demonstration_video'] = $this->uploadImage($request->file('demonstration_video'), 'users');
+//            dd($request->hasFile('demonstration_video'));
+            if (isset($request->demonstration_video) && $request->hasFile('demonstration_video')) $data['demonstration_video'] = $this->uploadImage($request->file('demonstration_video'), 'users');
             $data['major'] = $request->major;
             $data['experience'] = $request->experience;
-            $user->teacher_details()->create($data);
+//            $data['teacher_id'] = $user->id;
+            $teacher_details = $user->teacher_details;
+            if (isset($teacher_details)) $teacher_details->update($data);
+            else $user->teacher_details()->create($data);
         }
         $user['access_token'] = Str::substr(request()->header('Authorization'), 7);
         return apiSuccess(new ProfileResource($user), api('Profile Updated Successfully'));

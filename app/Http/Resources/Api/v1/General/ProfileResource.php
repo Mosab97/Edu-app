@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Api\v1\General;
 
+use App\Models\Teacher;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -25,7 +26,9 @@ class ProfileResource extends JsonResource
             'access_token' => $this->access_token,
         ];
         if ($this->user_type == User::user_type['TEACHER']) {
+            /** @var Teacher $teacher_details */
             $teacher_details = $this->teacher_details;
+//            dd($teacher_details->demonstration_video);
             return array_merge( $response,[
                 'major' => optional($teacher_details)->major,
                 'experience' => optional($teacher_details)->experience,
