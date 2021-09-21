@@ -11,7 +11,7 @@ class Group extends Model
 //        'level Two' => 2,
 //        'level Three' => 3,
 //    ];
-protected $guarded = [];
+    protected $guarded = [];
 
     public function getImageAttribute($value)
     {
@@ -29,6 +29,10 @@ protected $guarded = [];
         return $this->hasMany(StudentGroups::class);
     }
 
+    public function files()
+    {
+        return $this->hasMany(File::class, 'target_id')->where('target_type' . self::class);
+    }
 
 
     public function chatMessages()

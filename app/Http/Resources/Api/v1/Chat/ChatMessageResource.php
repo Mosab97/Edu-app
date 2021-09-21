@@ -13,7 +13,7 @@ class ChatMessageResource extends JsonResource
             'id' => $this->id,
             'message' => $this->message,
             'timestamp' => Carbon::parse($this->updated_at)->format(DATE_FORMAT_FULL),
-            'order_id' => $this->order_id,
+            'group_id' => $this->group_id,
             'sender_id' => $this->sender_id,
         ];
         return $response;

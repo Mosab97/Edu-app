@@ -32,9 +32,9 @@ class ProfileController extends Controller
         if (isset($request->image) && $request->hasFile('image')) {
             $image_path = $this->uploadImage($request->file('image'), 'users');
             if (File::where(['target_id' => $user->id, 'target_type' => User::class])->count() > 0) {
-                File::where(['target_id' => $user->id, 'target_type' => User::class])->update(['path' => $image_path, 'target_type' => User::class]);
+                File::where(['target_id' => $user->id, 'target_type' => User::class])->update(['path' => optional($image_path)['path'], 'name' => optional($image_path)['name'], 'extension' => optional($image_path)['extension'], 'target_type' => User::class]);
             } else {
-                File::create(['path' => $image_path, 'target_id' => $user->id, 'target_type' => User::class]);
+                File::create(['path' => optional($image_path)['path'], 'name' => optional($image_path)['name'], 'extension' => optional($image_path)['extension'], 'target_id' => $user->id, 'target_type' => User::class]);
             }
         }
         $user->update($data);
@@ -50,9 +50,9 @@ class ProfileController extends Controller
             if (isset($teacher_details) && isset($request->demonstration_video) && $request->hasFile('demonstration_video')) {
                 $file_path = $this->uploadImage($request->file('demonstration_video'), 'teachers');
                 if (File::where(['target_id' => $teacher_details->id, 'target_type' => Teacher::class])->count() > 0) {
-                    File::where(['target_id' => $teacher_details->id, 'target_type' => Teacher::class])->update(['path' => $file_path, 'target_type' => Teacher::class]);
+                    File::where(['target_id' => $teacher_details->id, 'target_type' => Teacher::class])->update(['path' => optional($file_path)['path'], 'name' => optional($file_path)['name'], 'extension' => optional($file_path)['extension'], 'target_type' => Teacher::class]);
                 } else {
-                    File::create(['path' => $file_path, 'target_id' => $teacher_details->id, 'target_type' => Teacher::class]);
+                    File::create(['path' => optional($file_path)['path'], 'name' => optional($file_path)['name'], 'extension' => optional($file_path)['extension'], 'target_id' => $teacher_details->id, 'target_type' => Teacher::class]);
                 }
             }
 

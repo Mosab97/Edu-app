@@ -20,6 +20,7 @@ use Illuminate\Support\Str;
 $factory->define(\App\Models\User::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
+        'description' => $faker->paragraph,
         'user_type' => collect([1, 2])->random(),
         'status' => collect(\App\Models\User::user_status)->random(),
         'email' => $faker->email,

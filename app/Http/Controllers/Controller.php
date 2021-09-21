@@ -80,7 +80,11 @@ class Controller extends BaseController
         $directory = 'uploads' . '/' . $path;//.'/'.date("Y").'/'.date("m").'/'.date("d");
         $destienation = public_path($directory);
         $file->move($destienation, $new_name);
-        return $directory . '/' . $new_name;
+        return [
+            'path' => $directory . '/' . $new_name,
+            'name' => $fileName,
+            'extension' => $file_exe,
+        ];
     }
 
     protected function deleteImage($image)

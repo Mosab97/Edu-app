@@ -61,6 +61,7 @@ Route::group(['prefix' => 'v1', 'namespace' => ROOT_NAMESPACE, "middleware" => [
             Route::post('sendMessage/{id}', 'ChatController@sendMessage');
             Route::get('getAllChats', 'ChatController@getAllChats');
             Route::get('chatMessages/{id}', 'ChatController@chatMessages');
+            Route::get('group_media/{group_id}', 'ChatController@group_media');
         });
     });
     Route::group(['namespace' => 'Auth'], function () {
