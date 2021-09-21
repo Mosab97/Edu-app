@@ -63,7 +63,7 @@ class AuthController extends Controller
 //        $sms_code = generateCode(0, 9, 6);
         $sms_code = CODE_FIXED;
         $user->update(['generatedCode' => $sms_code]);
-        return apiSuccess(null, api('We sent Phone Number verification code, please check your phone'));
+        return apiSuccess(['code' => $sms_code], api('We sent Phone Number verification code, please check your phone'));
     }
 
 
