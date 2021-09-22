@@ -31,7 +31,6 @@ class ProfileResource extends JsonResource
         if ($this->user_type == User::user_type['TEACHER']) {
             /** @var Teacher $teacher_details */
             $teacher_details = $this->teacher_details;
-//            dd($teacher_details->demonstration_video);
             return array_merge($response, [
                 'major' => optional($teacher_details)->major,
                 'experience' => optional($teacher_details)->experience,
