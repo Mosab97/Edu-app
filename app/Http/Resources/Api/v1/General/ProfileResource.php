@@ -20,7 +20,7 @@ class ProfileResource extends JsonResource
             'description' => $this->description,
             'user_type' => $this->user_type,
             'status' => api($this->status),
-            'image' => $this->getImage(),
+            'image' => $this->image_path,
             'phone' => $this->phone,
             'verified' => (bool)$this->verified,
             'gender' => gender($this->gender),

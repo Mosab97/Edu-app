@@ -17,6 +17,8 @@ class CreateFilesTable extends Migration
             $table->id();
             $table->string('name')->nullable();
             $table->string('extension')->nullable();
+            $table->string('files_number')->default(\App\Models\File::files_number['multi_file']);
+            $table->string('files_type')->default(\App\Models\File::files_type['image']);
             $table->string('path');
             $table->string('target_id');
             $table->string('target_type');

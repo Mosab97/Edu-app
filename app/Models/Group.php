@@ -9,17 +9,13 @@ class Group extends Model
 {
     use UploadMedia;
 
-//    public const levels = [
-//        'level One' => 1,
-//        'level Two' => 2,
-//        'level Three' => 3,
-//    ];
     protected $guarded = [];
     public const manager_route = 'groups';
 
     public function getImageAttribute($value)
     {
-        $image = $this->image_target;
+        $image = $this->image_target()->dd();
+        dd($image);
         return is_null($image) ? defaultUserImage() : $image->path;
     }
 
@@ -37,12 +33,12 @@ class Group extends Model
 
     public function video_target()
     {
-        return $this->belongsTo(File::class, 'video_id');
+        return $this->hasOne(File::class, 'target_id')->where('target_type', self::class)->where('files_number', File::files_number['one_file']);
     }
 
     public function image_target()
     {
-        return $this->belongsTo(File::class, 'image_id');
+        return $this->hasOne(File::class, 'target_id')->where(['target_type' => self::class, 'files_number' => File::files_number['one_file'], 'files_type' => File::files_type['image']]);
     }
 
     public function files()
@@ -128,7 +124,7 @@ class Group extends Model
         return $file_target;
     }
 
-    public function updateMedia(\Illuminate\Http\Request $request,$group)
+    public function updateMedia(\Illuminate\Http\Request $request, $group)
     {
         $files = [];
         if ($request->hasFile('image')) $files['image_id'] = $this->addImageMedia($request->image)->id;

@@ -96,7 +96,7 @@ class User extends Authenticatable
     }
 
 
-    public function getImage()
+    public function getImagePathAttribute()
     {
         $image = File::where(['target_id' => $this->id, 'target_type' => User::class])->first();
         return !isset($image) ? defaultUserImage() : $image->path;
