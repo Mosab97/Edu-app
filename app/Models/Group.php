@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Traits\UploadMedia;
 use Illuminate\Database\Eloquent\Model;
+use ZipStream\File;
 
 class Group extends Model
 {
@@ -23,6 +24,11 @@ class Group extends Model
         return $this->hasMany(ChatMessage::class);
     }
 
+    public function files()
+    {
+        return $this->hasMany(GroupFile::class,'group_id');
+    }
+
     public function course()
     {
         return $this->belongsTo(Course::class);
@@ -30,7 +36,7 @@ class Group extends Model
 
     public function teacher()
     {
-        return $this->belongsTo(User::class,'teacher_id');
+        return $this->belongsTo(User::class, 'teacher_id');
     }
 
     public function level()

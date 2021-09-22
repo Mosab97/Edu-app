@@ -15,9 +15,12 @@ class CreateGroupFilesTable extends Migration
     {
         Schema::create('group_files', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('group_id');
             $table->string('name')->nullable();
             $table->string('extension')->nullable();
             $table->string('path');
+            $table->foreign('group_id')->on('groups')->references('id')->cascadeOnDelete();
+
             $table->timestamps();
         });
     }

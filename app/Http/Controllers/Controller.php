@@ -71,7 +71,7 @@ class Controller extends BaseController
         return response()->json($response, $code);
     }
 
-    protected function uploadImage($file, $path = '')
+    protected function uploadImage($file, $path = '', $returned_detailed_array = false)
     {
 
         $fileName = $file->getClientOriginalName();
@@ -80,7 +80,11 @@ class Controller extends BaseController
         $directory = 'uploads' . '/' . $path;//.'/'.date("Y").'/'.date("m").'/'.date("d");
         $destienation = public_path($directory);
         $file->move($destienation, $new_name);
-        return $directory . '/' . $new_name;
+        return $returned_detailed_array ? [
+            'name' => $fileName,
+            'extension' => $file_exe,
+            'path' => $directory . '/' . $new_name,
+        ] : $directory . '/' . $new_name;
     }
 
     protected function deleteImage($image)

@@ -8,6 +8,7 @@ use App\Http\Resources\Api\v1\General\FileResource;
 use App\Models\ChatMessage;
 use App\Models\File;
 use App\Models\Group;
+use App\Models\GroupFile;
 use Illuminate\Http\Request;
 
 class ChatController extends Controller
@@ -25,7 +26,7 @@ class ChatController extends Controller
 
     public function group_media(Request $request, $group_id)
     {
-        $files = File::where(['target_id' => $group_id, 'target_type' => Group::class,])->paginate($this->perPage);
+        $files = GroupFile::where(['group_id' => $group_id])->paginate($this->perPage);
         return apiSuccess([
             'items' => FileResource::collection($files->items()),
             'paginate' => paginate($files),
@@ -46,7 +47,7 @@ class ChatController extends Controller
     {
         $request->validate([
             'message' => 'required|min:1|max:200',
-            'image' => 'sometimes|image',
+//            'file' => 'sometimes|image',
         ]);
         $group = Group::findOrFail($id);
         $chatMessage = $group->chatMessages()->create([
@@ -54,13 +55,15 @@ class ChatController extends Controller
             'message' => $request->message,
         ]);
 
-        $file = $this->uploadImage($request->file('image'), 'chat');
-        if ($request->hasFile('image')) {
-            $file = File::create([
-                'target_id' => $group->id,
-                'target_type' => Group::class,
-                'path' => optional($file)['path'], 'name' => optional($file)['name'], 'extension' => optional($file)['extension'],
+        if ($request->hasFile('file')) {
+            $file = $this->uploadImage($request->file('file'), ChatMessage::manager_route, true);
+            $group->files()->create([
+                'name' => optional($file)['name'],
+                'extension' => optional($file)['extension'],
+                'path' => optional($file)['path'],
             ]);
+//            GroupFile::create();
+
         }
 
         $user = apiUser();
