@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use App\Traits\UploadMedia;
 use Illuminate\Database\Eloquent\Model;
 
 class Teacher extends Model
 {
+    use UploadMedia;
     protected $guarded = [];
     protected $table = 'teachers';
+    public const manager_route = 'teachers';
 
 
     public function getDemonstrationVideo()

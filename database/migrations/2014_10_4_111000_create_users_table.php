@@ -12,6 +12,7 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
+            $table->string('image')->nullable();
             $table->longText('description')->nullable();
             $table->string('user_type')->nullable();
             $table->string('status')->default(\App\Models\User::user_status['Pending']);

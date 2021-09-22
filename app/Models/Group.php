@@ -30,7 +30,7 @@ class Group extends Model
 
     public function teacher()
     {
-        return $this->belongsTo(Teacher::class);
+        return $this->belongsTo(User::class,'teacher_id');
     }
 
     public function level()

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFilesTable extends Migration
+class CreateGroupFilesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,11 @@ class CreateFilesTable extends Migration
      */
     public function up()
     {
-        Schema::create('files', function (Blueprint $table) {
+        Schema::create('group_files', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
             $table->string('extension')->nullable();
-            $table->string('files_number')->default(\App\Models\File::files_number['multi_file']);
-            $table->string('files_type')->default(\App\Models\File::files_type['image']);
             $table->string('path');
-            $table->string('target_id');
-            $table->string('target_type');
             $table->timestamps();
         });
     }
@@ -33,6 +29,6 @@ class CreateFilesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('files');
+        Schema::dropIfExists('group_files');
     }
 }

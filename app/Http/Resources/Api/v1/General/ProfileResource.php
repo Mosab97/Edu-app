@@ -13,14 +13,13 @@ class ProfileResource extends JsonResource
     public function toArray($request)
     {
         $except_arr_resource = $request['except_arr_resource'];
-//        $image = $this->image->path;
         $response = [
             'id' => $this->id,
             'name' => $this->name,
             'description' => $this->description,
             'user_type' => $this->user_type,
             'status' => api($this->status),
-            'image' => $this->image_path,
+            'image' => $this->image,
             'phone' => $this->phone,
             'verified' => (bool)$this->verified,
             'gender' => gender($this->gender),
@@ -34,7 +33,7 @@ class ProfileResource extends JsonResource
             return array_merge($response, [
                 'major' => optional($teacher_details)->major,
                 'experience' => optional($teacher_details)->experience,
-                'demonstration_video' => optional($teacher_details)->getDemonstrationVideo(),
+                'demonstration_video' => optional($teacher_details)->demonstration_video,
             ]);
         }
         if ($this->user_type == User::user_type['STUDENT']) {

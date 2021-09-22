@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\UploadMedia;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -9,12 +10,11 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
 use Laravel\Passport\HasApiTokens;
-use Spatie\Translatable\HasTranslations;
 
 
 class User extends Authenticatable
 {
-    use Notifiable, SoftDeletes, HasApiTokens;
+    use Notifiable, SoftDeletes, HasApiTokens, UploadMedia;
 
     public $translatable = ['name'];
 
@@ -96,42 +96,7 @@ class User extends Authenticatable
     }
 
 
-    public function getImagePathAttribute()
-    {
-        $image = File::where(['target_id' => $this->id, 'target_type' => User::class])->first();
-        return !isset($image) ? defaultUserImage() : $image->path;
-    }
-
-
 //    attributes
-    public function getStatusNameAttribute()
-    {
-        return ($this->verified) ? api('Active') : api('Not Active');
-    }
-
-
-    public function getActiveNameAttribute()
-    {
-        return $this->status ? t('Active') : t('Inactive');
-    }
-
-    public function getSourceNameAttribute()
-    {
-        switch ($this->source) {
-            case self::ANDROID:
-                return api('Android');
-            case self::WEB:
-                return api('Web');
-            case self::DASHBOARD:
-                return api('Dashboard');
-            default:
-                return api('unknown status');
-                break;
-        }
-
-    }
-
-
     public function getUnreadNotificationsAttribute()
     {
         return $this->unreadNotifications()->count();
@@ -153,11 +118,6 @@ class User extends Authenticatable
 
 
 //methods
-    public function setLanguage()
-    {
-        $locale = $this->local ?? config("app.fallback_locale");
-        app()->setLocale($locale);
-    }
 
 
     protected $casts = [

@@ -66,9 +66,12 @@ class GroupController extends Controller
         $data = $request->except(['image', 'video']);
         $data['teacher_id'] = apiUser()->id;
         /** @var Group $group */
+        if ($request->hasFile('image')) $data['image'] = $this->uploadImage($request->file('image'), Group::manager_route);
+        if ($request->hasFile('video')) $data['video'] = $this->uploadImage($request->file('video'), Group::manager_route);
         $group = Group::create($data);
-        $group->updateMedia($request,$group);
         return apiSuccess(new GroupResource($group));
+
+
     }
 
     public function update_group(Request $request, $id)
