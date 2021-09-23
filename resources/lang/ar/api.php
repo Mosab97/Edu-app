@@ -147,5 +147,6 @@ return [
   'Please send your country' => 'Please send your country',
 
   'you got' => 'تم تقييمك بالمستوى :level',  
-  'Message Send Successfully' => 'Message Send Successfully',
+  'Message Send Successfully' => 'Message Send Successfully',  
+  'You do not have an account registered for this email' => 'You do not have an account registered for this email',
 ];

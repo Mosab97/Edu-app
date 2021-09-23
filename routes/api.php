@@ -66,6 +66,8 @@ Route::group(['prefix' => 'v1', 'namespace' => ROOT_NAMESPACE, "middleware" => [
         });
     });
     Route::group(['namespace' => 'Auth'], function () {
+        Route::post('social_login', 'AuthController@socialLogin');
+
         Route::post('login', 'AuthController@login');
         Route::post('resend_code', 'AuthController@resend_code');
         Route::post('register', 'AuthController@register');

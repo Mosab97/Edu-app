@@ -16,6 +16,7 @@ class ProfileResource extends JsonResource
         $response = [
             'id' => $this->id,
             'name' => $this->name,
+            'email' => $this->email,
             'description' => $this->description,
             'user_type' => $this->user_type,
             'status' => api($this->status),

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\v1\Auth;
 use App\Http\Controllers\Api\v1\Controller;
 
 use App\Http\Resources\Api\v1\General\ProfileResource;
+use App\Models\SocialProvider;
 use App\Models\User;
 use App\Rules\EmailRule;
 use Illuminate\Http\Request;
@@ -72,22 +73,32 @@ class AuthController extends Controller
         $request->validate([
             'name' => 'required|min:3|max:100',
             'phone' => ['required', 'unique:users,phone'],
+            'email' => ['required', 'unique:users,email'],
             'age_id' => ['sometimes', 'exists:ages,id'],
             'password' => password_rules(true, 6, true),
             'type' => 'required|in:' . implode(',', User::user_type),
+            'social' => 'nullable|in:1,0',
         ]);
-        $data = $request->except(['password', 'password_confirmation', 'type', 'age_id']);
+        $data = $request->except(['password', 'password_confirmation', 'type', 'age_id','provider','provider_id']);
         $data['password'] = Hash::make($request->password);
         $data['user_type'] = $request->type;
         $data['verified'] = false;
         $data['status'] = User::user_status['Accepted'];
         $data['generatedCode'] = generateCode();
-        $student = User::create($data);
-        if (isset($request->age_id)) $student->student_details()->updateOrCreate(['age_id' => $request->age_id]);
+        $data['social'] = $request->get('social', 0);
+        $user = User::create($data);
 
-        $student['access_token'] = $student->createToken(API_ACCESS_TOKEN_NAME)->accessToken;
+        if (isset($request->social) && $request->social == true && isset($request->provider) && isset($request->provider_id))
+            $user->social_provider()->create([
+                'provider' => $request->get('provider'),
+                'provider_id' => $request->get('provider_id'),
+            ]);
 
-        return apiSuccess(new ProfileResource($student), api('Successfully Registered'));
+        if (isset($request->age_id)) $user->student_details()->updateOrCreate(['age_id' => $request->age_id]);
+
+        $user['access_token'] = $user->createToken(API_ACCESS_TOKEN_NAME)->accessToken;
+
+        return apiSuccess(new ProfileResource($user), api('Successfully Registered'));
     }
 
     public function verified_code(Request $request)
@@ -133,4 +144,26 @@ class AuthController extends Controller
         $user->tokens()->delete();
         return apiSuccess(null, apiTrans('Successful Logout'));
     }
+
+    public function socialLogin(Request $request)
+    {
+        $request->validate([
+            'email' => 'required',
+            'provider_id' => 'required|string',
+            'provider' => 'required|string',
+        ]);
+
+        $user = User::query()->where('email', $request->get('email'))
+            ->where('social', true)
+            ->whereHas('social_provider', function ($query) use ($request) {
+                $query->where('provider_id', $request->get('provider_id'))
+                    ->where('provider', $request->get('provider'));
+            })->first();
+        if (!$user) return apiError(api('You do not have an account registered for this email'), 403);
+
+        $user['access_token'] = $user->createToken(API_ACCESS_TOKEN_NAME)->accessToken;
+        return apiSuccess(new ProfileResource($user));
+
+    }
+
 }

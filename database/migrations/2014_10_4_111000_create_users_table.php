@@ -32,9 +32,7 @@ class CreateUsersTable extends Migration
 //            $table->date('dob')->nullable();
 
             $table->string('password')->nullable();
-            $table->string('provider')->nullable();
-            $table->string('provider_id')->nullable();
-            $table->string('google_provider_id')->nullable();
+            $table->boolean('social')->default(0);
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
