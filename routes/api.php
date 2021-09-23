@@ -26,6 +26,7 @@ Route::group(['prefix' => 'v1', 'namespace' => ROOT_NAMESPACE, "middleware" => [
             Route::get('instructions/{course_id}', 'InstructionController@instructions');
             Route::post('check_level', 'QuestionController@check_level');
 
+            Route::post('subscribe/{course_id}', 'GroupController@subscribe');
             Route::get('groups/{course_id}', 'GroupController@groupsByCourse');
             Route::get('groups/{course_id}/{level_id}', 'GroupController@groupsByLevel');
             Route::get('group/{group_id}', 'GroupController@group');
@@ -48,7 +49,6 @@ Route::group(['prefix' => 'v1', 'namespace' => ROOT_NAMESPACE, "middleware" => [
             Route::get('questions/{course_id}', 'CourseController@questions');
             Route::get('groups_course_id/{course_id}', 'GroupController@groups_course_id');
             Route::get('group/{group_id}', 'GroupController@group');
-            Route::get('group_students/{group_id}', 'GroupController@group_students');
             Route::post('add_group', 'GroupController@add_group');
             Route::put('update_group/{group_id}', 'GroupController@update_group');
             Route::get('notifications', 'NotificationController@notifications');
@@ -57,6 +57,7 @@ Route::group(['prefix' => 'v1', 'namespace' => ROOT_NAMESPACE, "middleware" => [
 
 
         });
+        Route::get('group_students/{group_id}', 'HomeController@group_students');
 
         Route::group(['namespace' => 'Chat'], function () {
             Route::post('createNewChat', 'ChatController@createNewChat');

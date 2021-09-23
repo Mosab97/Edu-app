@@ -17,8 +17,8 @@ class CreateChatMessagesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('group_id')->nullable();
             $table->unsignedBigInteger('sender_id')->nullable();
+            $table->string('type')->default(\App\Models\ChatMessage::type['text']);
             $table->string('message')->nullable();
-            $table->string('image')->nullable();
             $table->timestamps();
             $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
             $table->foreign('sender_id')->references('id')->on('users')->onDelete('cascade');

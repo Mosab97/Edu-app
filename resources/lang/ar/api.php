@@ -146,7 +146,10 @@ return [
   'The Account Status is Pending' => 'يرجى انتظار الموافقة على حسابك',
   'Please send your country' => 'Please send your country',
 
-  'you got' => 'تم تقييمك بالمستوى :level',  
-  'Message Send Successfully' => 'Message Send Successfully',  
-  'You do not have an account registered for this email' => 'You do not have an account registered for this email',
+  'you got' => 'تم تقييمك بالمستوى :level',
+  'Message Send Successfully' => 'تم ارسال الرسالة بنجاح',
+  'You do not have an account registered for this email' => 'حسابك غير موجود في سجلاتنا',
+  'Subscribe Successfully' => 'تم الاشتراك بنجاح',
+  'You can not subscribe to this group more than one' => 'لا يمكن الاشتراك اكثر من مرة في نفس الكورس',
+  'Not Group member' => 'لست عضو في هذه المجموعة',
 ];

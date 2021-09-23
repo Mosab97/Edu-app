@@ -16,10 +16,11 @@ class CreateGroupFilesTable extends Migration
         Schema::create('group_files', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('group_id');
+            $table->unsignedBigInteger('chat_message_id');
             $table->string('name')->nullable();
             $table->string('extension')->nullable();
             $table->string('path');
-            $table->foreign('group_id')->on('groups')->references('id')->cascadeOnDelete();
+            $table->foreign('chat_message_id')->on('chat_messages')->references('id')->cascadeOnDelete();
 
             $table->timestamps();
         });

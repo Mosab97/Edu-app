@@ -4,11 +4,43 @@ namespace App\Http\Controllers\Api\v1\Student;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Api\v1\Student\GroupResource;
+use App\Http\Resources\Api\v1\Student\MyGroupResource;
+use App\Models\Course;
 use App\Models\Group;
+use App\Models\Level;
+use App\Models\StudentGroups;
 use Illuminate\Http\Request;
 
 class GroupController extends Controller
 {
+
+    private $_model;
+
+    public function __construct(Group $group)
+    {
+        parent::__construct();
+        $this->_model = $group;
+    }
+
+
+    public function subscribe(Request $request, $group_id)
+    {
+        $student = apiUser();
+        $group = Group::findOrFail($group_id);
+        if ($student->student_groups()->where([
+                'course_id' => $group->course_id,
+                'group_id' => $group->id,
+            ])->count() > 0) return apiError(api('You can not subscribe to this group more than one'));
+        $student->student_groups()->create([
+            'course_id' => $group->course_id,
+            'group_id' => $group->id,
+            'is_paid' => $request->get('is_paid', false),
+        ]);
+        return apiSuccess(api('Subscribe Successfully'));
+
+    }
+
+
     public function groupsByCourse(Request $request, $course_id)
     {
         $groups = Group::query()->where('course_id', $course_id)->with(['course'])->get();
@@ -30,8 +62,13 @@ class GroupController extends Controller
     {
         $student = apiUser();
         if (!isset($student)) return apiError('Wrong Student');
-//        return apiSuccess(GroupResource::collection($student->groups()->whereHas('group')->with(['group'])->withCount('group.students')->get()));
-        return apiSuccess(GroupResource::collection($student->student_groups()->with(['group'])->get()->pluck('group')));
+        $groups = $this->_model->query()
+//            This code will exclude the current user from the subscribed students
+//            ->with(['students' => function ($query) use ($student) {
+//            $query->where('student_id', '!=', $student->id);
+//        }])
+            ->checkStudent(apiUser())->get();
+        return apiSuccess(MyGroupResource::collection($groups));
     }
 
     public function group(Request $request, $group_id)

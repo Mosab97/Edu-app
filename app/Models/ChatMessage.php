@@ -6,6 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class ChatMessage extends Model
 {
+    public const type = [
+        'text' => 'text',
+        'file' => 'file',
+    ];
     protected $guarded = [];
-    public const manager_route =  'chat_messages';
+    public const manager_route = 'chat_messages';
+
+    public function file()
+    {
+        return $this->hasOne(GroupFile::class, 'chat_message_id');
+    }
 }

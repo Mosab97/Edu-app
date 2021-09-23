@@ -26,7 +26,7 @@ class Group extends Model
 
     public function files()
     {
-        return $this->hasMany(GroupFile::class,'group_id');
+        return $this->hasMany(GroupFile::class, 'group_id');
     }
 
     public function course()
@@ -47,6 +47,13 @@ class Group extends Model
     public function age()
     {
         return $this->belongsTo(Age::class);
+    }
+
+    public function scopeCheckStudent($query, User $student)
+    {
+        $query->whereHas('students', function ($query) use ($student) {
+            $query->where('student_id', $student->id);
+        });
     }
 
     protected $casts = [

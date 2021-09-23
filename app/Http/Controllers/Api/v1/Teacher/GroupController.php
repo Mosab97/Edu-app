@@ -13,15 +13,6 @@ use Illuminate\Http\Request;
 
 class GroupController extends Controller
 {
-    public function group_students(Request $request, $group_id)
-    {
-        $group = Group::findOrFail($group_id);
-        $students = $group->students->pluck('student')->map(function ($item) use ($group) {
-            $item['group_name'] = $group->name;
-            return $item;
-        });
-        return apiSuccess(GroupStudentResource::collection($students));
-    }
 
     public function groups_course_id(Request $request, $course_id)
     {

@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Api\v1\General\AgeResource;
+use App\Http\Resources\Api\v1\Teacher\GroupStudentResource;
 use App\Models\Age;
 use App\Models\ContactUs;
+use App\Models\Group;
 use App\Models\Manager;
 use App\Models\User;
 use App\Notifications\ContactUsNotification;
@@ -16,6 +18,15 @@ use Illuminate\Support\Facades\Notification;
 
 class HomeController extends Controller
 {
+    public function group_students(Request $request, $group_id)
+    {
+        $group = Group::findOrFail($group_id);
+        $students = $group->students->pluck('student')->map(function ($item) use ($group) {
+            $item['group_name'] = $group->name;
+            return $item;
+        });
+        return apiSuccess(GroupStudentResource::collection($students));
+    }
 
     public function settings()
     {

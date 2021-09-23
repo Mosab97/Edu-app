@@ -174,5 +174,8 @@ return [
   
   'you got' => 'you got',  
   'Message Send Successfully' => 'Message Send Successfully',  
-  'You do not have an account registered for this email' => 'You do not have an account registered for this email',
+  'You do not have an account registered for this email' => 'You do not have an account registered for this email',  
+  'Subscribe Successfully' => 'Subscribe Successfully',  
+  'You can not subscribe to this group more than one' => 'You can not subscribe to this group more than one',  
+  'Not Group member' => 'Not Group member',
 ];
