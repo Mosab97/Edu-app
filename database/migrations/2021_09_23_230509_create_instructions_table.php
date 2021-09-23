@@ -15,12 +15,9 @@ class CreateInstructionsTable extends Migration
     {
         Schema::create('instructions', function (Blueprint $table) {
             $table->id();
-
-
             $table->unsignedBigInteger('course_id');
+            $table->string('details');
             $table->foreign('course_id')->on('courses')->references('id')->cascadeOnDelete();
-
-
             $table->timestamps();
         });
     }

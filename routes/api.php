@@ -23,6 +23,7 @@ Route::group(['prefix' => 'v1', 'namespace' => ROOT_NAMESPACE, "middleware" => [
             Route::get('courses', 'CourseController@courses');
 
             Route::get('questions/{course_id}', 'QuestionController@questions');
+            Route::get('instructions/{course_id}', 'InstructionController@instructions');
             Route::post('check_level', 'QuestionController@check_level');
 
             Route::get('groups/{course_id}', 'GroupController@groupsByCourse');
