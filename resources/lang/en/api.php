@@ -177,5 +177,7 @@ return [
   'You do not have an account registered for this email' => 'You do not have an account registered for this email',  
   'Subscribe Successfully' => 'Subscribe Successfully',  
   'You can not subscribe to this group more than one' => 'You can not subscribe to this group more than one',  
-  'Not Group member' => 'Not Group member',
+  'Not Group member' => 'Not Group member',  
+  'Complaint Sent Successfully' => 'Complaint Sent Successfully',  
+  'This Student is Not Group member' => 'This Student is Not Group member',
 ];

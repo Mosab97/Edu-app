@@ -7,6 +7,7 @@ class DatabaseSeeder extends Seeder
 
     public function run()
     {
+        $this->call(StandardSeeder::class);
         $this->call(ManagerTableSeeder::class);
         $this->call(LevelSeeder::class);
         $this->call(AgeSeeder::class);
@@ -17,6 +18,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PermissionTableSeeder::class);
         $this->call(ISeedOauthPersonalAccessClientsTableSeeder::class);
         $this->call(ISeedOauthClientsTableSeeder::class);
+        $this->call(UserRateMessageSeeder::class);
 
     }
 }

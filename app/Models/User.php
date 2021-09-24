@@ -89,10 +89,12 @@ class User extends Authenticatable
     {
         return $this->hasOne(Teacher::class, 'teacher_id');
     }
+
     public function social_provider()
     {
         return $this->hasOne(SocialProvider::class);
     }
+
     public function teacher_groups()
     {
         return $this->hasMany(Group::class, 'teacher_id');
@@ -119,6 +121,10 @@ class User extends Authenticatable
         }
     }
 
+    public function getRateAttribute()
+    {
+        return UserRateMessage::query()->where(['to_id' => $this->id])->avg('avg');
+    }
 
 //methods
 

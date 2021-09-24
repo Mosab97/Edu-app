@@ -152,4 +152,6 @@ return [
   'Subscribe Successfully' => 'تم الاشتراك بنجاح',
   'You can not subscribe to this group more than one' => 'لا يمكن الاشتراك اكثر من مرة في نفس الكورس',
   'Not Group member' => 'لست عضو في هذه المجموعة',
+  'Complaint Sent Successfully' => 'تم ارسال الشكوى بنجاح',  
+  'This Student is Not Group member' => 'This Student is Not Group member',
 ];
