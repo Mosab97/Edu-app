@@ -45,8 +45,14 @@ class NotificationController extends Controller
     public function sendNotificationForAllUsers(Request $request)
     {
         $user = User::get();
-        $title = $request->title;
-        $body = $request->body;
+        $title = [
+            'ar' => $request->title,
+            'en' => $request->title,
+        ];
+        $body = [
+            'ar' => $request->body,
+            'en' => $request->body,
+        ];
         \Illuminate\Support\Facades\Notification::send($user, new GeneralNotification($title, $body));
         return apiSuccess('done');
     }

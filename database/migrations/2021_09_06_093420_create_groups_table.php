@@ -17,6 +17,12 @@ class CreateGroupsTable extends Migration
             $table->id();
             $table->string('name')->nullable();
             $table->unsignedBigInteger('teacher_id');
+
+//            Activity
+//            $table->unsignedBigInteger('activity_id')->nullable();
+//            $table->string('activity_url')->nullable();
+
+
             $table->string('video')->nullable();
             $table->string('image')->nullable();
             $table->double('price')->nullable();
@@ -30,6 +36,7 @@ class CreateGroupsTable extends Migration
             $table->unsignedBigInteger('level_id');
             $table->unsignedBigInteger('age_id');
             $table->timestamps();
+//            $table->foreign('activity_id')->on('activities')->references('id')->cascadeOnDelete();
             $table->foreign('course_id')->on('courses')->references('id')->cascadeOnDelete();
             $table->foreign('teacher_id')->on('users')->references('id')->cascadeOnDelete();
             $table->foreign('level_id')->on('levels')->references('id')->cascadeOnDelete();

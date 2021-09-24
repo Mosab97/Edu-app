@@ -19,6 +19,7 @@ class GroupResource extends JsonResource
             'name' => $this->name,
             'price' => $this->price,
             'students_number_max' => $this->students_number_max,
+            'what_will_i_learn' => $this->what_will_i_learn,
             'gender' => gender($this->gender),
             'time' => $this->time,
             'number_of_joined_students' => $this->students->count(),

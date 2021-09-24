@@ -160,5 +160,8 @@ return [
   'Lesson Deleted Successfully' => 'Lesson Deleted Successfully',  
   'Meeting Created Successfully' => 'Meeting Created Successfully',  
   'Meeting Updated Successfully' => 'Meeting Updated Successfully',  
-  'Meeting Deleted Successfully' => 'Meeting Deleted Successfully',
+  'Meeting Deleted Successfully' => 'Meeting Deleted Successfully',  
+  'Group Created Successfully' => 'Group Created Successfully',  
+  'Group Updated Successfully' => 'Group Updated Successfully',  
+  'Group Deleted Successfully' => 'Group Deleted Successfully',
 ];

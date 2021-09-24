@@ -7,11 +7,14 @@ Route::group(['prefix' => 'v1', 'namespace' => ROOT_NAMESPACE, "middleware" => [
     Route::get('system_constants', 'SystemConstantsController@system_constants');
     Route::get('standards/{standard_type}', 'HomeController@standards');
 
-    Route::group(["middleware" => ["auth:api", "CheckIsVerified", "CheckIsActive"]], function () {
         Route::post('contact_us', 'HomeController@contactUs');
+    Route::get('ages', 'HomeController@ages');
+    Route::get('activities', 'HomeController@activities');
+    Route::group(["middleware" => ["auth:api", "CheckIsVerified", "CheckIsActive"]], function () {
         Route::get('settings', 'HomeController@settings');
-        Route::get('ages', 'HomeController@ages');
+
         Route::get('group_students/{group_id}', 'HomeController@group_students');
+        Route::get('group_student/{group_id}/{student_id}', 'HomeController@group_student');
         Route::post('rate/{user_id}', 'RateController@post_rate');
         Route::group(['prefix' => 'user', 'namespace' => 'User'], function () {
             Route::get('notifications', 'NotificationController@notifications');
@@ -44,6 +47,7 @@ Route::group(['prefix' => 'v1', 'namespace' => ROOT_NAMESPACE, "middleware" => [
         Route::group(['prefix' => 'teacher', 'middleware' => ["auth_guard:" . \App\Models\User::user_type['TEACHER']]], function () {
             Route::post('complaint/{course_id}/{student_id}', 'ComplaintController@teacher_post_complaint');
             Route::group(['namespace' => 'Teacher'], function () {
+                Route::apiResource('advantages', 'AdvantageController');
                 Route::apiResource('lessons', 'LessonController');
                 Route::apiResource('meetings', 'MeetingController');
                 Route::get('my_groups', 'GroupController@my_groups');

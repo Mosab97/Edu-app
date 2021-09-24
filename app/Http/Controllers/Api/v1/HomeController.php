@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Api\v1\General\ActivityResource;
 use App\Http\Resources\Api\v1\General\AgeResource;
+use App\Http\Resources\Api\v1\General\GroupStudentProfileResource;
 use App\Http\Resources\Api\v1\General\StandardResource;
 use App\Http\Resources\Api\v1\Teacher\GroupStudentResource;
+use App\Models\Activity;
 use App\Models\Age;
 use App\Models\ContactUs;
 use App\Models\Group;
@@ -27,12 +30,20 @@ class HomeController extends Controller
 
     public function group_students(Request $request, $group_id)
     {
-        $group = Group::findOrFail($group_id);
+        $group = Group::with(['students'])->findOrFail($group_id);
         $students = $group->students->pluck('student')->map(function ($item) use ($group) {
             $item['group_name'] = $group->name;
             return $item;
         });
         return apiSuccess(GroupStudentResource::collection($students));
+    }
+
+    public function group_student(Request $request, $group_id, $student_id)
+    {
+        $student = User::query()->studentType()->whereHas('student_groups', function ($query) use ($group_id, $student_id) {
+            $query->where(['group_id' => $group_id, 'student_id' => $student_id]);
+        })->findOrFail($student_id);
+        return apiSuccess(new GroupStudentProfileResource($student));
     }
 
     public function settings()
@@ -47,17 +58,26 @@ class HomeController extends Controller
         return apiSuccess(AgeResource::collection(Age::get()));
     }
 
+    public function activities(Request $request)
+    {
+        return apiSuccess(ActivityResource::collection(Activity::get()));
+    }
+
     public function contactUs(Request $request)
     {
-        $request->validate([
-            'name' => 'required|max:250',
+        $user = apiUser();
+        $newArr = [];
+        $validations = [
             'title' => 'required|min:3|max:100',
-            'mobile' => ['required', new StartWith('+')],
             'message' => 'required|min:3|max:200',
+        ];
+        if (!isset($user)) $newArr = array_merge($validations, [
+            'name' => 'required|max:250',
+            'mobile' => ['required', new StartWith('+')],
             'email' => ['nullable', 'email', 'max:50', new EmailRule()],
         ]);
+        $request->validate($newArr);
 
-        $user = apiUser();
         $contact = ContactUs::create([
             'name' => $request->name,
             'title' => $request->title,

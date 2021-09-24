@@ -25,7 +25,7 @@ $factory->define(\App\Models\Group::class, function (Faker $faker) {
         'number_of_exercises_and_games' => $faker->numberBetween(5, 30),
         'course_date_and_time' => $faker->dateTime,
 //        \Carbon\Carbon::now()
-        'what_will_i_learn' => $faker->sentence,
+        'what_will_i_learn' => $faker->paragraph,
         'gender' => collect(Gender)->random(),
         'teacher_id' =>\App\Models\User::teacherType()->inRandomOrder()->first()->id,
         'course_id' =>\App\Models\Course::inRandomOrder()->first()->id,
