@@ -28,6 +28,7 @@ class GroupResource extends JsonResource
             'course' => new CourseResource($this->course),
             'level' => new LevelResource($this->level),
             'age' => new AgeResource($this->age),
+            'lessons' => LessonResource::collection($this->lessons),
             'gender' => gender($this->gender),
         ];
 

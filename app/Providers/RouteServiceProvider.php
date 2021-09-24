@@ -46,9 +46,7 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapWebRoutes();
 
-        $this->mapAdminapiappRoutes();
 
-//        $this->mapAdminApiAppRoutes();
 
         $this->mapManagerRoutes();
 
@@ -73,52 +71,6 @@ class RouteServiceProvider extends ServiceProvider
         });
     }
 
-    protected function mapRestaurantRoutes()
-    {
-        Route::group([
-            'middleware' => ['web', 'restaurant', 'auth:web'],
-            'prefix' => 'restaurant',
-            'as' => 'restaurant.',
-            'namespace' => $this->namespace,
-        ], function ($router) {
-            require base_path('routes/restaurant.php');
-        });
-    }
-
-    protected function mapBranchRoutes()
-    {
-        Route::group([
-            'middleware' => ['web', 'branch', 'auth:web'],
-            'prefix' => 'branch',
-            'as' => 'branch.',
-            'namespace' => $this->namespace,
-        ], function ($router) {
-            require base_path('routes/branch.php');
-        });
-    }
-
-
-    /**
-     * Define the "adminapiapp" routes for the application.
-     *
-     * These routes all receive session state, CSRF protection, etc.
-     *
-     * @return void
-     */
-    protected function mapAdminapiappRoutes()
-    {
-        Route::prefix('admin_api_app_v1')
-            ->middleware(['api'])
-            ->namespace($this->namespace)
-            ->group(base_path('routes/admin_api_app_v1.php'));
-//        Route::group([
-//            'middleware' => ['api', 'adminapiapp', 'auth:adminapiapp'],
-//            'prefix' => 'admin_api_app_v1',
-//            'namespace' => $this->namespace,
-//        ], function ($router) {
-//            require base_path('routes/admin_api_app.php');
-//        });
-    }
 
     /**
      * Define the "web" routes for the application.

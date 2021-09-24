@@ -31,7 +31,7 @@ class GroupController extends Controller
 
     public function group(Request $request, $group_id)
     {
-        $group = Group::find($group_id);
+        $group = Group::query()->with(['lessons','teacher','course','level','age'])->find($group_id);
         if (!isset($group)) return apiError('Wrong Group Id');
         return apiSuccess(new GroupResource($group));
     }

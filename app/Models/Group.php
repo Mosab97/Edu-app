@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Resources\Api\v1\Teacher\LessonResource;
 use App\Traits\UploadMedia;
 use Illuminate\Database\Eloquent\Model;
 use ZipStream\File;
@@ -22,6 +23,11 @@ class Group extends Model
     public function chatMessages()
     {
         return $this->hasMany(ChatMessage::class);
+    }
+
+   public function lessons()
+    {
+        return $this->hasMany(Lesson::class);
     }
 
     public function files()

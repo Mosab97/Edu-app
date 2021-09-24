@@ -153,5 +153,12 @@ return [
   'You can not subscribe to this group more than one' => 'لا يمكن الاشتراك اكثر من مرة في نفس الكورس',
   'Not Group member' => 'لست عضو في هذه المجموعة',
   'Complaint Sent Successfully' => 'تم ارسال الشكوى بنجاح',  
-  'This Student is Not Group member' => 'This Student is Not Group member',
+  'This Student is Not Group member' => 'This Student is Not Group member',  
+  'Group id is required' => 'Group id is required',  
+  'Lesson Created Successfully' => 'Lesson Created Successfully',  
+  'Lesson Updated Successfully' => 'Lesson Updated Successfully',  
+  'Lesson Deleted Successfully' => 'Lesson Deleted Successfully',  
+  'Meeting Created Successfully' => 'Meeting Created Successfully',  
+  'Meeting Updated Successfully' => 'Meeting Updated Successfully',  
+  'Meeting Deleted Successfully' => 'Meeting Deleted Successfully',
 ];

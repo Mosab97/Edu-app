@@ -29,7 +29,6 @@ Route::group(['namespace' => 'Manager'], function () {
 
     Route::get('user_notifications', 'UserController@notifications')->name('user.notifications');
 
-    Route::post('sendNotification/{id}', 'OrderController@sendNotification')->name('order.sendNotification');
 
     //Contact us Management
     Route::get('contact_us', 'ContactUsController@index')->name('contact_us.index');
@@ -38,27 +37,9 @@ Route::group(['namespace' => 'Manager'], function () {
 
 
 
-    //Join us Management
-    Route::get('join_us', 'JoinUsController@index')->name('join_us.index');
-    Route::get('join_us/{id}/edit', 'JoinUsController@show')->name('join_us.edit');
-    Route::post('join_us', 'JoinUsController@store')->name('join_us.store');
-    Route::delete('join_us/{id}', 'JoinUsController@destroy')->name('join_us.destroy');
 
-    //Pages Management
-    Route::get('page', 'PageController@index')->name('page.index');
-    Route::get('page/{id}/edit', 'PageController@edit')->name('page.edit');
-    Route::patch('page/{id}/update', 'PageController@update')->name('page.update');
 
-    //Notifications Routes
-    Route::post('send_user_notification', 'UserController@sendNotification')->name('user_notification');
-    Route::post('send_restaurant_notification', 'RestaurantController@sendNotification')->name('restaurant_notification');
-    Route::post('send_branch_notification', 'BranchController@sendNotification')->name('branch_notification');
 
-    //Notification Route
-    Route::get('notification', 'NotificationController@index')->name('notification.index');
-    Route::get('notification/{id}', 'NotificationController@show')->name('notification.show');
-    Route::delete('notification/{id}', 'NotificationController@destroy')->name('notification.destroy');
-    Route::post('notification', 'NotificationController@store')->name('notification.store');
 
 
     Route::resource('manager', 'ManagerController');

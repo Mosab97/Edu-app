@@ -2,7 +2,6 @@
 Route::group(['prefix' => 'v1', 'namespace' => ROOT_NAMESPACE, "middleware" => ['localization']], function () {
     Route::group(['prefix' => 'guest', 'namespace' => 'Guest'], function () {
         Route::get('groups/{course_id?}', 'GroupController@groups');
-        Route::get('group/{group_id}', 'CourseController@group');
     });
 
     Route::get('system_constants', 'SystemConstantsController@system_constants');
@@ -37,11 +36,6 @@ Route::group(['prefix' => 'v1', 'namespace' => ROOT_NAMESPACE, "middleware" => [
                 Route::get('groups/{course_id}/{level_id}', 'GroupController@groupsByLevel');
                 Route::get('group/{group_id}', 'GroupController@group');
                 Route::get('my_groups', 'GroupController@my_groups');
-                Route::get('notifications', 'NotificationController@notifications');
-                Route::get('notification/{id}', 'NotificationController@notification');
-                Route::post('sendNotificationForAllStudents', 'NotificationController@sendNotificationForAllStudents');
-                Route::get('profile', 'ProfileController@profile');
-                Route::post('update_profile', 'ProfileController@updateProfile');
             });
         });
 
@@ -50,6 +44,8 @@ Route::group(['prefix' => 'v1', 'namespace' => ROOT_NAMESPACE, "middleware" => [
         Route::group(['prefix' => 'teacher', 'middleware' => ["auth_guard:" . \App\Models\User::user_type['TEACHER']]], function () {
             Route::post('complaint/{course_id}/{student_id}', 'ComplaintController@teacher_post_complaint');
             Route::group(['namespace' => 'Teacher'], function () {
+                Route::apiResource('lessons', 'LessonController');
+                Route::apiResource('meetings', 'MeetingController');
                 Route::get('my_groups', 'GroupController@my_groups');
                 Route::get('profile', 'ProfileController@profile');
                 Route::post('update_profile', 'ProfileController@updateProfile');
@@ -59,13 +55,8 @@ Route::group(['prefix' => 'v1', 'namespace' => ROOT_NAMESPACE, "middleware" => [
                 Route::get('group/{group_id}', 'GroupController@group');
                 Route::post('add_group', 'GroupController@add_group');
                 Route::put('update_group/{group_id}', 'GroupController@update_group');
-                Route::get('notifications', 'NotificationController@notifications');
-                Route::get('notification/{id}', 'NotificationController@notification');
-                Route::post('sendNotificationForAllStudents', 'NotificationController@sendNotificationForAllStudents');
             });
         });
-
-
 
 
         Route::group(['namespace' => 'Chat'], function () {

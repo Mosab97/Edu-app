@@ -4,6 +4,7 @@ namespace App\Http\Resources\Api\v1\Student;
 
 use App\Http\Resources\Api\v1\General\AgeResource;
 use App\Http\Resources\Api\v1\General\LevelResource;
+use App\Http\Resources\Api\v1\Teacher\LessonResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class GroupResource extends JsonResource
@@ -23,6 +24,7 @@ class GroupResource extends JsonResource
             'number_of_joined_students' => $this->students->count(),
             'level' => new LevelResource($this->level),
             'age' => new AgeResource($this->age),
+            'lessons' => LessonResource::collection($this->lessons),
         ];
         return $response;
     }

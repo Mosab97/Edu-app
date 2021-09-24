@@ -179,5 +179,12 @@ return [
   'You can not subscribe to this group more than one' => 'You can not subscribe to this group more than one',  
   'Not Group member' => 'Not Group member',  
   'Complaint Sent Successfully' => 'Complaint Sent Successfully',  
-  'This Student is Not Group member' => 'This Student is Not Group member',
+  'This Student is Not Group member' => 'This Student is Not Group member',  
+  'Group id is required' => 'Group id is required',  
+  'Lesson Created Successfully' => 'Lesson Created Successfully',  
+  'Lesson Updated Successfully' => 'Lesson Updated Successfully',  
+  'Lesson Deleted Successfully' => 'Lesson Deleted Successfully',  
+  'Meeting Created Successfully' => 'Meeting Created Successfully',  
+  'Meeting Updated Successfully' => 'Meeting Updated Successfully',  
+  'Meeting Deleted Successfully' => 'Meeting Deleted Successfully',
 ];
