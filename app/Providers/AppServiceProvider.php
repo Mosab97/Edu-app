@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Country;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Schema;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,7 +25,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
 
-
+        Schema::defaultStringLength(191);
 //        if (Schema::hasTable('settings')) {
 //
 //            App::singleton('settings', function () {
