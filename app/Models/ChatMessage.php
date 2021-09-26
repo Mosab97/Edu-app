@@ -17,4 +17,9 @@ class ChatMessage extends Model
     {
         return $this->hasOne(GroupFile::class, 'chat_message_id');
     }
+
+    public function sender()
+    {
+        return $this->belongsTo(User::class,'sender_id');
+    }
 }

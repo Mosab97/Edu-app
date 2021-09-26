@@ -6,12 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\Api\v1\General\ActivityResource;
 use App\Http\Resources\Api\v1\General\AgeResource;
 use App\Http\Resources\Api\v1\General\GroupStudentProfileResource;
+use App\Http\Resources\Api\v1\General\LevelResource;
 use App\Http\Resources\Api\v1\General\StandardResource;
 use App\Http\Resources\Api\v1\Teacher\GroupStudentResource;
 use App\Models\Activity;
 use App\Models\Age;
 use App\Models\ContactUs;
 use App\Models\Group;
+use App\Models\Level;
 use App\Models\Manager;
 use App\Models\Standard;
 use App\Models\User;
@@ -56,6 +58,11 @@ class HomeController extends Controller
     public function ages()
     {
         return apiSuccess(AgeResource::collection(Age::get()));
+    }
+
+    public function levels()
+    {
+        return apiSuccess(LevelResource::collection(Level::get()));
     }
 
     public function activities(Request $request)

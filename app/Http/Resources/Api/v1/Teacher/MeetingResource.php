@@ -14,6 +14,7 @@ class MeetingResource extends JsonResource
         $except_arr_resource = $request['except_arr_resource'];
         $response = [
             'id' => $this->id,
+            'group_name' => optional($this->group)->name,
             'title' => $this->title,
             'date' => $this->date,
             'from' => $this->from,

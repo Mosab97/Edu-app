@@ -18,8 +18,16 @@ class MeetingController extends Controller
 
     public function index(Request $request)
     {
-        $request->validate(['group_id' => 'required|exists:groups,id']);
-        $items = $this->model->query()->where(['group_id' => $request->get('group_id')])->get();
+        $request->validate(['group_id' => 'sometimes|exists:groups,id']);
+        $date = $request->get('date', false);
+        $group_id = $request->get('group_id', false);
+        $items = $this->model->query()
+            ->when($date,function ($query) use ($date) {
+                $query->where('date', $date);
+            })
+            ->when($group_id,function ($query) use ($group_id) {
+                $query->where('group_id', $group_id);
+            })->get();
         return apiSuccess(MeetingResource::collection($items));
     }
 

@@ -33,6 +33,14 @@ class ChatController extends Controller
         ]);
     }
 
+    public function delete_media(Request $request, $file_id)
+    {
+        $file = GroupFile::query()->findOrFail($file_id);
+        $file->chatMessage()->delete();
+        $file->delete();
+        return apiSuccess(null, api('File Deleted Successfully'));
+    }
+
     public function chatMessages(Request $request, $id)
     {
         $messages = ChatMessage::query()->with(['file'])->where('group_id', $id)->paginate($this->perPage);
@@ -47,8 +55,8 @@ class ChatController extends Controller
     public function sendMessage(Request $request, $id)
     {
         $request->validate([
-            'message' => 'required|min:1|max:200',
-//            'file' => 'sometimes|image',
+            'message' => 'sometimes|min:1|max:200',
+            'file' => 'sometimes|mimes:mp4,mov,ogg,qt,jpg,png,JPG,PNG,gif,pdf,word,xls,docx | max:20000',
         ]);
         $student = apiUser();
         $group = Group::query()->findOrFail($id);

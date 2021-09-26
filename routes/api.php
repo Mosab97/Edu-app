@@ -9,6 +9,7 @@ Route::group(['prefix' => 'v1', 'namespace' => ROOT_NAMESPACE, "middleware" => [
 
         Route::post('contact_us', 'HomeController@contactUs');
     Route::get('ages', 'HomeController@ages');
+    Route::get('levels', 'HomeController@levels');
     Route::get('activities', 'HomeController@activities');
     Route::group(["middleware" => ["auth:api", "CheckIsVerified", "CheckIsActive"]], function () {
         Route::get('settings', 'HomeController@settings');
@@ -69,6 +70,7 @@ Route::group(['prefix' => 'v1', 'namespace' => ROOT_NAMESPACE, "middleware" => [
             Route::get('getAllChats', 'ChatController@getAllChats');
             Route::get('chatMessages/{id}', 'ChatController@chatMessages');
             Route::get('group_media/{group_id}', 'ChatController@group_media');
+            Route::delete('delete_media/{file_id}', 'ChatController@delete_media');
         });
     });
     Route::group(['namespace' => 'Auth'], function () {

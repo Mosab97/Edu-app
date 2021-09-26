@@ -189,5 +189,6 @@ return [
   'Meeting Deleted Successfully' => 'Meeting Deleted Successfully',  
   'Group Created Successfully' => 'Group Created Successfully',  
   'Group Updated Successfully' => 'Group Updated Successfully',  
-  'Group Deleted Successfully' => 'Group Deleted Successfully',
+  'Group Deleted Successfully' => 'Group Deleted Successfully',  
+  'File Deleted Successfully' => 'File Deleted Successfully',
 ];
