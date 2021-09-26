@@ -818,5 +818,6 @@ return [
   'Courses' => 'Courses',  
   'Show Courses' => 'Show Courses',  
   'Course' => 'Course',  
-  'Add Course' => 'Add Course',
+  'Add Course' => 'Add Course',  
+  'Edit Course' => 'Edit Course',
 ];

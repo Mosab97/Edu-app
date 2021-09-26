@@ -311,72 +311,72 @@
 {{--                    </div>--}}
                     <!--end: Language bar -->
                     <!--begin: Notifications -->
-                    @php
-                        $notifications = \App\Models\Notification::query()->where(function ($query){
-                                $query->where('notifiable_id', auth()->user()->id)->orWhere('notifiable_id', 0);
-                            })->where('notifiable_type', \App\Models\Manager::class)
-                                ->latest()->whereNull('read_at')->latest()->get();
-                    @endphp
-                    <div class="kt-header__topbar-item dropdown">
-                        <div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="10px,0px">
-                            <span class="kt-header__topbar-icon kt-header__topbar-icon--success">
-                                <i class="flaticon2-bell-alarm-symbol"></i>
-                                    <span class="kt-badge kt-badge--danger"
-                                          id="notification_count"  {{isset($notifications) && count($notifications) > 0 ? '':'style="display: none"'}}>{{ count($notifications) }}</span>
-                            </span>
+{{--                    @php--}}
+{{--                        $notifications = \App\Models\Notification::query()->where(function ($query){--}}
+{{--                                $query->where('notifiable_id', auth()->user()->id)->orWhere('notifiable_id', 0);--}}
+{{--                            })->where('notifiable_type', \App\Models\Manager::class)--}}
+{{--                                ->latest()->whereNull('read_at')->latest()->get();--}}
+{{--                    @endphp--}}
+{{--                    <div class="kt-header__topbar-item dropdown">--}}
+{{--                        <div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="10px,0px">--}}
+{{--                            <span class="kt-header__topbar-icon kt-header__topbar-icon--success">--}}
+{{--                                <i class="flaticon2-bell-alarm-symbol"></i>--}}
+{{--                                    <span class="kt-badge kt-badge--danger"--}}
+{{--                                          id="notification_count"  {{isset($notifications) && count($notifications) > 0 ? '':'style="display: none"'}}>{{ count($notifications) }}</span>--}}
+{{--                            </span>--}}
 
-                        </div>
-                        <div
-                            class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-xl">
-                            <form>
+{{--                        </div>--}}
+{{--                        <div--}}
+{{--                            class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-xl">--}}
+{{--                            <form>--}}
 
-                                <!--begin: Head -->
-                                <div class="kt-head kt-head--skin-dark kt-head--fit-x kt-head--fit-b"
-                                     style="background: linear-gradient(to right,#db1515,#ec5252)">
-                                    <h3 class="kt-head__title">
-                                        {{ t('Notifications') }}
-                                    </h3>
-                                    <ul class="nav nav-tabs nav-tabs-line nav-tabs-bold nav-tabs-line-3x nav-tabs-line-success kt-notification-item-padding-x"
-                                        role="tablist">
-                                        <li class="nav-item">
-                                            <a class="nav-link active show" data-toggle="tab"
-                                               href="#topbar_notifications_notifications" role="tab"
-                                               aria-selected="true"></a>
-                                        </li>
-                                    </ul>
-                                </div>
+{{--                                <!--begin: Head -->--}}
+{{--                                <div class="kt-head kt-head--skin-dark kt-head--fit-x kt-head--fit-b"--}}
+{{--                                     style="background: linear-gradient(to right,#db1515,#ec5252)">--}}
+{{--                                    <h3 class="kt-head__title">--}}
+{{--                                        {{ t('Notifications') }}--}}
+{{--                                    </h3>--}}
+{{--                                    <ul class="nav nav-tabs nav-tabs-line nav-tabs-bold nav-tabs-line-3x nav-tabs-line-success kt-notification-item-padding-x"--}}
+{{--                                        role="tablist">--}}
+{{--                                        <li class="nav-item">--}}
+{{--                                            <a class="nav-link active show" data-toggle="tab"--}}
+{{--                                               href="#topbar_notifications_notifications" role="tab"--}}
+{{--                                               aria-selected="true"></a>--}}
+{{--                                        </li>--}}
+{{--                                    </ul>--}}
+{{--                                </div>--}}
 
-                                <!--end: Head -->
-                                <div class="tab-content">
-                                    <div class="tab-pane active show" id="topbar_notifications_notifications"
-                                         role="tabpanel">
-                                        <div class="kt-notification kt-margin-t-10 kt-margin-b-10 kt-scroll"
-                                             id="notification_list"
-                                             data-scroll="true" data-height="300" data-mobile-height="200">
-                                            @isset($notifications)
-                                                @foreach($notifications as $notification)
-                                                    <a href="{{ url('/manager/notification/'.$notification->id) }}"
-                                                       class="kt-notification__item">
-                                                        <div class="kt-notification__item-icon">
-                                                            <i class="flaticon2-notification kt-font-success"></i>
-                                                        </div>
-                                                        <div class="kt-notification__item-details">
-                                                            <div class="kt-notification__item-title">
-                                                                {{ $notification->title }}
-                                                            </div>
-                                                            <div class="kt-notification__item-time">
-                                                                {{ $notification->created_at->diffForHumans() }}
-                                                            </div>
-                                                        </div>
-                                                    </a>
-                                                @endforeach
-                                            @endisset
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
+{{--                                <!--end: Head -->--}}
+{{--                                <div class="tab-content">--}}
+{{--                                    <div class="tab-pane active show" id="topbar_notifications_notifications"--}}
+{{--                                         role="tabpanel">--}}
+{{--                                        <div class="kt-notification kt-margin-t-10 kt-margin-b-10 kt-scroll"--}}
+{{--                                             id="notification_list"--}}
+{{--                                             data-scroll="true" data-height="300" data-mobile-height="200">--}}
+{{--                                            @isset($notifications)--}}
+{{--                                                @foreach($notifications as $notification)--}}
+{{--                                                    <a href="{{ url('/manager/notification/'.$notification->id) }}"--}}
+{{--                                                       class="kt-notification__item">--}}
+{{--                                                        <div class="kt-notification__item-icon">--}}
+{{--                                                            <i class="flaticon2-notification kt-font-success"></i>--}}
+{{--                                                        </div>--}}
+{{--                                                        <div class="kt-notification__item-details">--}}
+{{--                                                            <div class="kt-notification__item-title">--}}
+{{--                                                                {{ $notification->title }}--}}
+{{--                                                            </div>--}}
+{{--                                                            <div class="kt-notification__item-time">--}}
+{{--                                                                {{ $notification->created_at->diffForHumans() }}--}}
+{{--                                                            </div>--}}
+{{--                                                        </div>--}}
+{{--                                                    </a>--}}
+{{--                                                @endforeach--}}
+{{--                                            @endisset--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </form>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
 
                     <!--end: Notifications -->
                     <!--begin: User bar -->
@@ -504,45 +504,45 @@
 
 <!-- end:: Page -->
 
-<div class="modal fade" id="sendNotification" tabindex="-1" role="dialog" aria-labelledby="sendNotification"
-     aria-hidden="true" style="display: none;">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">{{ t('Create New Notification') }}</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                </button>
-            </div>
-            <form method="post" action="{{ route('manager.notification.store') }}">
-                {{ csrf_field() }}
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="recipient-name" class="form-control-label">{{ t('Recipients') }}:</label>
-                        <select name="recipients" class="form-control" id="notification_type">
-                            {{--                            <option value="{{ALL_USERS}}">{{ t('All Users') }}</option>--}}
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="recipient-name" class="form-control-label">{{ t('Title') }}:</label>
-                        <textarea name="title" class="form-control" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="recipient-name" class="form-control-label">{{ t('Content') }}:</label>
-                        <textarea name="content" class="form-control" required></textarea>
-                    </div>
-                    <div class="form-group" style="display: none" id="user_id">
-                        <label for="recipient-name" class="form-control-label">{{ t('User ID') }}:</label>
-                        <input type="number" class="form-control" name="user_id">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ t('Cancel') }}</button>
-                    <button type="submit" class="btn btn-danger">{{ t('Send') }}</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+{{--<div class="modal fade" id="sendNotification" tabindex="-1" role="dialog" aria-labelledby="sendNotification"--}}
+{{--     aria-hidden="true" style="display: none;">--}}
+{{--    <div class="modal-dialog" role="document">--}}
+{{--        <div class="modal-content">--}}
+{{--            <div class="modal-header">--}}
+{{--                <h5 class="modal-title" id="exampleModalLabel">{{ t('Create New Notification') }}</h5>--}}
+{{--                <button type="button" class="close" data-dismiss="modal" aria-label="Close">--}}
+{{--                </button>--}}
+{{--            </div>--}}
+{{--            <form method="post" action="{{ route('manager.notification.store') }}">--}}
+{{--                {{ csrf_field() }}--}}
+{{--                <div class="modal-body">--}}
+{{--                    <div class="form-group">--}}
+{{--                        <label for="recipient-name" class="form-control-label">{{ t('Recipients') }}:</label>--}}
+{{--                        <select name="recipients" class="form-control" id="notification_type">--}}
+{{--                            --}}{{--                            <option value="{{ALL_USERS}}">{{ t('All Users') }}</option>--}}
+{{--                        </select>--}}
+{{--                    </div>--}}
+{{--                    <div class="form-group">--}}
+{{--                        <label for="recipient-name" class="form-control-label">{{ t('Title') }}:</label>--}}
+{{--                        <textarea name="title" class="form-control" required></textarea>--}}
+{{--                    </div>--}}
+{{--                    <div class="form-group">--}}
+{{--                        <label for="recipient-name" class="form-control-label">{{ t('Content') }}:</label>--}}
+{{--                        <textarea name="content" class="form-control" required></textarea>--}}
+{{--                    </div>--}}
+{{--                    <div class="form-group" style="display: none" id="user_id">--}}
+{{--                        <label for="recipient-name" class="form-control-label">{{ t('User ID') }}:</label>--}}
+{{--                        <input type="number" class="form-control" name="user_id">--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--                <div class="modal-footer">--}}
+{{--                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ t('Cancel') }}</button>--}}
+{{--                    <button type="submit" class="btn btn-danger">{{ t('Send') }}</button>--}}
+{{--                </div>--}}
+{{--            </form>--}}
+{{--        </div>--}}
+{{--    </div>--}}
+{{--</div>--}}
 
 
 <!-- begin::Scrolltop -->
