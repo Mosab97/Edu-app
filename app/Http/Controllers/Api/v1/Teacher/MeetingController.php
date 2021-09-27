@@ -23,7 +23,7 @@ class MeetingController extends Controller
         $group_id = $request->get('group_id', false);
         $items = $this->model->query()
             ->when($date,function ($query) use ($date) {
-                $query->where('date', $date);
+                $query->whereDate('date', $date);
             })
             ->when($group_id,function ($query) use ($group_id) {
                 $query->where('group_id', $group_id);
