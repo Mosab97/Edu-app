@@ -9,6 +9,7 @@ use App\Models\ChatMessage;
 use App\Models\Group;
 use App\Models\GroupFile;
 use App\Models\StudentGroups;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ChatController extends Controller
@@ -58,9 +59,13 @@ class ChatController extends Controller
             'message' => 'sometimes|min:1|max:200',
             'file' => 'sometimes|mimes:mp4,mov,ogg,qt,jpg,png,JPG,PNG,gif,pdf,word,xls,docx | max:20000',
         ]);
-        $student = apiUser();
+        $user = apiUser();
         $group = Group::query()->findOrFail($id);
-        if ($group->students()->where(['student_id' => $student->id])->count() == 0) return apiError(api('Not Group member'));
+        if ($user->user_type == User::user_type['TEACHER']) {
+            if ($group->teacher_id != $user->id) return apiError(api('Not group teacher'));
+        } else {
+            if ($group->students()->where(['student_id' => $user->id])->count() == 0) return apiError(api('Not Group member'));
+        }
         $chatMessage = $group->chatMessages()->create([
             'sender_id' => apiUser()->id,
             'message' => $request->message,
