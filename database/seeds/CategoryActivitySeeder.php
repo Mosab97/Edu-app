@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class ActivitySeeder extends Seeder
+class CategoryActivitySeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,6 +11,6 @@ class ActivitySeeder extends Seeder
      */
     public function run()
     {
-
+        factory(\App\Models\CategoryActivity::class, 5)->create();
     }
 }

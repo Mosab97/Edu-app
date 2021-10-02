@@ -36,7 +36,7 @@ class MeetingController extends Controller
         $request->validate([
             'group_id' => 'required|exists:groups,id',
             'title' => 'sometimes|min:3|max:100',
-            'date' => 'required|date_format:d/m/Y',
+            'date' => 'required|date_format:Y-m-d',
             'from' => 'required|date_format:h:i',
             'to' => 'required|date_format:h:i',
             'url' => 'required|url',

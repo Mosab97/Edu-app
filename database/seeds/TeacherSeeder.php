@@ -19,6 +19,8 @@ class TeacherSeeder extends Seeder
                 factory(\App\Models\Lesson::class, 3)->create(['group_id' => $group->id]);
                 factory(\App\Models\Meeting::class, 3)->create(['group_id' => $group->id]);
                 factory(\App\Models\Advantage::class, 3)->create(['group_id' => $group->id]);
+                factory(\App\Models\Activity::class, 5)->create(['group_id' => $group->id]);
+
             });
         });
 

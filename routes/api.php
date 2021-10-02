@@ -42,6 +42,7 @@ Route::group(['prefix' => 'v1', 'namespace' => ROOT_NAMESPACE, "middleware" => [
                 Route::get('group/{group_id}', 'GroupController@group');
                 Route::get('teacher_profile/{teacher_id}', 'GroupController@teacher_profile');
                 Route::get('my_groups', 'GroupController@my_groups');
+                Route::get('meetings', 'MeetingController@meetings');
             });
         });
 
@@ -53,6 +54,8 @@ Route::group(['prefix' => 'v1', 'namespace' => ROOT_NAMESPACE, "middleware" => [
                 Route::apiResource('advantages', 'AdvantageController');
                 Route::apiResource('lessons', 'LessonController');
                 Route::apiResource('meetings', 'MeetingController');
+                Route::apiResource('group.activates', 'ActivityController');
+                Route::get('category_activity', 'ActivityController@category_activity');
                 Route::get('my_groups', 'GroupController@my_groups');
                 Route::get('profile', 'ProfileController@profile');
                 Route::post('update_profile', 'ProfileController@updateProfile');

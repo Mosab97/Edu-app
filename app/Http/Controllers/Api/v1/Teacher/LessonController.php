@@ -33,9 +33,15 @@ class LessonController extends Controller
     {
         $request->validate([
             'group_id' => 'required|exists:groups,id',
-            'name' => 'required|min:3|max:100'
+            'lessons' => 'required|array|min:3|max:100'
         ]);
-        return apiSuccess(new LessonResource($this->model->create($request->only(['group_id', 'name']))), api('Lesson Created Successfully'));
+        foreach ($request->lessons as $index => $lesson) {
+            $this->model->create([
+                'name' => $lesson,
+                'group_id' => $request->group_id,
+            ]);
+        }
+        return apiSuccess(LessonResource::collection(Lesson::where(['group_id' => $request->group_id])->get()), api('Lessons Created Successfully'));
     }
 
     public function update(Request $request, $lesson_id)

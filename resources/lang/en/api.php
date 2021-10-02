@@ -190,5 +190,9 @@ return [
   'Group Created Successfully' => 'Group Created Successfully',  
   'Group Updated Successfully' => 'Group Updated Successfully',  
   'Group Deleted Successfully' => 'Group Deleted Successfully',  
-  'File Deleted Successfully' => 'File Deleted Successfully',
+  'File Deleted Successfully' => 'File Deleted Successfully',  
+  'Lessons Created Successfully' => 'Lessons Created Successfully',  
+  'Activity Created Successfully' => 'Activity Created Successfully',  
+  'Activity Updated Successfully' => 'Activity Updated Successfully',  
+  'Activity Deleted Successfully' => 'Activity Deleted Successfully',
 ];
