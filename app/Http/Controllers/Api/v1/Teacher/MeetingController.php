@@ -22,10 +22,10 @@ class MeetingController extends Controller
         $date = $request->get('date', false);
         $group_id = $request->get('group_id', false);
         $items = $this->model->query()
-            ->when($date,function ($query) use ($date) {
+            ->when($date, function ($query) use ($date) {
                 $query->whereDate('date', $date);
             })
-            ->when($group_id,function ($query) use ($group_id) {
+            ->when($group_id, function ($query) use ($group_id) {
                 $query->where('group_id', $group_id);
             })->get();
         return apiSuccess(MeetingResource::collection($items));
@@ -37,8 +37,8 @@ class MeetingController extends Controller
             'group_id' => 'required|exists:groups,id',
             'title' => 'sometimes|min:3|max:100',
             'date' => 'required|date_format:Y-m-d',
-            'from' => 'required|date_format:h:i',
-            'to' => 'required|date_format:h:i',
+            'from' => 'required|date_format:H:i',
+            'to' => 'required|date_format:H:i',
             'url' => 'required|url',
             'is_canceled' => 'sometimes|in:1,0',
         ]);
