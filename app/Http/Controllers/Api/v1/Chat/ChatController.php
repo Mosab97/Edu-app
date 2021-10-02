@@ -57,7 +57,7 @@ class ChatController extends Controller
     {
         $request->validate([
             'message' => 'sometimes|min:1|max:200',
-            'file' => 'sometimes|mimes:mp4,mov,ogg,qt,jpg,png,JPG,PNG,gif,pdf,word,xls,docx | max:20000',
+            'file' => 'sometimes|mimes:mp4,mp3,mov,ogg,qt,jpg,png,JPG,PNG,gif,pdf,word,xls,docx | max:20000',
         ]);
         $user = apiUser();
         $group = Group::query()->findOrFail($id);

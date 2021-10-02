@@ -32,6 +32,7 @@ Route::group(['prefix' => 'v1', 'namespace' => ROOT_NAMESPACE, "middleware" => [
         Route::group(['prefix' => 'student', 'middleware' => ['auth_guard:' . \App\Models\User::user_type['STUDENT']]], function () {
             Route::post('complaint/{course_id}', 'ComplaintController@post_complaint');
             Route::group(['namespace' => 'Student'], function () {
+                Route::get('group/{group_id}/activates', 'ActivityController@activates');
                 Route::get('courses', 'CourseController@courses');
                 Route::get('questions/{course_id}', 'QuestionController@questions');
                 Route::get('instructions/{course_id}', 'InstructionController@instructions');
