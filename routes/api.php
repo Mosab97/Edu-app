@@ -2,6 +2,7 @@
 Route::group(['prefix' => 'v1', 'namespace' => ROOT_NAMESPACE, "middleware" => ['localization']], function () {
     Route::group(['prefix' => 'guest', 'namespace' => 'Guest'], function () {
         Route::get('groups/{course_id?}', 'GroupController@groups');
+        Route::get('group/{group_id}', 'GroupController@group');
     });
 
     Route::get('system_constants', 'SystemConstantsController@system_constants');
@@ -39,6 +40,7 @@ Route::group(['prefix' => 'v1', 'namespace' => ROOT_NAMESPACE, "middleware" => [
                 Route::get('groups/{course_id}', 'GroupController@groupsByCourse');
                 Route::get('groups/{course_id}/{level_id}', 'GroupController@groupsByLevel');
                 Route::get('group/{group_id}', 'GroupController@group');
+                Route::get('teacher_profile/{teacher_id}', 'GroupController@teacher_profile');
                 Route::get('my_groups', 'GroupController@my_groups');
             });
         });

@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Api\v1\Student;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Api\v1\General\ProfileResource;
 use App\Http\Resources\Api\v1\Student\GroupResource;
 use App\Http\Resources\Api\v1\Student\MyGroupResource;
 use App\Models\Course;
 use App\Models\Group;
 use App\Models\Level;
 use App\Models\StudentGroups;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class GroupController extends Controller
@@ -73,8 +75,14 @@ class GroupController extends Controller
 
     public function group(Request $request, $group_id)
     {
-        $group = Group::query()->with(['lessons','teacher','course','level','age'])->find($group_id);
+        $group = Group::query()->with(['lessons', 'teacher', 'course', 'level', 'age'])->find($group_id);
         if (!isset($group)) return apiError('Wrong Group Id');
         return apiSuccess(new GroupResource($group));
+    }
+
+    public function teacher_profile(Request $request, $teacher_id)
+    {
+        $user = User::findOrFail($teacher_id);
+        return apiSuccess(new ProfileResource($user));
     }
 }

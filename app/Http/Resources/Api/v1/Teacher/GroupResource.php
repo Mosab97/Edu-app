@@ -28,9 +28,10 @@ class GroupResource extends JsonResource
             'course' => new CourseResource($this->course),
             'level' => new LevelResource($this->level),
             'age' => new AgeResource($this->age),
-            'lessons' => LessonResource::collection($this->lessons),
             'gender' => gender($this->gender),
             'student_images' => optional(optional(optional($this->students)->pluck('student'))->pluck('image'))->all(),
+            'lessons' => LessonResource::collection($this->lessons),
+            'advantages' => AdvantageResource::collection($this->advantages),
         ];
 
         return $response;

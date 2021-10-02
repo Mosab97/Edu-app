@@ -29,6 +29,10 @@ class Group extends Model
     {
         return $this->hasMany(Lesson::class);
     }
+   public function advantages()
+    {
+        return $this->hasMany(Advantage::class);
+    }
 
     public function files()
     {

@@ -13,6 +13,7 @@ class CourseResource extends JsonResource
         $response = [
             'id' => $this->id,
             'name' => $this->name,
+            'is_subscribed' => $this->is_subscribed,
         ];
         return $response;
     }

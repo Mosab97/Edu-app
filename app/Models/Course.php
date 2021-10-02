@@ -9,6 +9,7 @@ class Course extends Model
 {
 
     public const manager_route = 'course';
+
     public function getActionButtonsAttribute()
     {
         if (Auth::guard('manager')->check()) {
@@ -20,11 +21,11 @@ class Course extends Model
     }
 
 
-
     public function groups()
     {
         return $this->hasMany(Group::class);
     }
+
     public function instructions()
     {
         return $this->hasMany(Instruction::class);
@@ -33,5 +34,14 @@ class Course extends Model
     public function questions()
     {
         return $this->hasMany(Question::class);
+    }
+
+    public function getIsSubscribedAttribute()
+    {
+        $user = apiUser();
+        $result = StudentGroups::query()->where(['student_id' => $user->id])->whereHas('group', function ($query) {
+            $query->where(['course_id' => $this->id]);
+        })->count();
+        return $result > 0;
     }
 }

@@ -25,14 +25,6 @@ class GroupController extends Controller
         }
     }
 
-    public function my_groups(Request $request)
-    {
-        $student = apiUser();
-        if (!isset($student)) return apiError('Wrong Student');
-//        return apiSuccess(GroupResource::collection($student->groups()->whereHas('group')->with(['group'])->withCount('group.students')->get()));
-        return apiSuccess(GroupResource::collection($student->groups()->with(['group'])->get()->pluck('group')));
-    }
-
     public function group(Request $request, $group_id)
     {
         $group = Group::find($group_id);
