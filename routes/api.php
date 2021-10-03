@@ -56,8 +56,8 @@ Route::group(['prefix' => 'v1', 'namespace' => ROOT_NAMESPACE, "middleware" => [
                 Route::apiResource('lessons', 'LessonController');
                 Route::post('lessons_delete/{lesson_id}','LessonController@destroy');
                 Route::apiResource('meetings', 'MeetingController');
+                Route::post('group/{group_id}/activates_delete/{activates_id}','ActivityController@destroy');
                 Route::apiResource('group.activates', 'ActivityController');
-                Route::post('group/{group_id}/activates_delete/{activates_id}','LessonController@destroy');
 
                 Route::get('category_activity', 'ActivityController@category_activity');
                 Route::get('my_groups', 'GroupController@my_groups');
