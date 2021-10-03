@@ -33,11 +33,17 @@ class LessonController extends Controller
     {
         $request->validate([
             'group_id' => 'required|exists:groups,id',
-            'lessons' => 'required|array|min:3|max:100'
+            'lessons' => 'required|array'
         ]);
         foreach ($request->lessons as $index => $lesson) {
+//            dd($lesson);
             $this->model->create([
-                'name' => $lesson,
+                'name' => $lesson['name'],
+                'from' => $lesson['from'],
+                'to' => $lesson['to'],
+                'url' => optional($lesson)['url'],
+                'date' => optional($lesson)['date'],
+                'done' => optional($lesson)['done'],
                 'group_id' => $request->group_id,
             ]);
         }
@@ -56,7 +62,7 @@ class LessonController extends Controller
 //            $query->where('teacher_id', apiUser()->id);
 //        })
             ->findOrFail($lesson_id);
-        $lesson->update($request->only(['group_id', 'name']));
+        $lesson->update($request->only(['group_id', 'name', 'from', 'to', 'url', 'date']));
         return apiSuccess(new LessonResource($lesson), api('Lesson Updated Successfully'));
     }
 

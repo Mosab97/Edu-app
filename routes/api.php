@@ -54,8 +54,11 @@ Route::group(['prefix' => 'v1', 'namespace' => ROOT_NAMESPACE, "middleware" => [
             Route::group(['namespace' => 'Teacher'], function () {
                 Route::apiResource('advantages', 'AdvantageController');
                 Route::apiResource('lessons', 'LessonController');
+                Route::post('lessons/{lesson_id}','LessonController@destroy');
                 Route::apiResource('meetings', 'MeetingController');
                 Route::apiResource('group.activates', 'ActivityController');
+                Route::post('group/{group_id}/activates/{activates_id}','LessonController@destroy');
+
                 Route::get('category_activity', 'ActivityController@category_activity');
                 Route::get('my_groups', 'GroupController@my_groups');
                 Route::get('profile', 'ProfileController@profile');

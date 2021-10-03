@@ -30,7 +30,7 @@ class GroupResource extends JsonResource
             'age' => new AgeResource($this->age),
             'gender' => gender($this->gender),
             'student_images' => optional(optional(optional($this->students)->pluck('student'))->pluck('image'))->all(),
-            'lessons' => LessonResource::collection($this->lessons),
+            'lessons' => LessonNamesResource::collection($this->lessons),
             'advantages' => AdvantageResource::collection($this->advantages),
         ];
 

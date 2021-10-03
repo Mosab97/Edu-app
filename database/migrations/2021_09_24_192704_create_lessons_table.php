@@ -17,7 +17,11 @@ class CreateLessonsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('group_id');
             $table->string('name');
-
+            $table->date('date');
+            $table->time('from');
+            $table->time('to');
+            $table->string('url')->nullable();
+            $table->boolean('done')->default(false);
             $table->foreign('group_id')->on('groups')->references('id')->cascadeOnDelete();
             $table->timestamps();
         });
