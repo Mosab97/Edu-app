@@ -818,5 +818,7 @@ return [
   'Teachers' => 'Teachers',  
   'Students' => 'Students',  
   'Show Teachers' => 'Show Teachers',  
-  'Add Teacher' => 'Add Teacher',
+  'Add Teacher' => 'Add Teacher',  
+  'Show Students' => 'Show Students',  
+  'Add Student' => 'Add Student',
 ];

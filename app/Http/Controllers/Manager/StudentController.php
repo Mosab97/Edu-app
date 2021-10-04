@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Manager;
 
 use App\Http\Controllers\Controller;
 use App\Models\Course;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Proengsoft\JsValidation\Facades\JsValidatorFacade as JsValidator;
@@ -13,15 +14,15 @@ class StudentController extends Controller
 {
     private $_model;
 
-    public function __construct(Course $course)
+    public function __construct(User $user)
     {
         parent::__construct();
-        $this->_model = $course;
+        $this->_model = $user;
     }
 
     public function index()
     {
-        $title = t('Show Courses');
+        $title = t('Show Students');
         if (request()->ajax()) {
             $search = request()->get('search', false);
             $items = $this->_model->query()->when($search, function ($query) use ($search) {
@@ -40,8 +41,9 @@ class StudentController extends Controller
                 })
                 ->make();
         }
-        return view('manager.' . Course::manager_route . '.index', compact('title'));
+        return view('manager.' . User::manager_route_user_type['student'] . '.index', compact('title'));
     }
+
 
     public function create()
     {
