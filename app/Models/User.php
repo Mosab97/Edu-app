@@ -113,7 +113,7 @@ class User extends Authenticatable
 
     public function getActionButtonsAttribute()
     {
-        $route = Request::is('manager/user') ? 'user' : 'driver';
+        $route = Request::is('manager/teacher') ? 'teacher' : 'student';
 
 
         if (Auth::guard('manager')->check()) {

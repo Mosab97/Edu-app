@@ -195,15 +195,6 @@
                                                     class="kt-menu__link-text">{{ t('Students') }}</span></a>
                                         </li>
                                         {{--                                        @endcan--}}
-                                        {{--                                        @can('Distributor')--}}
-                                        <li class="kt-menu__item " aria-haspopup="true">
-                                            <a
-                                                href="{{route('manager.distributor.index')}}"
-                                                class="kt-menu__link "><i
-                                                    class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span
-                                                    class="kt-menu__link-text">{{ t('Distributor') }}</span></a>
-                                        </li>
-                                        {{--                                        @endcan--}}
                                     </ul>
                                 </div>
                             </li>

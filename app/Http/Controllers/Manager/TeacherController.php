@@ -22,7 +22,7 @@ class TeacherController extends Controller
 
     public function index()
     {
-        $title = t('Show Courses');
+        $title = t('Show Teachers');
         if (request()->ajax()) {
             $search = request()->get('search', false);
             $items = $this->_model->query()->when($search, function ($query) use ($search) {
@@ -41,7 +41,7 @@ class TeacherController extends Controller
                 })
                 ->make();
         }
-        return view('manager.' . Course::manager_route . '.index', compact('title'));
+        return view('manager.' . User::manager_route_user_type['teacher'] . '.index', compact('title'));
     }
 
     public function create()

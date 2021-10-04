@@ -814,5 +814,9 @@ return [
   'Show Courses' => 'Show Courses',  
   'Course' => 'Course',  
   'Add Course' => 'Add Course',  
-  'Edit Course' => 'Edit Course',
+  'Edit Course' => 'Edit Course',  
+  'Teachers' => 'Teachers',  
+  'Students' => 'Students',  
+  'Show Teachers' => 'Show Teachers',  
+  'Add Teacher' => 'Add Teacher',
 ];
