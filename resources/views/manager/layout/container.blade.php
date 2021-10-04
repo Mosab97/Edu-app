@@ -160,6 +160,58 @@
                                 <span class="kt-menu__link-text">{{ t('Courses') }}</span>
                             </a>
                         </li>
+
+{{--                        @can('Users')--}}
+                            <li class="kt-menu__item kt-menu__item--submenu   @if(Request::is('manager/teacher*')||Request::is('manager/student*') ) kt-menu__item--active @endif"
+                                aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
+                                <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
+                                    <span class="kt-menu__link-icon">
+                                        <i class="kt-menu__link-icon flaticon2-user-1"></i>
+                                    </span>
+                                    <span class="kt-menu__link-text">{{t('Users')}}</span>
+                                    <i class="kt-menu__ver-arrow la la-angle-right"></i>
+                                </a>
+                                <div class="kt-menu__submenu " kt-hidden-height="200"
+                                     style="display: none; overflow: hidden;"><span class="kt-menu__arrow"></span>
+                                    <ul class="kt-menu__subnav">
+                                        <li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true">
+                                        <span class="kt-menu__link">
+                                            <span class="kt-menu__link-text">{{t('Users')}}</span>
+                                        </span>
+                                        </li>
+                                        {{--                                        @can('Customers')--}}
+                                        <li class="kt-menu__item " aria-haspopup="true">
+                                            <a
+                                                href="{{route('manager.teacher.index')}}" class="kt-menu__link "><i
+                                                    class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span
+                                                    class="kt-menu__link-text">{{ t('Teachers') }}</span></a>
+                                        </li>
+                                        {{--                                        @endcan--}}
+                                        {{--                                        @can('Merchant')--}}
+                                        <li class="kt-menu__item " aria-haspopup="true">
+                                            <a
+                                                href="{{route('manager.student.index')}}" class="kt-menu__link "><i
+                                                    class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span
+                                                    class="kt-menu__link-text">{{ t('Students') }}</span></a>
+                                        </li>
+                                        {{--                                        @endcan--}}
+                                        {{--                                        @can('Distributor')--}}
+                                        <li class="kt-menu__item " aria-haspopup="true">
+                                            <a
+                                                href="{{route('manager.distributor.index')}}"
+                                                class="kt-menu__link "><i
+                                                    class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span
+                                                    class="kt-menu__link-text">{{ t('Distributor') }}</span></a>
+                                        </li>
+                                        {{--                                        @endcan--}}
+                                    </ul>
+                                </div>
+                            </li>
+{{--                        @endcan--}}
+
+
+
+
                         <li class="kt-menu__item  @if(Request::is('manager/payment*') ) kt-menu__item--active @endif"
                             aria-haspopup="true">
                             <a href="{{route('manager.'.\App\Models\Payment::manager_route . '.index')}}"

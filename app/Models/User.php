@@ -19,6 +19,10 @@ class User extends Authenticatable
     public $translatable = ['name'];
 
     public const manager_route = 'users';
+    public const manager_route_user_type = [
+        'teacher' => 'teacher',
+        'student' => 'student',
+    ];
     public const user_type = [
         'STUDENT' => 1,
         'TEACHER' => 2,

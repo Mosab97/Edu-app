@@ -72,6 +72,5 @@ class ActivityController extends Controller
     {
         $this->model->query()->where(['group_id' => $group])->findOrFail($activity)->delete();
         return apiSuccess(null, api('Activity Deleted Successfully'));
-
     }
 }
