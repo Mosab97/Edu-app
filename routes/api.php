@@ -39,6 +39,7 @@ Route::group(['prefix' => 'v1', 'namespace' => ROOT_NAMESPACE, "middleware" => [
                 Route::post('check_level', 'QuestionController@check_level');
                 Route::post('subscribe/{course_id}', 'GroupController@subscribe');
                 Route::get('groups/{course_id}', 'GroupController@groupsByCourse');
+                Route::get('lessons/{group_id}', 'LessonController@index');
                 Route::get('groups/{course_id}/{level_id}', 'GroupController@groupsByLevel');
                 Route::get('group/{group_id}', 'GroupController@group');
                 Route::get('teacher_profile/{teacher_id}', 'GroupController@teacher_profile');
@@ -55,6 +56,7 @@ Route::group(['prefix' => 'v1', 'namespace' => ROOT_NAMESPACE, "middleware" => [
                 Route::apiResource('advantages', 'AdvantageController');
                 Route::apiResource('lessons', 'LessonController');
                 Route::post('lessons_delete/{lesson_id}','LessonController@destroy');
+                Route::post('lessons_set_as_done/{lesson_id}','LessonController@lessons_set_as_done');
                 Route::apiResource('meetings', 'MeetingController');
                 Route::post('group/{group_id}/activates_delete/{activates_id}','ActivityController@destroy');
                 Route::apiResource('group.activates', 'ActivityController');

@@ -76,4 +76,13 @@ class LessonController extends Controller
         return apiSuccess(null, api('Lesson Deleted Successfully'));
 
     }
+
+    public function lessons_set_as_done(Request $request, $lesson_id)
+    {
+        $item = $this->model->query()
+            ->findOrFail($lesson_id);
+        $item->update(['done' => true]);
+        return apiSuccess(new LessonResource($item), api('Lesson Updated Successfully'));
+
+    }
 }
