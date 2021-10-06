@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Http\Resources\Api\v1\Teacher\LessonResource;
 use App\Traits\UploadMedia;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use ZipStream\File;
 
 class Group extends Model
@@ -12,6 +13,12 @@ class Group extends Model
     use UploadMedia;
 
     protected $guarded = [];
+    public const ui = [
+        'manager_route' => 'groups',
+        'single_name' => 'Group',
+        'plural_name' => 'Groups',
+        'update_form_hidden_field' => 'group_id',
+    ];
     public const manager_route = 'groups';
 
     public function students()
@@ -25,11 +32,12 @@ class Group extends Model
         return $this->hasMany(ChatMessage::class);
     }
 
-   public function lessons()
+    public function lessons()
     {
         return $this->hasMany(Lesson::class);
     }
-   public function advantages()
+
+    public function advantages()
     {
         return $this->hasMany(Advantage::class);
     }
@@ -69,6 +77,18 @@ class Group extends Model
     protected $casts = [
         'gender' => 'integer'
     ];
+
+
+
+    public function getActionButtonsAttribute()
+    {
+        if (Auth::guard('manager')->check()) {
+            $button = '';
+            $button .= '<a href="' . route('manager.' . self::ui['manager_route'] . '.edit', $this->id) . '" class="btn btn-icon btn-danger "><i class="la la-pencil"></i></a> ';
+            $button .= '<button type="button" data-id="' . $this->id . '" data-toggle="modal" data-target="#deleteModel" class="deleteRecord btn btn-icon btn-danger"><i class="la la-trash"></i></button>';
+            return $button;
+        }
+    }
 
 
 }

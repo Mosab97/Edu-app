@@ -161,46 +161,44 @@
                             </a>
                         </li>
 
-{{--                        @can('Users')--}}
-                            <li class="kt-menu__item kt-menu__item--submenu   @if(Request::is('manager/teacher*')||Request::is('manager/student*') ) kt-menu__item--active @endif"
-                                aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
-                                <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
+                        {{--                        @can('Users')--}}
+                        <li class="kt-menu__item kt-menu__item--submenu   @if(Request::is('manager/teacher*')||Request::is('manager/student*') ) kt-menu__item--active @endif"
+                            aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
+                            <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
                                     <span class="kt-menu__link-icon">
                                         <i class="kt-menu__link-icon flaticon2-user-1"></i>
                                     </span>
-                                    <span class="kt-menu__link-text">{{t('Users')}}</span>
-                                    <i class="kt-menu__ver-arrow la la-angle-right"></i>
-                                </a>
-                                <div class="kt-menu__submenu " kt-hidden-height="200"
-                                     style="display: none; overflow: hidden;"><span class="kt-menu__arrow"></span>
-                                    <ul class="kt-menu__subnav">
-                                        <li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true">
+                                <span class="kt-menu__link-text">{{t('Users')}}</span>
+                                <i class="kt-menu__ver-arrow la la-angle-right"></i>
+                            </a>
+                            <div class="kt-menu__submenu " kt-hidden-height="200"
+                                 style="display: none; overflow: hidden;"><span class="kt-menu__arrow"></span>
+                                <ul class="kt-menu__subnav">
+                                    <li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true">
                                         <span class="kt-menu__link">
                                             <span class="kt-menu__link-text">{{t('Users')}}</span>
                                         </span>
-                                        </li>
-                                        {{--                                        @can('Customers')--}}
-                                        <li class="kt-menu__item " aria-haspopup="true">
-                                            <a
-                                                href="{{route('manager.teacher.index')}}" class="kt-menu__link "><i
-                                                    class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span
-                                                    class="kt-menu__link-text">{{ t('Teachers') }}</span></a>
-                                        </li>
-                                        {{--                                        @endcan--}}
-                                        {{--                                        @can('Merchant')--}}
-                                        <li class="kt-menu__item " aria-haspopup="true">
-                                            <a
-                                                href="{{route('manager.student.index')}}" class="kt-menu__link "><i
-                                                    class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span
-                                                    class="kt-menu__link-text">{{ t('Students') }}</span></a>
-                                        </li>
-                                        {{--                                        @endcan--}}
-                                    </ul>
-                                </div>
-                            </li>
-{{--                        @endcan--}}
-
-
+                                    </li>
+                                    {{--                                        @can('Customers')--}}
+                                    <li class="kt-menu__item " aria-haspopup="true">
+                                        <a
+                                            href="{{route('manager.teacher.index')}}" class="kt-menu__link "><i
+                                                class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span
+                                                class="kt-menu__link-text">{{ t('Teachers') }}</span></a>
+                                    </li>
+                                    {{--                                        @endcan--}}
+                                    {{--                                        @can('Merchant')--}}
+                                    <li class="kt-menu__item " aria-haspopup="true">
+                                        <a
+                                            href="{{route('manager.student.index')}}" class="kt-menu__link "><i
+                                                class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span
+                                                class="kt-menu__link-text">{{ t('Students') }}</span></a>
+                                    </li>
+                                    {{--                                        @endcan--}}
+                                </ul>
+                            </div>
+                        </li>
+                        {{--                        @endcan--}}
 
 
                         <li class="kt-menu__item  @if(Request::is('manager/payment*') ) kt-menu__item--active @endif"
@@ -209,6 +207,14 @@
                                class="kt-menu__link ">
                                 <i class="kt-menu__link-icon flaticon2-email"></i>
                                 <span class="kt-menu__link-text">{{ t('Payments') }}</span>
+                            </a>
+                        </li>
+                        <li class="kt-menu__item  @if(Request::is('manager/'.\App\Models\Group::manager_route.'*') ) kt-menu__item--active @endif"
+                            aria-haspopup="true">
+                            <a href="{{route('manager.'.\App\Models\Group::manager_route . '.index')}}"
+                               class="kt-menu__link ">
+                                <i class="kt-menu__link-icon flaticon2-email"></i>
+                                <span class="kt-menu__link-text">{{ t('Groups') }}</span>
                             </a>
                         </li>
                     </ul>
@@ -285,28 +291,28 @@
                                                     </a>
                                                 </li>
                                             @endcan
-{{--                                            @can('Managers')--}}
-{{--                                                <li class="kt-menu__item" aria-haspopup="true">--}}
-{{--                                                    <a href="{{route('manager.manager.index')}}" class="kt-menu__link">--}}
-{{--                                                        <i class="kt-menu__link-bullet kt-menu__link-bullet--dot">--}}
-{{--                                                            <span></span>--}}
-{{--                                                        </i>--}}
-{{--                                                        <span class="kt-menu__link-text">{{ t('Managers') }}</span>--}}
-{{--                                                    </a>--}}
-{{--                                                </li>--}}
-{{--                                            @endcan--}}
-{{--                                            @can('Roles')--}}
-{{--                                                <li class="kt-menu__item" aria-haspopup="true">--}}
-{{--                                                    <a href="{{route('manager.manager_roles.index')}}"--}}
-{{--                                                       class="kt-menu__link">--}}
-{{--                                                        <i class="kt-menu__link-bullet kt-menu__link-bullet--dot">--}}
-{{--                                                            <span></span>--}}
-{{--                                                        </i>--}}
-{{--                                                        <span--}}
-{{--                                                            class="kt-menu__link-text">{{ t('Managers Roles') }}</span>--}}
-{{--                                                    </a>--}}
-{{--                                                </li>--}}
-{{--                                            @endcan--}}
+                                            {{--                                            @can('Managers')--}}
+                                            {{--                                                <li class="kt-menu__item" aria-haspopup="true">--}}
+                                            {{--                                                    <a href="{{route('manager.manager.index')}}" class="kt-menu__link">--}}
+                                            {{--                                                        <i class="kt-menu__link-bullet kt-menu__link-bullet--dot">--}}
+                                            {{--                                                            <span></span>--}}
+                                            {{--                                                        </i>--}}
+                                            {{--                                                        <span class="kt-menu__link-text">{{ t('Managers') }}</span>--}}
+                                            {{--                                                    </a>--}}
+                                            {{--                                                </li>--}}
+                                            {{--                                            @endcan--}}
+                                            {{--                                            @can('Roles')--}}
+                                            {{--                                                <li class="kt-menu__item" aria-haspopup="true">--}}
+                                            {{--                                                    <a href="{{route('manager.manager_roles.index')}}"--}}
+                                            {{--                                                       class="kt-menu__link">--}}
+                                            {{--                                                        <i class="kt-menu__link-bullet kt-menu__link-bullet--dot">--}}
+                                            {{--                                                            <span></span>--}}
+                                            {{--                                                        </i>--}}
+                                            {{--                                                        <span--}}
+                                            {{--                                                            class="kt-menu__link-text">{{ t('Managers Roles') }}</span>--}}
+                                            {{--                                                    </a>--}}
+                                            {{--                                                </li>--}}
+                                            {{--                                            @endcan--}}
                                         </ul>
                                     </div>
                                 </li>
@@ -321,107 +327,107 @@
 
 
                     <!--begin: Language bar -->
-{{--                    <div class="kt-header__topbar-item kt-header__topbar-item--langs">--}}
-{{--                        <div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="10px,0px">--}}
-{{--									<span class="kt-header__topbar-icon kt-header__topbar-icon--brand">--}}
-{{--                                        @if(isRtl())--}}
-{{--                                            <img class="" src="{{ asset("assets/media/flags/008-saudi-arabia.svg") }}"--}}
-{{--                                                 alt=""/>--}}
-{{--                                        @else--}}
-{{--                                            <img class="" src="{{ asset("assets/media/flags/020-flag.svg") }}" alt=""/>--}}
-{{--                                        @endif--}}
-{{--									</span>--}}
-{{--                        </div>--}}
-{{--                        <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim">--}}
-{{--                            <ul class="kt-nav kt-margin-t-10 kt-margin-b-10">--}}
-{{--                                <li class="kt-nav__item kt-nav__item--active">--}}
-{{--                                    <a href="{{ route('manager.switch-language', 'en') }}" class="kt-nav__link">--}}
-{{--                                        <span class="kt-nav__link-icon"><img--}}
-{{--                                                src="{{ asset("assets/media/flags/020-flag.svg") }}" alt=""/></span>--}}
-{{--                                        <span class="kt-nav__link-text">English</span>--}}
-{{--                                    </a>--}}
-{{--                                </li>--}}
-{{--                                <li class="kt-nav__item">--}}
-{{--                                    <a href="{{ route('manager.switch-language', 'ar') }}" class="kt-nav__link">--}}
-{{--                                        <span class="kt-nav__link-icon"><img--}}
-{{--                                                src="{{ asset("assets/media/flags/008-saudi-arabia.svg") }}"--}}
-{{--                                                alt=""/></span>--}}
-{{--                                        <span class="kt-nav__link-text">العربية</span>--}}
-{{--                                    </a>--}}
-{{--                                </li>--}}
-{{--                            </ul>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-                    <!--end: Language bar -->
+                {{--                    <div class="kt-header__topbar-item kt-header__topbar-item--langs">--}}
+                {{--                        <div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="10px,0px">--}}
+                {{--									<span class="kt-header__topbar-icon kt-header__topbar-icon--brand">--}}
+                {{--                                        @if(isRtl())--}}
+                {{--                                            <img class="" src="{{ asset("assets/media/flags/008-saudi-arabia.svg") }}"--}}
+                {{--                                                 alt=""/>--}}
+                {{--                                        @else--}}
+                {{--                                            <img class="" src="{{ asset("assets/media/flags/020-flag.svg") }}" alt=""/>--}}
+                {{--                                        @endif--}}
+                {{--									</span>--}}
+                {{--                        </div>--}}
+                {{--                        <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim">--}}
+                {{--                            <ul class="kt-nav kt-margin-t-10 kt-margin-b-10">--}}
+                {{--                                <li class="kt-nav__item kt-nav__item--active">--}}
+                {{--                                    <a href="{{ route('manager.switch-language', 'en') }}" class="kt-nav__link">--}}
+                {{--                                        <span class="kt-nav__link-icon"><img--}}
+                {{--                                                src="{{ asset("assets/media/flags/020-flag.svg") }}" alt=""/></span>--}}
+                {{--                                        <span class="kt-nav__link-text">English</span>--}}
+                {{--                                    </a>--}}
+                {{--                                </li>--}}
+                {{--                                <li class="kt-nav__item">--}}
+                {{--                                    <a href="{{ route('manager.switch-language', 'ar') }}" class="kt-nav__link">--}}
+                {{--                                        <span class="kt-nav__link-icon"><img--}}
+                {{--                                                src="{{ asset("assets/media/flags/008-saudi-arabia.svg") }}"--}}
+                {{--                                                alt=""/></span>--}}
+                {{--                                        <span class="kt-nav__link-text">العربية</span>--}}
+                {{--                                    </a>--}}
+                {{--                                </li>--}}
+                {{--                            </ul>--}}
+                {{--                        </div>--}}
+                {{--                    </div>--}}
+                <!--end: Language bar -->
                     <!--begin: Notifications -->
-{{--                    @php--}}
-{{--                        $notifications = \App\Models\Notification::query()->where(function ($query){--}}
-{{--                                $query->where('notifiable_id', auth()->user()->id)->orWhere('notifiable_id', 0);--}}
-{{--                            })->where('notifiable_type', \App\Models\Manager::class)--}}
-{{--                                ->latest()->whereNull('read_at')->latest()->get();--}}
-{{--                    @endphp--}}
-{{--                    <div class="kt-header__topbar-item dropdown">--}}
-{{--                        <div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="10px,0px">--}}
-{{--                            <span class="kt-header__topbar-icon kt-header__topbar-icon--success">--}}
-{{--                                <i class="flaticon2-bell-alarm-symbol"></i>--}}
-{{--                                    <span class="kt-badge kt-badge--danger"--}}
-{{--                                          id="notification_count"  {{isset($notifications) && count($notifications) > 0 ? '':'style="display: none"'}}>{{ count($notifications) }}</span>--}}
-{{--                            </span>--}}
+                {{--                    @php--}}
+                {{--                        $notifications = \App\Models\Notification::query()->where(function ($query){--}}
+                {{--                                $query->where('notifiable_id', auth()->user()->id)->orWhere('notifiable_id', 0);--}}
+                {{--                            })->where('notifiable_type', \App\Models\Manager::class)--}}
+                {{--                                ->latest()->whereNull('read_at')->latest()->get();--}}
+                {{--                    @endphp--}}
+                {{--                    <div class="kt-header__topbar-item dropdown">--}}
+                {{--                        <div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="10px,0px">--}}
+                {{--                            <span class="kt-header__topbar-icon kt-header__topbar-icon--success">--}}
+                {{--                                <i class="flaticon2-bell-alarm-symbol"></i>--}}
+                {{--                                    <span class="kt-badge kt-badge--danger"--}}
+                {{--                                          id="notification_count"  {{isset($notifications) && count($notifications) > 0 ? '':'style="display: none"'}}>{{ count($notifications) }}</span>--}}
+                {{--                            </span>--}}
 
-{{--                        </div>--}}
-{{--                        <div--}}
-{{--                            class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-xl">--}}
-{{--                            <form>--}}
+                {{--                        </div>--}}
+                {{--                        <div--}}
+                {{--                            class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-xl">--}}
+                {{--                            <form>--}}
 
-{{--                                <!--begin: Head -->--}}
-{{--                                <div class="kt-head kt-head--skin-dark kt-head--fit-x kt-head--fit-b"--}}
-{{--                                     style="background: linear-gradient(to right,#db1515,#ec5252)">--}}
-{{--                                    <h3 class="kt-head__title">--}}
-{{--                                        {{ t('Notifications') }}--}}
-{{--                                    </h3>--}}
-{{--                                    <ul class="nav nav-tabs nav-tabs-line nav-tabs-bold nav-tabs-line-3x nav-tabs-line-success kt-notification-item-padding-x"--}}
-{{--                                        role="tablist">--}}
-{{--                                        <li class="nav-item">--}}
-{{--                                            <a class="nav-link active show" data-toggle="tab"--}}
-{{--                                               href="#topbar_notifications_notifications" role="tab"--}}
-{{--                                               aria-selected="true"></a>--}}
-{{--                                        </li>--}}
-{{--                                    </ul>--}}
-{{--                                </div>--}}
+                {{--                                <!--begin: Head -->--}}
+                {{--                                <div class="kt-head kt-head--skin-dark kt-head--fit-x kt-head--fit-b"--}}
+                {{--                                     style="background: linear-gradient(to right,#db1515,#ec5252)">--}}
+                {{--                                    <h3 class="kt-head__title">--}}
+                {{--                                        {{ t('Notifications') }}--}}
+                {{--                                    </h3>--}}
+                {{--                                    <ul class="nav nav-tabs nav-tabs-line nav-tabs-bold nav-tabs-line-3x nav-tabs-line-success kt-notification-item-padding-x"--}}
+                {{--                                        role="tablist">--}}
+                {{--                                        <li class="nav-item">--}}
+                {{--                                            <a class="nav-link active show" data-toggle="tab"--}}
+                {{--                                               href="#topbar_notifications_notifications" role="tab"--}}
+                {{--                                               aria-selected="true"></a>--}}
+                {{--                                        </li>--}}
+                {{--                                    </ul>--}}
+                {{--                                </div>--}}
 
-{{--                                <!--end: Head -->--}}
-{{--                                <div class="tab-content">--}}
-{{--                                    <div class="tab-pane active show" id="topbar_notifications_notifications"--}}
-{{--                                         role="tabpanel">--}}
-{{--                                        <div class="kt-notification kt-margin-t-10 kt-margin-b-10 kt-scroll"--}}
-{{--                                             id="notification_list"--}}
-{{--                                             data-scroll="true" data-height="300" data-mobile-height="200">--}}
-{{--                                            @isset($notifications)--}}
-{{--                                                @foreach($notifications as $notification)--}}
-{{--                                                    <a href="{{ url('/manager/notification/'.$notification->id) }}"--}}
-{{--                                                       class="kt-notification__item">--}}
-{{--                                                        <div class="kt-notification__item-icon">--}}
-{{--                                                            <i class="flaticon2-notification kt-font-success"></i>--}}
-{{--                                                        </div>--}}
-{{--                                                        <div class="kt-notification__item-details">--}}
-{{--                                                            <div class="kt-notification__item-title">--}}
-{{--                                                                {{ $notification->title }}--}}
-{{--                                                            </div>--}}
-{{--                                                            <div class="kt-notification__item-time">--}}
-{{--                                                                {{ $notification->created_at->diffForHumans() }}--}}
-{{--                                                            </div>--}}
-{{--                                                        </div>--}}
-{{--                                                    </a>--}}
-{{--                                                @endforeach--}}
-{{--                                            @endisset--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </form>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
+                {{--                                <!--end: Head -->--}}
+                {{--                                <div class="tab-content">--}}
+                {{--                                    <div class="tab-pane active show" id="topbar_notifications_notifications"--}}
+                {{--                                         role="tabpanel">--}}
+                {{--                                        <div class="kt-notification kt-margin-t-10 kt-margin-b-10 kt-scroll"--}}
+                {{--                                             id="notification_list"--}}
+                {{--                                             data-scroll="true" data-height="300" data-mobile-height="200">--}}
+                {{--                                            @isset($notifications)--}}
+                {{--                                                @foreach($notifications as $notification)--}}
+                {{--                                                    <a href="{{ url('/manager/notification/'.$notification->id) }}"--}}
+                {{--                                                       class="kt-notification__item">--}}
+                {{--                                                        <div class="kt-notification__item-icon">--}}
+                {{--                                                            <i class="flaticon2-notification kt-font-success"></i>--}}
+                {{--                                                        </div>--}}
+                {{--                                                        <div class="kt-notification__item-details">--}}
+                {{--                                                            <div class="kt-notification__item-title">--}}
+                {{--                                                                {{ $notification->title }}--}}
+                {{--                                                            </div>--}}
+                {{--                                                            <div class="kt-notification__item-time">--}}
+                {{--                                                                {{ $notification->created_at->diffForHumans() }}--}}
+                {{--                                                            </div>--}}
+                {{--                                                        </div>--}}
+                {{--                                                    </a>--}}
+                {{--                                                @endforeach--}}
+                {{--                                            @endisset--}}
+                {{--                                        </div>--}}
+                {{--                                    </div>--}}
+                {{--                                </div>--}}
+                {{--                            </form>--}}
+                {{--                        </div>--}}
+                {{--                    </div>--}}
 
-                    <!--end: Notifications -->
+                <!--end: Notifications -->
                     <!--begin: User bar -->
                     <div class="kt-header__topbar-item kt-header__topbar-item--user">
                         <div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="10px,0px">
@@ -501,19 +507,19 @@
                         </div>
                     @endif
                 <!--Begin::Dashboard 6-->
-{{--                    --}}{{----}}
-{{--                    @if(Session::has('message'))--}}
-{{--                        <div class="alert alert-{{ Session::get('m-class') }} role="alert">--}}
-{{--                            <div class="alert-text">{{ Session::get('message') }}</div>--}}
-{{--                            <div class="alert-close">--}}
-{{--                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">--}}
-{{--                                    <span aria-hidden="true"><i class="la la-close"></i></span>--}}
-{{--                                </button>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    @endif--}}
+                    {{--                    --}}{{----}}
+                    {{--                    @if(Session::has('message'))--}}
+                    {{--                        <div class="alert alert-{{ Session::get('m-class') }} role="alert">--}}
+                    {{--                            <div class="alert-text">{{ Session::get('message') }}</div>--}}
+                    {{--                            <div class="alert-close">--}}
+                    {{--                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">--}}
+                    {{--                                    <span aria-hidden="true"><i class="la la-close"></i></span>--}}
+                    {{--                                </button>--}}
+                    {{--                            </div>--}}
+                    {{--                        </div>--}}
+                    {{--                    @endif--}}
 
-{{--                    --}}
+                    {{--                    --}}
                     @if (count($errors) > 0)
                         <div class="alert alert-warning">
                             <ul style="width: 100%;">

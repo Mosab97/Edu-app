@@ -825,5 +825,10 @@ return [
   'Show Teachers' => 'Show Teachers',  
   'Add Teacher' => 'Add Teacher',  
   'Show Students' => 'Show Students',  
-  'Add Student' => 'Add Student',
+  'Add Student' => 'Add Student',  
+  'Groups' => 'Groups',  
+  'Show Groups' => 'Show Groups',  
+  'Add Group' => 'Add Group',  
+  'Edit Group' => 'Edit Group',  
+  'Group' => 'Group',
 ];

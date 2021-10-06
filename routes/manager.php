@@ -29,6 +29,10 @@ Route::group(['namespace' => 'Manager'], function () {
     //Student Routes
     Route::resource(\App\Models\User::manager_route_user_type['student'], 'StudentController');
 
+
+    //Group Routes
+    Route::resource(\App\Models\Group::manager_route, 'GroupController');
+
     //payments Routes
     Route::resource('payment', 'PaymentController');
     //User Routes
