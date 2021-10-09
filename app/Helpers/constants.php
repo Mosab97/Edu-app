@@ -35,7 +35,6 @@ define('ROOT_NAMESPACE', 'Api\v1');
 define('PASSWORD', '123456');
 
 
-
 define("DEFAULT_category_IMAGE", 'category_image.png');
 define("DEFAULT_item_IMAGE", 'item_image.png');
 
@@ -55,8 +54,6 @@ define('Gender', [
     'MALE' => 1,
     'FEMALE' => 2,
 ]);
-
-
 
 
 /***
@@ -82,7 +79,6 @@ define('CONTACT_US_NOTIFICATION', 1);
 define('GENERAL_NOTIFICATION', 2);
 define('CLOSE_CHAT_NOTIFICATION', 3);
 define('NEW_CHAT_MESSAGE', 4);
-
 
 
 /*
@@ -123,9 +119,6 @@ define('DECIMAL_SEPARATOR', '.');
 define('DIGIT_THOUSANDS_SEPARATOR', '');
 
 
-
-
-
 /***ERRORS_STATUS_CODE**/
 define('METHOD_NOT_ALLOWED_EXCEPTION', 403);
 define('UN_AUTHENTICATED', 401);
@@ -136,4 +129,4 @@ define('STOP_MOBILE_APP', 4001);
 define('WAITING', 4003);
 
 
-define('API_ACCESS_KEY', "");
+define('API_ACCESS_KEY', "AAAAsui00A0:APA91bEPVqiAdadlMPGKfnB3E5dqhQAGb26z6VZzaEjdsCf4smz39EPUkNPi0hOfAbYCngnpvN_ZrF7RhkxUAg7DGcpHLE7QdOIFnq39DAdLePzhC8Bz28T6kCtCTbKjrBMy1SJ135Cg");

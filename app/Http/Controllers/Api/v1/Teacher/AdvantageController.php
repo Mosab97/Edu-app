@@ -50,7 +50,7 @@ class AdvantageController extends Controller
 
     public function destroy(Request $request, $group_id)
     {
-        
+
         $this->model->query()
 //            ->whereHas('group', function ($query) {
 //            $query->where('teacher_id', apiUser()->id);

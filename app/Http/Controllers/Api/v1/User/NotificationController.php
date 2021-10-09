@@ -16,7 +16,7 @@ class NotificationController extends Controller
     {
         $user = apiUser();
         $notifications = Notification::where('notifiable_id', $user->id)
-            ->where('notifiable_type',  User::class)
+            ->where('notifiable_type', User::class)
             ->where('created_at', '>=', $user->created_at)
             ->paginate($this->perPage);
         return apiSuccess([
