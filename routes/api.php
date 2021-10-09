@@ -8,7 +8,7 @@ Route::group(['prefix' => 'v1', 'namespace' => ROOT_NAMESPACE, "middleware" => [
     Route::get('system_constants', 'SystemConstantsController@system_constants');
     Route::get('standards/{standard_type}', 'HomeController@standards');
 
-        Route::post('contact_us', 'HomeController@contactUs');
+    Route::post('contact_us', 'HomeController@contactUs');
     Route::get('ages', 'HomeController@ages');
     Route::get('levels', 'HomeController@levels');
     Route::get('activities', 'HomeController@activities');
@@ -45,6 +45,7 @@ Route::group(['prefix' => 'v1', 'namespace' => ROOT_NAMESPACE, "middleware" => [
                 Route::get('teacher_profile/{teacher_id}', 'GroupController@teacher_profile');
                 Route::get('my_groups', 'GroupController@my_groups');
                 Route::get('meetings', 'MeetingController@meetings');
+
             });
         });
 
@@ -53,12 +54,17 @@ Route::group(['prefix' => 'v1', 'namespace' => ROOT_NAMESPACE, "middleware" => [
         Route::group(['prefix' => 'teacher', 'middleware' => ["auth_guard:" . \App\Models\User::user_type['TEACHER']]], function () {
             Route::post('complaint/{course_id}/{student_id}', 'ComplaintController@teacher_post_complaint');
             Route::group(['namespace' => 'Teacher'], function () {
+                Route::post('advantages_delete/{meeting_id}', 'AdvantageController@destroy');
                 Route::apiResource('advantages', 'AdvantageController');
+
+
                 Route::apiResource('lessons', 'LessonController');
-                Route::post('lessons_delete/{lesson_id}','LessonController@destroy');
-                Route::post('lessons_set_as_done/{lesson_id}','LessonController@lessons_set_as_done');
+                Route::post('lessons_delete/{lesson_id}', 'LessonController@destroy');
+                Route::post('lessons_set_as_done/{lesson_id}', 'LessonController@lessons_set_as_done');
                 Route::apiResource('meetings', 'MeetingController');
-                Route::post('group/{group_id}/activates_delete/{activates_id}','ActivityController@destroy');
+                Route::post('meetings_delete/{meeting_id}', 'MeetingController@destroy');
+
+                Route::post('group/{group_id}/activates_delete/{activates_id}', 'ActivityController@destroy');
                 Route::apiResource('group.activates', 'ActivityController');
 
                 Route::get('category_activity', 'ActivityController@category_activity');

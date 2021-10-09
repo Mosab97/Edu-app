@@ -168,5 +168,7 @@ return [
   'Lessons Created Successfully' => 'Lessons Created Successfully',  
   'Activity Created Successfully' => 'Activity Created Successfully',  
   'Activity Updated Successfully' => 'Activity Updated Successfully',  
-  'Activity Deleted Successfully' => 'Activity Deleted Successfully',
+  'Activity Deleted Successfully' => 'Activity Deleted Successfully',  
+  'Rejected' => 'Rejected',  
+  'Advantage Deleted Successfully' => 'Advantage Deleted Successfully',
 ];
