@@ -87,7 +87,7 @@ Route::group(['prefix' => 'v1', 'namespace' => ROOT_NAMESPACE, "middleware" => [
             Route::get('getAllChats', 'ChatController@getAllChats');
             Route::get('chatMessages/{id}', 'ChatController@chatMessages');
             Route::get('group_media/{group_id}', 'ChatController@group_media');
-            Route::delete('delete_media/{file_id}', 'ChatController@delete_media');
+            Route::post('delete_media/{file_id}', 'ChatController@delete_media');
         });
     });
     Route::group(['namespace' => 'Auth'], function () {
