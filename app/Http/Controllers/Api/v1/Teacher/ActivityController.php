@@ -42,7 +42,7 @@ class ActivityController extends Controller
             'category_id' => 'required|exists:category_activities,id',
 //            'group_id' => 'required|exists:groups,id',
             'name' => 'sometimes|min:3|max:100',
-            'url' => 'required|url',
+            'url' => 'required',//|url
         ]);
         $data = $request->only(['category_id', 'name', 'url']);
         $data['group_id'] = $group_obj->id;
@@ -60,7 +60,7 @@ class ActivityController extends Controller
         $request->validate([
             'category_id' => 'required|exists:category_activities,id',
             'name' => 'sometimes|min:3|max:100',
-            'url' => 'required|url',
+            'url' => 'required',
         ]);
         $data = $request->only(['category_id', 'name', 'url']);
         $data['group_id'] = $group_obj->id;
