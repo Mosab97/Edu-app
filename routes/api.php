@@ -1,5 +1,27 @@
 <?php
 Route::group(['prefix' => 'v1', 'namespace' => ROOT_NAMESPACE, "middleware" => ['localization']], function () {
+        Route::post('websocket', function (\Illuminate\Http\Request $request){
+            $curl = curl_init();
+
+            $post_fields = [
+                "key" => "oCdCMcMPQpbvNjUIzqtvF1d2X2okWpDQj4AwARJuAgtjhzKxVEjQU6IdCjwm", //Demo key,  get yours at https://piesocket.com
+                "secret" => "d8129f82f8dd71910aa4a7efa30a7297", //Demo secret, get yours at https://piesocket.com
+                "channelId" => 1,
+                "message" => ["text" => "Hello world!"]
+            ];
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => "https://CLUSTER_ID.piesocket.com/api/publish",
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_CUSTOMREQUEST => "POST",
+                CURLOPT_POSTFIELDS => json_encode($post_fields),
+                CURLOPT_HTTPHEADER => array(
+                    "Content-Type: application/json"
+                ),
+            ));
+
+            $response = curl_exec($curl);
+            print_r($response);
+        });
     Route::group(['prefix' => 'guest', 'namespace' => 'Guest'], function () {
         Route::get('groups/{course_id?}', 'GroupController@groups');
         Route::get('group/{group_id}', 'GroupController@group');
