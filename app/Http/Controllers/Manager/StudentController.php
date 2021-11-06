@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Manager;
 
 use App\Http\Controllers\Controller;
 use App\Models\Course;
+use App\Models\StudentGroups;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -44,6 +45,40 @@ class StudentController extends Controller
         return view('manager.' . User::manager_route_user_type['student'] . '.index', compact('title'));
     }
 
+    public function get_courses(Request $request)
+    {
+        if (request()->ajax()) {
+            $student = request()->get('student', false);
+            $items = StudentGroups::query()->when($student, function ($query) use ($student) {
+                $query->where('student_id', $student);
+            });
+            return DataTables::make($items)
+                ->escapeColumns([])
+                ->addColumn('created_at', function ($item) {
+                    return Carbon::parse($item->created_at)->toDateTimeString();
+                })
+                ->addColumn('group_name', function ($item) {
+                    return $item->group->name;
+                })
+                ->addColumn('course_name', function ($item) {
+                    return $item->course->name;
+                })
+                ->addColumn('is_paid', function ($item) {
+                    return $item->is_paid ? t('Paid') : t('Not Paid');
+                })
+                ->addColumn('actions', function ($item) {
+                    return $item->action_buttons;
+                })
+                ->make();
+        }
+    }
+
+    public function show(Request $request, $id)
+    {
+        $title = t('Show ' . User::manager_route_user_type['student']);
+        $user = $this->_model->findOrFail($id);
+        return view('manager.' . User::manager_route_user_type['student'] . '.show', compact('user', 'title'));
+    }
 
     public function create()
     {

@@ -826,4 +826,18 @@ return [
   'Add Group' => 'Add Group',  
   'Edit Group' => 'Edit Group',  
   'Group' => 'Group',
+  
+  'Show Teacher' => 'Show Teacher',  
+  'Points' => 'Points',  
+  'Customer / Merchant' => 'Customer / Merchant',  
+  'Mobile no' => 'Mobile no',  
+  'Distributor' => 'Distributor',  
+  'Star Rating' => 'Star Rating',  
+  'Max Number Of Students' => 'Max Number Of Students',  
+  'Number Of Live Lessons' => 'Number Of Live Lessons',  
+  'Number Of Exercises And Games' => 'Number Of Exercises And Games',  
+  'Course Date' => 'Course Date',  
+  'Show student' => 'Show student',  
+  'Is Paid' => 'Is Paid',  
+  'Not Paid' => 'Not Paid',
 ];

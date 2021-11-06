@@ -51,6 +51,13 @@ class TeacherController extends Controller
         return view('manager.' . Course::manager_route . '.edit', compact('title', 'validator'));
     }
 
+    public function show(Request $request, $id)
+    {
+        $title = t('Show Teacher');
+        $user = $this->_model->findOrFail($id);
+        return view('manager.' . User::manager_route_user_type['teacher'] . '.show', compact('user', 'title'));
+    }
+
     public function store(Request $request)
     {
         $store = isset($request->age_id) ? $this->_model->findOrFail($request->age_id) : new $this->_model();

@@ -26,9 +26,16 @@ class GroupController extends Controller
         $title = t('Show ' . Group::ui['plural_name']);
         if (request()->ajax()) {
             $search = request()->get('search', false);
-            $items = $this->_model->query()->when($search, function ($query) use ($search) {
-                $query->where('name', 'like', '%' . $search . '%');
-            });
+            if (is_array($search)) $search = false;
+            $teacher = request()->get('teacher', false);
+//            dd($search,$teacher);
+            $items = $this->_model->query()
+                ->when($teacher, function ($query) use ($teacher) {
+                    $query->where('teacher_id', $teacher);
+                })
+                ->when($search, function ($query) use ($search) {
+                    $query->where('name', 'like', '%' . $search . '%');
+                });
             return DataTables::make($items)
                 ->escapeColumns([])
                 ->addColumn('created_at', function ($item) {
@@ -36,6 +43,21 @@ class GroupController extends Controller
                 })
                 ->addColumn('name', function ($item) {
                     return $item->name;
+                })
+                ->addColumn('course', function ($item) {
+                    return $item->course->name;
+                })
+                ->addColumn('level', function ($item) {
+                    return $item->level->name;
+                })
+                ->addColumn('age', function ($item) {
+                    return $item->age->name;
+                })
+                ->addColumn('price', function ($item) {
+                    return $item->price;
+                })
+                ->addColumn('gender', function ($item) {
+                    return gender($item->gender);
                 })
                 ->addColumn('actions', function ($item) {
                     return $item->action_buttons;

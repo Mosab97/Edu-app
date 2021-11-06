@@ -77,9 +77,18 @@
 
                     <table class="table text-center" id="users-table">
                         <thead>
-                        <th>{{t('Name')}}</th>
-                        <th>{{t('Created At')}}</th>
-                        <th>{{t('Actions')}}</th>
+                        <th>{{ t('Name') }}</th>
+                        <th>{{ t('Course') }}</th>
+                        <th>{{ t('Level') }}</th>
+                        <th>{{ t('Age') }}</th>
+                        <th>{{ t('Price') }}</th>
+                        <th>{{ t('Max Number Of Students') }}</th>
+                        <th>{{ t('Number Of Live Lessons') }}</th>
+                        <th>{{ t('Number Of Exercises And Games') }}</th>
+                        <th>{{ t('Gender') }}</th>
+                        <th>{{ t('Course Date') }}</th>
+                        <th>{{ t('Created At') }}</th>
+                        <th>{{ t('Actions') }}</th>
                         </thead>
                     </table>
                 </div>
@@ -149,6 +158,15 @@
                     },
                     columns: [
                         {data: 'name', name: 'name'},
+                        {data: 'course', name: 'course'},
+                        {data: 'level', name: 'level'},
+                        {data: 'age', name: 'age'},
+                        {data: 'price', name: 'price'},
+                        {data: 'students_number_max', name: 'students_number_max'},
+                        {data: 'number_of_live_lessons', name: 'number_of_live_lessons'},
+                        {data: 'number_of_exercises_and_games', name: 'number_of_exercises_and_games'},
+                        {data: 'gender', name: 'gender'},
+                        {data: 'course_date_and_time', name: 'course_date_and_time'},
                         {data: 'created_at', name: 'created_at'},
                         {data: 'actions', name: 'actions'}
                     ],

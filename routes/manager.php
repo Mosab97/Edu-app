@@ -28,7 +28,7 @@ Route::group(['namespace' => 'Manager'], function () {
 
     //Student Routes
     Route::resource(\App\Models\User::manager_route_user_type['student'], 'StudentController');
-
+Route::get('get_courses',"StudentController@get_courses")->name('get_courses');
 
     //Group Routes
     Route::resource(\App\Models\Group::manager_route, 'GroupController');
