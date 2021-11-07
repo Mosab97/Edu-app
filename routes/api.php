@@ -1,6 +1,20 @@
 <?php
-Route::get('test_api',function (\Illuminate\Http\Request $request){
+Route::get('test_api', function (\Illuminate\Http\Request $request) {
     \Illuminate\Support\Facades\Log::info(json_encode($request->all()));
+
+
+    $socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+    $result = socket_connect($socket, 'ws://137.184.76.140', 60050);
+
+    if (!$result) {
+        dd('cannot connect ' . socket_strerror(socket_last_error()) . PHP_EOL);
+    }
+
+    $bytes = socket_write($socket, "Hello World");
+
+    echo "wrote " . number_format($bytes) . ' bytes to socket' . PHP_EOL;
+
 
 });
 Route::group(['prefix' => 'v1', 'namespace' => ROOT_NAMESPACE, "middleware" => ['localization']], function () {
