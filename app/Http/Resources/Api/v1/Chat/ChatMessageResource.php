@@ -18,6 +18,7 @@ class ChatMessageResource extends JsonResource
             'type' => $this->type,
             'group_id' => $this->group_id,
             'sender' => [
+                'id' => optional($sender)->id,
                 'name' => optional($sender)->name,
                 'image' => optional($sender)->image,
             ],

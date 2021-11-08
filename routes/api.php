@@ -1,4 +1,6 @@
 <?php
+
+
 Route::get('test_api', function (\Illuminate\Http\Request $request) {
     \Illuminate\Support\Facades\Log::info(json_encode($request->all()));
 
@@ -18,6 +20,9 @@ Route::get('test_api', function (\Illuminate\Http\Request $request) {
 
 });
 Route::group(['prefix' => 'v1', 'namespace' => ROOT_NAMESPACE, "middleware" => ['localization']], function () {
+    /*Node js apis*/
+    Route::get('chatMessages/{id}', 'Chat/ChatController@chatMessages');
+
     Route::group(['prefix' => 'guest', 'namespace' => 'Guest'], function () {
         Route::get('groups/{course_id?}', 'GroupController@groups');
         Route::get('group/{group_id}', 'GroupController@group');
