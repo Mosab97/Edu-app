@@ -21,7 +21,7 @@ Route::get('test_api', function (\Illuminate\Http\Request $request) {
 });
 Route::group(['prefix' => 'v1', 'namespace' => ROOT_NAMESPACE, "middleware" => ['localization']], function () {
     /*Node js apis*/
-    Route::get('chatMessages/{id}', 'Chat/ChatController@chatMessages');
+    Route::get('websocket/chatMessages/{id}', 'Chat/ChatController@chatMessages');
 
     Route::group(['prefix' => 'guest', 'namespace' => 'Guest'], function () {
         Route::get('groups/{course_id?}', 'GroupController@groups');
