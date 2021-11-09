@@ -11,6 +11,7 @@ use App\Models\GroupFile;
 use App\Models\StudentGroups;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class ChatController extends Controller
 {
@@ -93,6 +94,19 @@ class ChatController extends Controller
 //            );
 
         return apiSuccess(new ChatMessageResource($chatMessage), api('Message Send Successfully'));
+    }
+
+    public function storeChatFile(Request $request, $group_id)
+    {
+        Log::info('file_websocket', [
+            'request' => $request->all(),
+            'group' => $group_id,
+        ]);
+        return apiSuccess([
+            'request' => $request->all(),
+            'group' => $group_id,
+        ]);
+        dd($group_id, checkRequestIsWorkingOrNot());
     }
 
 }
