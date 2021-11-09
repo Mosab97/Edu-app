@@ -12,6 +12,7 @@ use App\Models\StudentGroups;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class ChatController extends Controller
 {
@@ -102,9 +103,30 @@ class ChatController extends Controller
             'request' => $request->all(),
             'group' => $group_id,
         ]);
+
+
+        $file_base64 = $request->file_base64;
+        // if a base64 was sent, store it in the db
+        if (Str::startsWith($file_base64, 'data:image')) {
+            // 0. Make the image
+            $image = \Image::make($file_base64)->encode('jpg', 90);
+
+            // 1. Generate a filename.
+            $filename = md5($file_base64 . time()) . '.jpg';
+
+            // 2. Store the image on disk.
+            \Storage::disk('public')->put('websocket' . '/' . $filename, $image->stream());
+
+//            // is the public URL (everything that comes after the domain name)
+//            $public_destination_path = Str::replaceFirst('public/', '', $destination_path);
+//            $this->attributes[$attribute_name] = $public_destination_path . '/' . $filename;
+        }
+
+
         return apiSuccess([
             'request' => $request->all(),
             'group' => $group_id,
+            'path' => 'websocket/' . $filename,
         ]);
         dd($group_id, checkRequestIsWorkingOrNot());
     }
