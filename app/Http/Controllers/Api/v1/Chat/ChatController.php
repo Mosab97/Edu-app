@@ -99,36 +99,44 @@ class ChatController extends Controller
 
     public function storeChatFile(Request $request, $group_id)
     {
-        Log::info('file_websocket', [
-            'request' => $request->all(),
-            'group' => $group_id,
+        $img = $request->file_base64;
+        $folderPath = "uploads/" . ChatMessage::manager_route . "/"; //path location
+
+        $image_parts = explode(";base64,", $img);
+        $image_type_aux = explode("image/", $image_parts[0]);
+        $image_type = $image_type_aux[1];
+        $image_base64 = base64_decode($image_parts[1]);
+        $uniqid = uniqid();
+        $file = $folderPath . $uniqid . '.' . $image_type;
+        file_put_contents($file, $image_base64);
+
+
+        $group = Group::findOrFail($group_id);
+        $chatMessage = $group->chatMessages()->create([
+            'sender_id' => apiUser()->id,
+            'message' => $request->message,
+            'type' => ChatMessage::type['file'],
         ]);
-
-
-        $file_base64 = $request->file_base64;
-        // if a base64 was sent, store it in the db
-        if (Str::startsWith($file_base64, 'data:image')) {
-            // 0. Make the image
-            $image = \Image::make($file_base64)->encode('jpg', 90);
-
-            // 1. Generate a filename.
-            $filename = md5($file_base64 . time()) . '.jpg';
-
-            // 2. Store the image on disk.
-            \Storage::disk('public')->put('websocket' . '/' . $filename, $image->stream());
-
-//            // is the public URL (everything that comes after the domain name)
-//            $public_destination_path = Str::replaceFirst('public/', '', $destination_path);
-//            $this->attributes[$attribute_name] = $public_destination_path . '/' . $filename;
+        if ($request->hasFile('file')) {
+            $group->files()->create([
+                'chat_message_id' => $chatMessage->id,
+                'name' => 'null',
+                'extension' => $image_type,
+                'path' => $file,
+            ]);
         }
-
+        Log::info('file_websocket', [
+            'group' => $group_id,
+            'file' => asset($file),
+        ]);
 
         return apiSuccess([
-            'request' => $request->all(),
+            // 'request' => $request->all(),
             'group' => $group_id,
-            'path' => 'websocket/' . $filename,
+            'path' => $file,
         ]);
-        dd($group_id, checkRequestIsWorkingOrNot());
+        // dd($group_id, checkRequestIsWorkingOrNot());
     }
+
 
 }
