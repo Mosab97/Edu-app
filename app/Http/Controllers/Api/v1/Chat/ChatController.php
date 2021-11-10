@@ -117,14 +117,12 @@ class ChatController extends Controller
             'message' => $request->message,
             'type' => ChatMessage::type['file'],
         ]);
-        if ($request->hasFile('file')) {
             $group->files()->create([
                 'chat_message_id' => $chatMessage->id,
                 'name' => 'null',
                 'extension' => $image_type,
                 'path' => $file,
             ]);
-        }
         Log::info('file_websocket', [
             'group' => $group_id,
             'file' => asset($file),
