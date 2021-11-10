@@ -46,12 +46,14 @@ class ChatController extends Controller
 
     public function chatMessages(Request $request, $id)
     {
-        $messages = ChatMessage::query()->with(['file'])->where('group_id', $id)->paginate($this->perPage);
+        $messages = ChatMessage::query()->with(['file'])->where('group_id', $id)->get();
+//            ->paginate($this->perPage);
+        return apiSuccess(ChatMessageResource::collection($messages));
 //        dd(collect($messages->items())->pluck('file'));
-        return apiSuccess([
-            'items' => ChatMessageResource::collection($messages->items()),
-            'paginate' => paginate($messages),
-        ]);
+//        return apiSuccess([
+//            'items' => ChatMessageResource::collection($messages->items()),
+//            'paginate' => paginate($messages),
+//        ]);
     }
 
 
@@ -104,7 +106,7 @@ class ChatController extends Controller
         $file_parts = explode(";base64,", $file);
         $file_type_aux = explode("/", $file_parts[0]);
         $file_ext = $file_type_aux[1];
-        $file_type = explode(':',$file_type_aux[0])[1];
+        $file_type = explode(':', $file_type_aux[0])[1];
 
         $file_base64 = base64_decode($file_parts[1]);
         $uniqid = uniqid();
@@ -122,7 +124,6 @@ class ChatController extends Controller
 
 
         /******************************************************/
-
 
 
         $group = Group::findOrFail($group_id);
