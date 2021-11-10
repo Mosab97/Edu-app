@@ -130,3 +130,10 @@ define('WAITING', 4003);
 
 
 define('API_ACCESS_KEY', "AAAAsui00A0:APA91bEPVqiAdadlMPGKfnB3E5dqhQAGb26z6VZzaEjdsCf4smz39EPUkNPi0hOfAbYCngnpvN_ZrF7RhkxUAg7DGcpHLE7QdOIFnq39DAdLePzhC8Bz28T6kCtCTbKjrBMy1SJ135Cg");
+
+
+
+
+define('file_type_aux', [
+    'video' => 'data:video/mp4'
+]);

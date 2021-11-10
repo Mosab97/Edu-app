@@ -99,16 +99,30 @@ class ChatController extends Controller
 
     public function storeChatFile(Request $request, $group_id, $sender_id)
     {
-        $img = $request->file_base64;
+        $file = $request->file_base64;
         $folderPath = "uploads/" . ChatMessage::manager_route . "/"; //path location
+        $file_parts = explode(";base64,", $file);
+        $file_type_aux = explode("/", $file_parts[0]);
+        $file_ext = $file_type_aux[1];
+        $file_type = explode(':',$file_type_aux[0])[1];
 
-        $image_parts = explode(";base64,", $img);
-        $image_type_aux = explode("image/", $image_parts[0]);
-        $image_type = $image_type_aux[1];
-        $image_base64 = base64_decode($image_parts[1]);
+        $file_base64 = base64_decode($file_parts[1]);
         $uniqid = uniqid();
-        $file = $folderPath . $uniqid . '.' . $image_type;
-        file_put_contents($file, $image_base64);
+        $file = $folderPath . $uniqid . '.' . $file_ext;
+        file_put_contents($file, $file_base64);
+//        dd($file_parts[1],$file_base64);
+
+//        switch ($file_type){
+//    case'video':break;
+//    case'image':break;
+//    case'audio':break;
+//    /*for pdf*/case'application':break;
+//}
+//        dd($file_type_aux,$file_ext,$file_type);
+
+
+        /******************************************************/
+
 
 
         $group = Group::findOrFail($group_id);
@@ -120,15 +134,14 @@ class ChatController extends Controller
         $group->files()->create([
             'chat_message_id' => $chatMessage->id,
             'name' => 'null',
-            'extension' => $image_type,
+            'extension' => $file_ext,
             'path' => $file,
         ]);
         Log::info('file_websocket', [
             'group' => $group_id,
             'file' => asset($file),
-            'image_parts' => $image_parts,
-            'image_type_aux' => $image_type_aux,
-            'image_type' => $image_type,
+            'file_type' => $file_type,
+            'file_ext' => $file_ext,
         ]);
         return apiSuccess([
             // 'request' => $request->all(),
