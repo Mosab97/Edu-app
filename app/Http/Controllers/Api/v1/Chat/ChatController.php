@@ -97,7 +97,7 @@ class ChatController extends Controller
         return apiSuccess(new ChatMessageResource($chatMessage), api('Message Send Successfully'));
     }
 
-    public function storeChatFile(Request $request, $group_id,$sender_id)
+    public function storeChatFile(Request $request, $group_id, $sender_id)
     {
         $img = $request->file_base64;
         $folderPath = "uploads/" . ChatMessage::manager_route . "/"; //path location
@@ -117,12 +117,12 @@ class ChatController extends Controller
             'message' => $request->message,
             'type' => ChatMessage::type['file'],
         ]);
-            $group->files()->create([
-                'chat_message_id' => $chatMessage->id,
-                'name' => 'null',
-                'extension' => $image_type,
-                'path' => $file,
-            ]);
+        $group->files()->create([
+            'chat_message_id' => $chatMessage->id,
+            'name' => 'null',
+            'extension' => $image_type,
+            'path' => $file,
+        ]);
         Log::info('file_websocket', [
             'group' => $group_id,
             'file' => asset($file),
@@ -138,5 +138,15 @@ class ChatController extends Controller
         // dd($group_id, checkRequestIsWorkingOrNot());
     }
 
+    public function sendMessageWebSocket(Request $request, $group_id, $sender_id)
+    {
+        $group = Group::query()->findOrFail($group_id);
+        $chatMessage = $group->chatMessages()->create([
+            'sender_id' => $sender_id,
+            'message' => $request->message,
+            'type' => ChatMessage::type['text'],
+        ]);
+        return apiSuccess(new ChatMessageResource($chatMessage), api('Message Send Successfully'));
+    }
 
 }

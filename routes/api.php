@@ -23,6 +23,7 @@ Route::group(['prefix' => 'v1', 'namespace' => ROOT_NAMESPACE, "middleware" => [
     /*Node js apis*/
     Route::get('websocket/chatMessages/{id}', 'Chat\ChatController@chatMessages');
     Route::post('websocket/store_chat_file/{id}/{sender_id}', 'Chat\ChatController@storeChatFile');
+    Route::post('websocket/sendMessageWebSocket/{group_id}/{sender_id}', 'Chat\ChatController@sendMessageWebSocket');
 
     Route::group(['prefix' => 'guest', 'namespace' => 'Guest'], function () {
         Route::get('groups/{course_id?}', 'GroupController@groups');
