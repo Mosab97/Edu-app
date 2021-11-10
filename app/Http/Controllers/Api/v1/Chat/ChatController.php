@@ -128,8 +128,10 @@ class ChatController extends Controller
         Log::info('file_websocket', [
             'group' => $group_id,
             'file' => asset($file),
+            'image_parts' => $image_parts,
+            'image_type_aux' => $image_type_aux,
+            'image_type' => $image_type,
         ]);
-
         return apiSuccess([
             // 'request' => $request->all(),
             'group' => $group_id,
