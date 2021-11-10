@@ -14,7 +14,7 @@ class ChatMessageResource extends JsonResource
         $response = [
             'id' => $this->id,
             'message' => $this->message,
-            'timestamp' => Carbon::parse($this->updated_at)->format(DATE_FORMAT_FULL),
+            'timestamp' => Carbon::parse($this->created_at)->format(DATE_FORMAT_FULL),
             'type' => $this->type,
             'group_id' => $this->group_id,
             'sender' => [
@@ -23,9 +23,7 @@ class ChatMessageResource extends JsonResource
                 'image' => optional($sender)->image,
             ],
         ];
-        if ($this->type == ChatMessage::type['file']) {
-            $response['file'] = optional($this->file)->path;
-        }
+        if ($this->type == ChatMessage::type['file']) $response['file'] = optional($this->file)->path;
         return $response;
 
     }
