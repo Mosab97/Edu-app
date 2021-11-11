@@ -29,11 +29,12 @@ class ChatController extends Controller
 
     public function group_media(Request $request, $group_id)
     {
-        $files = GroupFile::where(['group_id' => $group_id])->paginate($this->perPage);
-        return apiSuccess([
-            'items' => FileResource::collection($files->items()),
-            'paginate' => paginate($files),
-        ]);
+        $files = GroupFile::where(['group_id' => $group_id])->get();//->paginate($this->perPage);
+        return apiSuccess(FileResource::collection($files));
+//        return apiSuccess([
+//            'items' => FileResource::collection($files->items()),
+//            'paginate' => paginate($files),
+//        ]);
     }
 
     public function delete_media(Request $request, $file_id)
