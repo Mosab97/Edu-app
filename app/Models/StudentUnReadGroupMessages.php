@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class StudentUnReadGroupMessages extends Model
 {
-    //
+    protected $guarded = [];
 }

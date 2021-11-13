@@ -64,11 +64,11 @@ class ChatController extends Controller
     {
         $request->validate([
             'message' => 'sometimes|min:1|max:200',
-            'file' => 'required',
-//            'file' => 'sometimes|mimes:mp4,mp3,mov,ogg,qt,jpg,png,JPG,PNG,gif,pdf,word,xlsx,docx | max:20000',
+//            'file' => 'required',
+            'file' => 'sometimes|mimes:mp4,mp3,mov,ogg,qt,jpg,png,JPG,PNG,gif,pdf,word,xlsx,docx | max:20000',
         ]);
         $user = apiUser();
-        $group = Group::query()->findOrFail($id);
+        $group = Group::query()->with(['students.student'])->findOrFail($id);
         if ($user->user_type == User::user_type['TEACHER']) {
             if ($group->teacher_id != $user->id) return apiError(api('Not group teacher'));
         } else {
@@ -88,7 +88,7 @@ class ChatController extends Controller
                 'path' => optional($file)['path'],
             ]);
         }
-        foreach ($group->students as $student) {
+        foreach ($group->students->pluck('student') as $student) {
             $res = StudentUnReadGroupMessages::where(['user_id' => $student->id, 'group_id' => $group->id])->first();
             if (isset($res)) {
                 $res->update([
@@ -102,17 +102,6 @@ class ChatController extends Controller
                 ]);
             }
         }
-//        $user = apiUser();
-//        Notification::send($user, new NewMessageNotification($group, $chatMessage));
-//        app('firebase.firestore')->database()->collection('chat')->document($group->id)
-//            ->set([
-//                    'sender_id' => apiUser()->id,
-//                    'message' => $request->message,
-//                    'image' => $chatMessage->image,
-//                    'timestamp' => Carbon::parse($request->updated_at)->format(DATE_FORMAT_FULL),
-//                ]
-//            );
-
         return apiSuccess(new ChatMessageResource($chatMessage), api('Message Send Successfully'));
     }
 
@@ -171,12 +160,27 @@ class ChatController extends Controller
 
     public function sendMessageWebSocket(Request $request, $group_id, $sender_id)
     {
-        $group = Group::query()->findOrFail($group_id);
+        $group = Group::query()->with(['students.student'])->findOrFail($group_id);
         $chatMessage = $group->chatMessages()->create([
             'sender_id' => $sender_id,
             'message' => $request->message,
             'type' => ChatMessage::type['text'],
         ]);
+        foreach ($group->students->pluck('student') as $student) {
+            $res = StudentUnReadGroupMessages::where(['user_id' => $student->id, 'group_id' => $group->id])->first();
+            if (isset($res)) {
+                $res->update([
+                    'number' => ($res->number + 1)
+                ]);
+            } else {
+                StudentUnReadGroupMessages::create([
+                    'number' => 1,
+                    'group_id' => $group->id,
+                    'user_id' => $student->id,
+                ]);
+            }
+        }
+
         return apiSuccess(new ChatMessageResource($chatMessage), api('Message Send Successfully'));
     }
 
