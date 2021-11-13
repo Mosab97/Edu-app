@@ -32,7 +32,16 @@ class HomeController extends Controller
 
     public function group_students(Request $request, $group_id)
     {
-        $group = Group::with(['students'])->findOrFail($group_id);
+        $name = $request->get('name', false);
+        $group = Group::with(['students' => function ($query) use ($name) {
+//            dd($name);
+            $query->when($name, function ($query2) use ($name) {
+                $query2->whereHas('student', function ($query3) use ($name) {
+                    $query3->where('name', 'like', "%$name%");
+                });
+            });
+        }])->findOrFail($group_id);
+//        dd($group);
         $students = $group->students->pluck('student')->map(function ($item) use ($group) {
             $item['group_name'] = $group->name;
             return $item;

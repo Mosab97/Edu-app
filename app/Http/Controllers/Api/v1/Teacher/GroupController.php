@@ -26,12 +26,17 @@ class GroupController extends Controller
 
         $teacher = apiUser();
         if (!isset($teacher)) return apiError('Wrong Teacher');
-        return apiSuccess(GroupResource::collection($teacher->teacher_groups()->with('course')->get()));
+        $name = $request->get('name', false);
+        return apiSuccess(GroupResource::collection($teacher->teacher_groups()
+            ->when($name, function ($query) use ($name) {
+            $query->where('name', 'like', "%$name%");
+        })
+            ->with('course')->get()));
     }
 
     public function group(Request $request, $group_id)
     {
-        $group = Group::query()->with(['lessons','teacher','course','level','age'])->find($group_id);
+        $group = Group::query()->with(['lessons', 'teacher', 'course', 'level', 'age'])->find($group_id);
         if (!isset($group)) return apiError('Wrong Group Id');
         return apiSuccess(new GroupResource($group));
     }

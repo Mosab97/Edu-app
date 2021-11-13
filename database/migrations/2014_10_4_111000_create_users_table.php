@@ -31,6 +31,7 @@ class CreateUsersTable extends Migration
 //            $table->enum('local', ['en', 'ar'])->default('ar');
 //            $table->date('dob')->nullable();
 
+//            $table->integer('unread_messages')->nullable();
             $table->string('password')->nullable();
             $table->boolean('social')->default(0);
             $table->rememberToken();

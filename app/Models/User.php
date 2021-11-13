@@ -54,8 +54,13 @@ class User extends Authenticatable
     protected $hidden = ['password', 'remember_token',];
 
     //    relations
+    public function un_read_messages()
+    {
+        return $this->hasMany(StudentUnReadGroupMessages::class, 'user_id');
+    }
 
 //    Scopes
+
 
     public function scopePhone($query, $param)
     {

@@ -64,8 +64,15 @@ class GroupController extends Controller
     {
         $student = apiUser();
         if (!isset($student)) return apiError('Wrong Student');
+        $name = $request->get('name', false);
+
+
         $groups = $this->_model->query()
-//            This code will exclude the current user from the subscribed students
+            ->when($name, function ($query) use ($name) {
+                $query->where('name', 'like', "%$name%");
+            })
+
+            //            This code will exclude the current user from the subscribed students
 //            ->with(['students' => function ($query) use ($student) {
 //            $query->where('student_id', '!=', $student->id);
 //        }])

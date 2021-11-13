@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Api\v1\Chat;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Api\v1\Chat\ChatMessageResource;
 use App\Http\Resources\Api\v1\General\FileResource;
+use App\Http\Resources\Api\v1\Teacher\GroupResource;
 use App\Models\ChatMessage;
 use App\Models\Group;
 use App\Models\GroupFile;
 use App\Models\StudentGroups;
+use App\Models\StudentUnReadGroupMessages;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -86,7 +88,20 @@ class ChatController extends Controller
                 'path' => optional($file)['path'],
             ]);
         }
-
+        foreach ($group->students as $student) {
+            $res = StudentUnReadGroupMessages::where(['user_id' => $student->id, 'group_id' => $group->id])->first();
+            if (isset($res)) {
+                $res->update([
+                    'number' => ($res->number + 1)
+                ]);
+            } else {
+                StudentUnReadGroupMessages::create([
+                    'number' => 1,
+                    'group_id' => $group->id,
+                    'user_id' => $student->id,
+                ]);
+            }
+        }
 //        $user = apiUser();
 //        Notification::send($user, new NewMessageNotification($group, $chatMessage));
 //        app('firebase.firestore')->database()->collection('chat')->document($group->id)
@@ -163,6 +178,12 @@ class ChatController extends Controller
             'type' => ChatMessage::type['text'],
         ]);
         return apiSuccess(new ChatMessageResource($chatMessage), api('Message Send Successfully'));
+    }
+
+    public function read_all_messages(Request $request, $group_id)
+    {
+        StudentUnReadGroupMessages::where(['group_id' => $group_id, 'user_id' => apiUser()->id])->delete();
+        return apiSuccess(null, api('Messages Read Successfully'));
     }
 
 }

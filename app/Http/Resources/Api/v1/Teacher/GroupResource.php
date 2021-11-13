@@ -12,8 +12,10 @@ class GroupResource extends JsonResource
     public function toArray($request)
     {
         $except_arr_resource = $request['except_arr_resource'];
+        $user = apiUser();
         $response = [
             'id' => $this->id,
+            'unread_messages' => isset($user) ? (optional($user->un_read_messages()->where(['group_id' => $this->id])->first())->number ?? 0) : 0,
             'name' => $this->name,
             'video' => $this->video,
             'image' => $this->image,

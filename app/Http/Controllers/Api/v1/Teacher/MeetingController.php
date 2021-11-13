@@ -39,7 +39,7 @@ class MeetingController extends Controller
             'date' => 'required|date_format:Y-m-d',
             'from' => 'required|date_format:H:i',
             'to' => 'required|date_format:H:i',
-            'url' => 'required',
+//            'url' => 'required',
             'is_canceled' => 'sometimes|in:1,0',
         ]);
         return apiSuccess(new MeetingResource($this->model->create($request->all())), api('Meeting Created Successfully'));
@@ -53,7 +53,7 @@ class MeetingController extends Controller
             'date' => 'required|date_format:d/m/Y',
             'from' => 'required|date_format:h:i',
             'to' => 'required|date_format:h:i',
-            'url' => 'required',
+//            'url' => 'required',
             'is_canceled' => 'sometimes|in:1,0',
         ]);
 
