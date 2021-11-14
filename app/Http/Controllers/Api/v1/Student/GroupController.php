@@ -46,7 +46,7 @@ class GroupController extends Controller
     public function groupsByCourse(Request $request, $course_id)
     {
         $groups = Group::query()->where('course_id', $course_id)->with(['course'])->get();
-        if (count($groups) == 0) return apiError('Wrong Course Id');
+//        if (count($groups) == 0) return apiError('Wrong Course Id');
         return apiSuccess(GroupResource::collection($groups));
     }
 
