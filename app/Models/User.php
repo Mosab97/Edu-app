@@ -88,6 +88,13 @@ class User extends Authenticatable
         return $this->hasMany(StudentGroups::class, 'student_id');
     }
 
+    public function teacher_groups()
+    {
+        return $this->hasMany(Group::class, 'teacher_id');
+    }
+
+
+
     public function student_details()
     {
         return $this->hasOne(StudentDetails::class, 'student_id');
@@ -104,10 +111,6 @@ class User extends Authenticatable
         return $this->hasOne(SocialProvider::class);
     }
 
-    public function teacher_groups()
-    {
-        return $this->hasMany(Group::class, 'teacher_id');
-    }
 
 
 //    attributes

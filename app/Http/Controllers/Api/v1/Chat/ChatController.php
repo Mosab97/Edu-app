@@ -194,7 +194,7 @@ class ChatController extends Controller
     {
         $user = User::findOrFail($client_id);
         if ($user->user_type == User::user_type['TEACHER']) return apiSuccess([
-            'can_send' => $user->teacher_groups()->where(['group_id' => $group_id])->count() > 0
+            'can_send' => $user->teacher_groups()->where(['id' => $group_id])->count() > 0
         ]);
         else return apiSuccess([
             'can_send' => $user->student_groups()->where(['group_id' => $group_id])->count() > 0
