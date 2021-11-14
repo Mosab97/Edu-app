@@ -21,6 +21,7 @@ Route::get('test_api', function (\Illuminate\Http\Request $request) {
 });
 Route::group(['prefix' => 'v1', 'namespace' => ROOT_NAMESPACE, "middleware" => ['localization']], function () {
     /*Node js apis*/
+    Route::get('websocket/checkCanSendMessage/{group_id}/{client_id}', 'Chat\ChatController@checkCanSendMessage');
     Route::get('websocket/chatMessages/{id}', 'Chat\ChatController@chatMessages');
     Route::post('websocket/store_chat_file/{id}/{sender_id}', 'Chat\ChatController@storeChatFile');
     Route::post('websocket/sendMessageWebSocket/{group_id}/{sender_id}', 'Chat\ChatController@sendMessageWebSocket');
