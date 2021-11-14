@@ -84,6 +84,7 @@ class AuthController extends Controller
         $data['user_type'] = $request->type;
         $data['verified'] = false;
         $data['status'] = User::user_status['Accepted'];
+        $data['verified'] = true;
         $data['generatedCode'] = generateCode();
         $data['social'] = $request->get('social', 0);
         $user = User::create($data);
