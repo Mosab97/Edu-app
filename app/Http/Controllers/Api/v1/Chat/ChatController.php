@@ -201,4 +201,12 @@ class ChatController extends Controller
         ]);
     }
 
+    public function getAllIdsWithTeacherId(Request $request, $group_id)
+    {
+        $group = Group::with(['students'])->findOrFail($group_id);
+        $ids = $group->students->pluck('student_id')->all();
+        $ids[] = $group->teacher_id;
+        return apiSuccess($ids);
+    }
+
 }
