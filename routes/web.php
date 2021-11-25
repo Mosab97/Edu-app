@@ -94,10 +94,6 @@ Route::get('page/{key}', function ($key) {
 });
 
 
-
-
-
-
 // clear route cache
 Route::get('/clear-route-cache', function () {
     Artisan::call('route:cache');
@@ -120,6 +116,9 @@ Route::get('/clear-app-cache', function () {
 Route::get('/clear-view-cache', function () {
     Artisan::call('view:clear');
     return 'View cache has clear successfully!';
+});
+Route::get('/test_server_vars', function () {
+    phpinfo();
 });
 
 
